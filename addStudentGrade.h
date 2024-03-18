@@ -1,1 +1,0 @@
-void addStudent(const char* filename, const char* studentInfo);

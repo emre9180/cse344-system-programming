@@ -1,1 +1,0 @@
-void openFile(const char* filename);
