@@ -1,22 +1,23 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
-#include <fcntl.h>
 #include <string.h>
+#include <sys/types.h>
+#include <sys/uio.h>
+#include <fcntl.h>
 
-void openFile(const char* filename) {
-    int fd = open(filename, O_CREAT | O_EXCL | O_WRONLY, 0644);
-    if (fd < 0) {
-        perror("Open failed");
-        exit(EXIT_FAILURE);
+void gtuStudentGrades(const char *file)
+{
+    int fd = open(file, O_WRONLY | O_CREAT | O_EXCL, 0644); // Open the file in write-only mode, create if not exists, and fail if already exists
+    if (fd == -1)
+    {
+        strcpy(filename, file);
+        perror("open");
+        return;
     }
 
-    const char* data = "Sample data";
-    ssize_t bytes_written = write(fd, data, strlen(data));
-    if (bytes_written < 0) {
-        perror("Write failed");
-        exit(EXIT_FAILURE);
-    }
+    strcpy(filename, file);
+    printf("Filename set to: %s\n", filename);
 
-    close(fd);
+    close(fd); // Close the file
 }

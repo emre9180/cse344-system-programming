@@ -1,4 +1,4 @@
-CC = gcc
+CC = gcc-13
 CFLAGS = -Wall -Wextra -g
 
 all: main
