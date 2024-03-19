@@ -48,7 +48,7 @@ void showAll(const char *filename, int numEntries, int pageNumber)
             if (printFlag == 1)
                 printf("Record %d: %s\n", ct, buffer);
 
-            buffer[newline - buffer] = '\n';    // Restore newline character
+            // buffer[newline - buffer] = '\n';    // Restore newline character
             strcpy(buffer, newline + 1);        // Update buffer to start from the new newline pointer
             newline = strchr(buffer + 1, '\n'); // Find the next newline character
             ct++;

@@ -7,7 +7,7 @@
 #include <sys/uio.h>
 #include <fcntl.h>
 
-void searchStudent(const char *filename, const char *target)
+void searchStudent(const char *target, const char *filename)
 {
     printf("Searching for student: %s\n", target);
 
@@ -38,7 +38,7 @@ void searchStudent(const char *filename, const char *target)
                 printf("The record has been found: Name: %s, Surname: %s, Grade: %s\n", name, surname, grade);
                 break;
             }
-            buffer[newline - buffer] = '\n';    // Restore newline character
+            // buffer[newline - buffer] = '\n';    // Restore newline character
             strcpy(buffer, newline + 1);        // Update buffer to start from the new newline pointer
             newline = strchr(buffer + 1, '\n'); // Find the next newline character
 

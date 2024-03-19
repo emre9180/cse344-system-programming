@@ -35,7 +35,7 @@ void sortAll(const char *filename)
             lines[numLines] = strdup(buffer); // Allocate memory and store the line in the array
             numLines++;
 
-            buffer[newline - buffer] = '\n';    // Restore newline character
+            // buffer[newline - buffer] = '\n';    // Restore newline character
             strcpy(buffer, newline + 1);        // Update buffer to start from the new newline pointer
             newline = strchr(buffer + 1, '\n'); // Find the next newline character
 

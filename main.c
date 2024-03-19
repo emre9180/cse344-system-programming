@@ -96,9 +96,9 @@ int main()
                     printf("command: %s", command);
                     addStudentGrade(file, arg1, arg2, arg3);
                 }
-                else if (strcmp(command, "searchStudent") == 0 && arg1 != NULL)
+                else if (strcmp(command, "searchStudent") == 0 && arg1 != NULL && arg2 != NULL)
                 {
-                    searchStudent(file, arg1);
+                    searchStudent(arg1, arg2);
                 }
                 else if (strcmp(command, "sortAll") == 0)
                 {
