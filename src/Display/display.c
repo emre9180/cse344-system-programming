@@ -30,6 +30,10 @@ void showAll(const char *filename, int numEntries, int pageNumber)
 
         while (newline != NULL)
         {
+            if (*(newline + 1) == '\0')
+            {
+                break;
+            }
             int printFlag = 1;
             if (ct == 5 && numEntries == 5 && pageNumber == -1)
             {
@@ -50,11 +54,11 @@ void showAll(const char *filename, int numEntries, int pageNumber)
             ct++;
 
             // for taking last string of the document. could be deleted
-            if ((newline == NULL || *newline == '\0') && printFlag == 1)
-            {
-                printf("Record %d: %s\n", ct, buffer);
-                break;
-            }
+            // if ((newline == NULL || *newline == '\0') && printFlag == 1)
+            // {
+            //     printf("Record %d: %s\n", ct, buffer);
+            //     break;
+            // }
             // Print name, surname and grade
         }
 

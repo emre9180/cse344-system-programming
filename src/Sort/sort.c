@@ -40,12 +40,12 @@ void sortAll(const char *filename)
             newline = strchr(buffer + 1, '\n'); // Find the next newline character
 
             // for taking last string of the document. could be deleted
-            if (newline == NULL || *newline == '\0')
-            {
-                lines[numLines] = strdup(buffer);
-                numLines++;
-                break;
-            }
+            // if (newline == NULL || *newline == '\0')
+            // {
+            //     lines[numLines] = strdup(buffer);
+            //     numLines++;
+            //     break;
+            // }
         }
 
         lseek(fd, newline - buffer + 1, SEEK_CUR); // Move the file pointer to the next line

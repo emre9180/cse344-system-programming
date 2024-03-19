@@ -39,7 +39,37 @@ int main()
         char *arg3 = strtok(NULL, " \n");     // Extract third argument
         char *file = strtok(NULL, "\"\n");    // Extract fourth argument
 
-        printf("%s, %s, %s, %s, %s\n", command, arg1, arg2, arg3, file);
+        if (arg1 != NULL)
+        {
+            if (arg1[0] == '"')
+                arg1++; // Move the pointer to the character after the first quote
+            if (arg1[strlen(arg1) - 1] == '"')
+                arg1[strlen(arg1) - 1] = '\0'; // Remove the last quote
+        }
+
+        if (arg2 != NULL)
+        {
+            if (arg2[0] == '"')
+                arg2++; // Move the pointer to the character after the first quote
+            if (arg2[strlen(arg2) - 1] == '"')
+                arg2[strlen(arg2) - 1] = '\0'; // Remove the last quote
+        }
+
+        if (arg3 != NULL)
+        {
+            if (arg3[0] == '"')
+                arg3++; // Move the pointer to the character after the first quote
+            if (arg3[strlen(arg3) - 1] == '"')
+                arg3[strlen(arg3) - 1] = '\0'; // Remove the last quote
+        }
+
+        if (file != NULL)
+        {
+            if (file[0] == '"')
+                file++; // Move the pointer to the character after the first quote
+            if (file[strlen(file) - 1] == '"')
+                file[strlen(file) - 1] = '\0'; // Remove the last quote
+        }
 
         if (command != NULL)
         {
@@ -61,8 +91,9 @@ int main()
             }
             else if (pid == 0)
             {
-                if (strcmp(command, "addStudentGrade") == 0 && arg1 != NULL && arg2 != NULL, arg3 != NULL)
+                if (strcmp(command, "addStudentGrade") == 0 && arg1 != NULL && arg2 != NULL && arg3 != NULL)
                 {
+                    printf("command: %s", command);
                     addStudentGrade(file, arg1, arg2, arg3);
                 }
                 else if (strcmp(command, "searchStudent") == 0 && arg1 != NULL)
