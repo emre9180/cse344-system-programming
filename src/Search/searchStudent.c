@@ -6,6 +6,7 @@
 #include <sys/types.h>
 #include <sys/uio.h>
 #include <fcntl.h>
+#include "../Log/log.h"
 
 void searchStudent(const char *target, const char *filename)
 {
@@ -15,7 +16,10 @@ void searchStudent(const char *target, const char *filename)
     if (fd == -1)
     {
         perror("open");
-        return;
+        char logMessage[100];
+        sprintf(logMessage, "Error opening file: %s", filename);
+        logToFile(logMessage);
+        exit(EXIT_FAILURE);
     }
 
     char buffer[1024];
@@ -25,7 +29,6 @@ void searchStudent(const char *target, const char *filename)
     while ((bytes_read = read(fd, buffer, sizeof(buffer))) > 0)
     {
         newline = strchr(buffer, '\n'); // Find the newline character
-        // printf("%s, buffer", buffer);
 
         while (newline != NULL)
         {
@@ -63,7 +66,16 @@ void searchStudent(const char *target, const char *filename)
     if (bytes_read == -1)
     {
         perror("read");
+        close(fd);
+        char logMessage[100];
+        sprintf(logMessage, "Error reading file: %s", filename);
+        logToFile(logMessage);
+        exit(EXIT_FAILURE);
     }
 
     close(fd); // Close the file
+    char logMessage[100];
+    sprintf(logMessage, "Successful command: %s", "search");
+    logToFile(logMessage);
+    exit(EXIT_SUCCESS);
 }

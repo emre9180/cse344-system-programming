@@ -11,6 +11,7 @@
 #include "src/Display/display.h"
 #include "src/Search/searchStudent.h"
 #include "src/Sort/sort.h"
+#include "src/Log/log.h"
 
 #define MAX_INPUT_LENGTH 100
 
@@ -23,6 +24,7 @@ int main()
         if (bytes_read == -1)
         {
             perror("read");
+            logToFile("Error reading command");
             exit(EXIT_FAILURE);
         }
         else if (bytes_read == 0)
@@ -75,7 +77,17 @@ int main()
         {
             if (strcmp(command, "exit") == 0 && arg1 == NULL)
             {
-                exit(EXIT_SUCCESS);
+                if (command != NULL)
+                {
+                    if (strcmp(command, "exit") == 0 && arg1 == NULL)
+                    {
+                        char logMessage[100];
+                        sprintf(logMessage, "Successful command: %s", command);
+                        logToFile(logMessage);
+                        exit(EXIT_SUCCESS);
+                    }
+                    // Rest of the code...
+                }
             }
             if (strcmp(command, "gtuStudentGrades") == 0 && arg1 != NULL)
             {
@@ -87,31 +99,26 @@ int main()
             if (pid == -1)
             {
                 perror("fork");
+                logToFile("Error forking process");
                 exit(EXIT_FAILURE);
             }
             else if (pid == 0)
             {
                 if (strcmp(command, "addStudentGrade") == 0 && arg1 != NULL && arg2 != NULL && arg3 != NULL)
-                {
-                    printf("command: %s", command);
                     addStudentGrade(file, arg1, arg2, arg3);
-                }
+
                 else if (strcmp(command, "searchStudent") == 0 && arg1 != NULL && arg2 != NULL)
-                {
                     searchStudent(arg1, arg2);
-                }
+
                 else if (strcmp(command, "sortAll") == 0)
-                {
                     sortAll(arg1);
-                }
+
                 else if (strcmp(command, "showAll") == 0)
-                {
                     showAll(arg1, -1, -1);
-                }
+
                 else if (strcmp(command, "lstGrades") == 0)
-                {
                     showAll(arg1, 5, -1);
-                }
+
                 else if (strcmp(command, "lstSome") == 0 && arg1 != NULL && arg2 != NULL && arg3 != NULL)
                 {
                     int numEntries;
@@ -131,11 +138,15 @@ int main()
                 }
                 else if (strcmp(command, "quit") == 0)
                 {
+                    char logMessage[100];
+                    sprintf(logMessage, "Successful command: %s", "quit");
+                    logToFile(logMessage);
                     exit(EXIT_SUCCESS); // Exit child process
                 }
                 else
                 {
                     printf("Invalid command or arguments.\n");
+                    logToFile("Error: Invalid command or arguments");
                     exit(EXIT_SUCCESS); // Exit child process (error code
                 }
                 exit(EXIT_SUCCESS); // Exit child process

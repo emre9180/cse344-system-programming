@@ -5,6 +5,8 @@
 #include <sys/types.h>
 #include <sys/uio.h>
 #include <fcntl.h>
+#include "gtuStudentGrades.h"
+#include "../Log/log.h"
 
 void gtuStudentGrades(const char *file)
 {
@@ -13,11 +15,18 @@ void gtuStudentGrades(const char *file)
     {
         // strcpy(filename, file);
         perror("open");
-        return;
+        char logMessage[100];
+        sprintf(logMessage, "Error opening file: %s", file);
+        logToFile(logMessage);
+        exit(EXIT_FAILURE);
     }
 
     // strcpy(filename, file);
     printf("Filename set to: %s\n", file);
 
     close(fd); // Close the file
+    char logMessage[100];
+    sprintf(logMessage, "File created: %s", file);
+    logToFile(logMessage);
+    exit(EXIT_SUCCESS);
 }

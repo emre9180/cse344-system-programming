@@ -3,11 +3,14 @@ CFLAGS = -Wall -Wextra -g
 
 all: main
 
-main: main.o sort.o display.o addStudentGrade.o gtuStudentGrades.o searchStudent.o
-	$(CC) $(CFLAGS) -o main main.o searchStudent.o sort.o display.o addStudentGrade.o gtuStudentGrades.o
+main: main.o sort.o display.o addStudentGrade.o gtuStudentGrades.o searchStudent.o log.o
+	$(CC) $(CFLAGS) -o main main.o searchStudent.o sort.o display.o addStudentGrade.o gtuStudentGrades.o log.o
 
 main.o: main.c
 	$(CC) $(CFLAGS) -c main.c
+
+log.o: src/Log/log.c
+	$(CC) $(CFLAGS) -c src/Log/log.c
 
 searchStudent.o: src/Search/searchStudent.c
 	$(CC) $(CFLAGS) -c src/Search/searchStudent.c
@@ -25,4 +28,4 @@ gtuStudentGrades.o: src/FileCreation/gtuStudentGrades.c
 	$(CC) $(CFLAGS) -c src/FileCreation/gtuStudentGrades.c
 
 clean:
-	rm -f main main.o searchStudent.o sort.o display.o addStudentGrade.o gtuStudentGrades.o    
+	rm -f main main.o searchStudent.o sort.o display.o addStudentGrade.o gtuStudentGrades.o log.o 

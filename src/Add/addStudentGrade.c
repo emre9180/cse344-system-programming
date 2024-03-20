@@ -3,6 +3,7 @@
 #include <unistd.h>
 #include <fcntl.h>
 #include <string.h>
+#include "../Log/log.h"
 #define MAX_INPUT_LENGTH 100
 
 void addStudentGrade(const char *filename, const char *name, const char *surname, const char *grade)
@@ -13,7 +14,10 @@ void addStudentGrade(const char *filename, const char *name, const char *surname
     if (fd == -1)
     {
         perror("open");
-        return;
+        char logMessage[100];
+        sprintf(logMessage, "Error opening file: %s", filename);
+        logToFile(logMessage);
+        exit(EXIT_FAILURE);
     }
 
     char buffer[MAX_INPUT_LENGTH];
@@ -22,7 +26,13 @@ void addStudentGrade(const char *filename, const char *name, const char *surname
     if (bytes_written == -1)
     {
         perror("write");
+        char logMessage[100];
+        sprintf(logMessage, "Error reading file: %s", filename);
+        logToFile(logMessage);
+        close(fd); // Close the file
+        exit(EXIT_FAILURE);
     }
 
     close(fd); // Close the file
+    exit(EXIT_SUCCESS);
 }

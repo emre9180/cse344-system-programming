@@ -5,20 +5,22 @@
 #include <sys/types.h>
 #include <sys/uio.h>
 #include <fcntl.h>
+#include "../Log/log.h"
 
 void showAll(const char *filename, int numEntries, int pageNumber)
 {
-    printf("%s", filename);
     int fd = open(filename, O_RDWR); // Open the file in read-write mode
     if (fd == -1)
     {
         perror("open");
-        return;
+        char logMessage[100];
+        sprintf(logMessage, "Error opening file: %s", filename);
+        logToFile(logMessage);
+        exit(EXIT_FAILURE);
     }
     // Read the file and store the lines in a string array
     char buffer[1024];
     ssize_t bytes_read;
-    char *lines[100]; // Assuming a maximum of 100 lines
     char *newline;
     int ct = 0;
 
@@ -26,7 +28,6 @@ void showAll(const char *filename, int numEntries, int pageNumber)
     while ((bytes_read = read(fd, buffer, sizeof(buffer))) > 0)
     {
         newline = strchr(buffer, '\n'); // Find the newline character
-        // printf("%s, buffer", buffer);
 
         while (newline != NULL)
         {
@@ -37,6 +38,10 @@ void showAll(const char *filename, int numEntries, int pageNumber)
             int printFlag = 1;
             if (ct == 5 && numEntries == 5 && pageNumber == -1)
             {
+                char logMessage[100];
+                sprintf(logMessage, "Successful command: %s", "Print first 5 students");
+                logToFile(logMessage);
+                close(fd);
                 exit(EXIT_SUCCESS);
             }
 
@@ -65,4 +70,27 @@ void showAll(const char *filename, int numEntries, int pageNumber)
         lseek(fd, newline - buffer + 1, SEEK_CUR); // Move the file pointer to the next line
         strcpy(buffer, "");                        // Clear the buffer
     }
+    if (bytes_read == -1)
+    {
+        perror("read");
+        char logMessage[100];
+        sprintf(logMessage, "Error reading file: %s", filename);
+        logToFile(logMessage);
+        exit(EXIT_FAILURE);
+    }
+
+    if (pageNumber == -1)
+    {
+        char logMessage[100];
+        sprintf(logMessage, "Successful command: %s", "Print all students");
+        logToFile(logMessage);
+    }
+    else
+    {
+        char logMessage[100];
+        sprintf(logMessage, "Successful command: %s", "Print a page of students");
+        logToFile(logMessage);
+    }
+    close(fd); // Close the file
+    exit(EXIT_SUCCESS);
 }

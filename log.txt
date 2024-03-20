@@ -1,0 +1,4 @@
+[2024-03-21 01:25:54]: Successful command: Sort all students
+[2024-03-21 01:26:03]: Error: Invalid command or arguments
+[2024-03-21 01:26:10]: Error opening file: emesadf.txt
+[2024-03-21 01:26:42]: Successful command: exit
