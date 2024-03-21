@@ -1,4 +1,3 @@
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -22,11 +21,21 @@ void searchStudent(const char *target, const char *filename)
         exit(EXIT_FAILURE);
     }
 
-    char buffer[1024];
+    char *buffer = (char *)malloc(1024 * sizeof(char)); // Allocate memory for buffer
+    if (buffer == NULL)
+    {
+        perror("malloc");
+        close(fd);
+        char logMessage[100];
+        sprintf(logMessage, "Error allocating memory for buffer");
+        logToFile(logMessage);
+        exit(EXIT_FAILURE);
+    }
+
     ssize_t bytes_read;
     char *newline;
 
-    while ((bytes_read = read(fd, buffer, sizeof(buffer))) > 0)
+    while ((bytes_read = read(fd, buffer, 1024)) > 0)
     {
         newline = strchr(buffer, '\n'); // Find the newline character
 
@@ -67,13 +76,15 @@ void searchStudent(const char *target, const char *filename)
     {
         perror("read");
         close(fd);
+        free(buffer); // Free the allocated memory
         char logMessage[100];
         sprintf(logMessage, "Error reading file: %s", filename);
         logToFile(logMessage);
         exit(EXIT_FAILURE);
     }
 
-    close(fd); // Close the file
+    close(fd);    // Close the file
+    free(buffer); // Free the allocated memory
     char logMessage[100];
     sprintf(logMessage, "Successful command: %s", "search");
     logToFile(logMessage);

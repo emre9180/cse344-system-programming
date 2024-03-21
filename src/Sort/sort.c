@@ -1,4 +1,3 @@
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -77,13 +76,13 @@ void sortAll(const char *filename)
     sortOrder = atoi(orderBuffer);
 
     // Read the file and store the lines in a string array
-    char buffer[1024];
+    char *buffer = (char *)malloc(1024 * sizeof(char));
     ssize_t bytes_read;
     char *lines[100]; // Assuming a maximum of 100 lines
     char *newline;
     int numLines = 0;
 
-    while ((bytes_read = read(fd, buffer, sizeof(buffer))) > 0)
+    while ((bytes_read = read(fd, buffer, 1024)) > 0)
     {
         newline = strchr(buffer, '\n'); // Find the newline character
 
@@ -185,6 +184,13 @@ void sortAll(const char *filename)
             printf("Record %d: %s\n", i + 1, lines[i]);
         }
     }
+
+    // Free dynamically allocated memory
+    for (int i = 0; i < numLines; i++)
+    {
+        free(lines[i]);
+    }
+    free(buffer);
 
     char logMessage[100];
     sprintf(logMessage, "Successful command: %s", "Sort all students");
