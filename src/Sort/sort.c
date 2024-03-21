@@ -9,17 +9,9 @@
 #include "sort.h"
 
 // Function to sort all student grades
-LetterGrade findGrade(char *grade)
+LetterGrade findGrade(const char *grade)
 {
-    // Convert the grade to uppercase
-    for (int i = 0; grade[i] != '\0'; i++)
-    {
-        if (grade[i] >= 'a' && grade[i] <= 'z')
-        {
-            grade[i] = grade[i] - 32; // Convert lowercase to uppercase using ASCII logic
-        }
-    }
-
+    printf("Finding grade: %s\n", grade);
     // Compare the grade and return the corresponding enum value
     if (strcmp(grade, "AA") == 0)
         return GRADE_AA;
@@ -46,7 +38,7 @@ LetterGrade findGrade(char *grade)
 // Function to sort all student grades
 void sortAll(const char *filename)
 {
-    int fd = open(filename, O_RDWR); // Open the file in read-write mode
+    int fd = open(filename, O_RDONLY); // Open the file in read-write mode
     if (fd == -1)
     {
         perror("open");
@@ -78,7 +70,7 @@ void sortAll(const char *filename)
     // Read the file and store the lines in a string array
     char *buffer = (char *)malloc(1024 * sizeof(char));
     ssize_t bytes_read;
-    char *lines[100]; // Assuming a maximum of 100 lines
+    char **lines = (char **)malloc(500 * sizeof(char *)); // Assuming a maximum of 100 lines
     char *newline;
     int numLines = 0;
 
@@ -116,6 +108,8 @@ void sortAll(const char *filename)
         sprintf(logMessage, "Error reading file: %s", filename);
         logToFile(logMessage);
         close(fd); // Close the file
+        free(buffer);
+        free(lines);
         perror("read");
         exit(EXIT_FAILURE);
     }
@@ -149,22 +143,43 @@ void sortAll(const char *filename)
         {
             for (int j = 0; j < numLines - i - 1; j++)
             {
-                char *grade1 = strrchr(lines[j], ' ') + 1; // Get the last word as the grade
-                char *grade2 = strrchr(lines[j + 1], ' ') + 1;
+                char *last_space1 = strrchr(lines[j], ' ');
+                char *last_space2 = strrchr(lines[j + 1], ' ');
 
-                LetterGrade letterGrade1 = findGrade(grade1);
-                LetterGrade letterGrade2 = findGrade(grade2);
-
-                if (letterGrade1 < letterGrade2)
+                if (last_space1 && last_space2)
                 {
-                    char *temp = lines[j];
-                    lines[j] = lines[j + 1];
-                    lines[j + 1] = temp;
+                    // Calculate the length of the grade string
+                    size_t len1 = strlen(last_space1 + 1);
+                    size_t len2 = strlen(last_space2 + 1);
+
+                    // Allocate memory for grade strings
+                    char *grade1 = malloc(len1 + 1);
+                    char *grade2 = malloc(len2 + 1);
+
+                    // Copy grade strings and null-terminate
+                    strncpy(grade1, last_space1 + 1, len1);
+                    grade1[len1] = '\0';
+
+                    strncpy(grade2, last_space2 + 1, len2);
+                    grade2[len2] = '\0';
+
+                    LetterGrade letterGrade1 = findGrade(grade1);
+                    LetterGrade letterGrade2 = findGrade(grade2);
+
+                    // Free allocated memory
+                    free(grade1);
+                    free(grade2);
+
+                    if (letterGrade1 < letterGrade2)
+                    {
+                        char *temp = lines[j];
+                        lines[j] = lines[j + 1];
+                        lines[j + 1] = temp;
+                    }
                 }
             }
         }
     }
-
     printf("Displaying all student grades\n");
 
     // Print the sorted lines based on the sorting order
@@ -185,15 +200,17 @@ void sortAll(const char *filename)
         }
     }
 
+    char logMessage[100];
+    sprintf(logMessage, "Successful command: %s", "Sort all students");
+    logToFile(logMessage);
+
     // Free dynamically allocated memory
+    free(buffer);
     for (int i = 0; i < numLines; i++)
     {
         free(lines[i]);
     }
-    free(buffer);
+    free(lines);
 
-    char logMessage[100];
-    sprintf(logMessage, "Successful command: %s", "Sort all students");
-    logToFile(logMessage);
     exit(EXIT_SUCCESS);
 }

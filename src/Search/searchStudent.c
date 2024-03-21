@@ -9,7 +9,7 @@
 
 void searchStudent(const char *target, const char *filename)
 {
-    printf("Searching for student: %s\n", target);
+    printf("Searching for student: %s in the file %s\n", target, filename);
 
     int fd = open(filename, O_RDONLY); // Open the file in read-only mode
     if (fd == -1)
@@ -41,13 +41,12 @@ void searchStudent(const char *target, const char *filename)
 
         while (newline != NULL)
         {
-            *newline = '\0';                   // Replace newline with null terminator
-            char *name = strtok(buffer, " ");  // Extract name
-            char *surname = strtok(NULL, " "); // Extract surname
-            char *grade = strtok(NULL, " ");   // Extract grade
+            *newline = '\0';                  // Replace newline with null terminator
+            char *name = strtok(buffer, ","); // Extract name
+            char *grade = strtok(NULL, ",");  // Extract grade
             if (name != NULL && strcmp(name, target) == 0)
             {
-                printf("The record has been found: Name: %s, Surname: %s, Grade: %s\n", name, surname, grade);
+                printf("The record has been found: Name: %s, Grade: %s\n", name, grade);
                 break;
             }
             // buffer[newline - buffer] = '\n';    // Restore newline character
@@ -62,7 +61,7 @@ void searchStudent(const char *target, const char *filename)
                 char *grade = strtok(NULL, " ");   // Extract grade
                 if (name != NULL && strcmp(name, target) == 0)
                 {
-                    printf("The record has been found: Name: %s, Surname: %s, Grade: %s\n", name, surname, grade);
+                    printf("The record has been found: Name: %s, Grade: %s\n", name, grade);
                     break;
                 }
             }

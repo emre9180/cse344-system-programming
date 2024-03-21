@@ -20,6 +20,7 @@ int main()
     char input[MAX_INPUT_LENGTH];
     while (1)
     {
+        int multiple_name = 0;
         ssize_t bytes_read = read(STDIN_FILENO, input, MAX_INPUT_LENGTH);
         if (bytes_read == -1)
         {
@@ -31,15 +32,30 @@ int main()
         {
             break; // End of input
         }
-
         input[bytes_read] = '\0'; // Null terminate the string
 
         // Parse input
         char *command = strtok(input, " \n"); // Extract first word as command
         char *arg1 = strtok(NULL, " \n");     // Extract first argument
-        char *arg2 = strtok(NULL, " \n");     // Extract second argument
-        char *arg3 = strtok(NULL, " \n");     // Extract third argument
-        char *file = strtok(NULL, "\"\n");    // Extract fourth argument
+
+        if (arg1 && arg1[0] == '"' && (strcmp(command, "addStudentGrade") == 0 || strcmp(command, "searchStudent") == 0))
+        {
+            char *read;
+            // If first character is a quote, extract until the next quote
+            read = strtok(NULL, "\"\n");
+            // Concatenate first_char and arg1
+            char concatenated_arg1[MAX_INPUT_LENGTH];
+            strcpy(concatenated_arg1, arg1);
+            strcat(concatenated_arg1, " ");
+            strcat(concatenated_arg1, read);
+            strcpy(arg1, concatenated_arg1);
+            multiple_name = 1;
+        }
+
+        char *arg2 = strtok(NULL, " \n"); // Extract second argument
+        char *arg3 = strtok(NULL, " \n"); // Extract third argument
+        char *file = strtok(NULL, " \n");
+        char *arg4 = strtok(NULL, "\"\n");
 
         if (arg1 != NULL)
         {
@@ -104,11 +120,47 @@ int main()
             }
             else if (pid == 0)
             {
+                if (strcmp(command, "gtuStudentGrades") == 0 && arg1 == NULL)
+                {
+                    usage();
+                    exit(EXIT_SUCCESS);
+                }
+
                 if (strcmp(command, "addStudentGrade") == 0 && arg1 != NULL && arg2 != NULL && arg3 != NULL)
-                    addStudentGrade(file, arg1, arg2, arg3);
+                {
+                    if (multiple_name == 0)
+                    {
+                        char result[MAX_INPUT_LENGTH]; // Adjust the size according to your requirements
+                        strcpy(result, arg1);
+                        strcat(result, " ");
+                        strcat(result, arg2);
+                        strcpy(arg1, result);
+                        addStudentGrade(file, arg1, arg3);
+                    }
+
+                    else
+                    {
+                        addStudentGrade(arg3, arg1, arg2);
+                    }
+                }
 
                 else if (strcmp(command, "searchStudent") == 0 && arg1 != NULL && arg2 != NULL)
-                    searchStudent(arg1, arg2);
+                {
+                    if (multiple_name == 0)
+                    {
+                        char result[MAX_INPUT_LENGTH]; // Adjust the size according to your requirements
+                        strcpy(result, arg1);
+                        strcat(result, " ");
+                        strcat(result, arg2);
+                        strcpy(arg1, result);
+                        searchStudent(arg1, arg3);
+                    }
+
+                    else
+                    {
+                        searchStudent(arg1, arg2);
+                    }
+                }
 
                 else if (strcmp(command, "sortAll") == 0)
                     sortAll(arg1);

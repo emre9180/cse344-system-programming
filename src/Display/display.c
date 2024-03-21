@@ -62,23 +62,15 @@ void showAll(const char *filename, int numEntries, int pageNumber)
             if (printFlag == 1)
                 printf("Record %d: %s\n", ct, buffer);
 
-            // buffer[newline - buffer] = '\n';    // Restore newline character
             strcpy(buffer, newline + 1);        // Update buffer to start from the new newline pointer
             newline = strchr(buffer + 1, '\n'); // Find the next newline character
             ct++;
-
-            // for taking last string of the document. could be deleted
-            // if ((newline == NULL || *newline == '\0') && printFlag == 1)
-            // {
-            //     printf("Record %d: %s\n", ct, buffer);
-            //     break;
-            // }
-            // Print name, surname and grade
         }
 
         lseek(fd, newline - buffer + 1, SEEK_CUR); // Move the file pointer to the next line
         strcpy(buffer, "");                        // Clear the buffer
     }
+
     if (bytes_read == -1)
     {
         perror("read");

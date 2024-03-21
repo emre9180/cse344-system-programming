@@ -4,3 +4,225 @@
 [2024-03-21 01:26:42]: Successful command: exit
 [2024-03-21 11:29:49]: Successful command: Sort all students
 [2024-03-21 11:30:17]: Successful command: exit
+[2024-03-21 11:42:39]: Successful command: Sort all students
+[2024-03-21 11:43:51]: Successful command: Sort all students
+[2024-03-21 11:44:05]: Successful command: Sort all students
+[2024-03-21 11:44:13]: Error opening file: grades.yxy
+[2024-03-21 11:44:29]: Successful command: Sort all students
+[2024-03-21 11:50:33]: Successful command: Sort all students
+[2024-03-21 11:51:32]: Successful command: exit
+[2024-03-21 11:51:43]: Successful command: Sort all students
+[2024-03-21 11:58:03]: Successful command: search
+[2024-03-21 11:59:56]: Successful command: exit
+[2024-03-21 12:00:17]: Successful command: exit
+[2024-03-21 12:01:26]: Successful command: exit
+[2024-03-21 12:03:17]: Successful command: exit
+[2024-03-21 12:03:21]: Error opening file: (null)
+[2024-03-21 12:05:43]: Successful command: exit
+[2024-03-21 12:05:48]: Successful command: Sort all students
+[2024-03-21 12:08:01]: Successful command: exit
+[2024-03-21 12:09:07]: Successful command: exit
+[2024-03-21 12:10:27]: Successful command: exit
+[2024-03-21 12:10:47]: Successful command: Sort all students
+[2024-03-21 12:11:24]: Successful command: exit
+[2024-03-21 12:12:17]: Successful command: exit
+[2024-03-21 12:19:06]: Successful command: exit
+[2024-03-21 12:19:22]: Successful command: exit
+[2024-03-21 12:20:04]: Successful command: exit
+[2024-03-21 12:20:12]: Successful command: Sort all students
+[2024-03-21 12:20:46]: Successful command: exit
+[2024-03-21 12:20:52]: Successful command: Sort all students
+[2024-03-21 12:21:06]: Successful command: exit
+[2024-03-21 12:21:10]: Error opening file: grades.tzt
+[2024-03-21 12:21:15]: Error opening file: grades.tzt
+[2024-03-21 12:22:52]: Successful command: exit
+[2024-03-21 12:23:22]: Successful command: exit
+[2024-03-21 12:23:28]: Successful command: Sort all students
+[2024-03-21 12:26:31]: Successful command: exit
+[2024-03-21 12:26:37]: Successful command: Sort all students
+[2024-03-21 12:27:04]: Successful command: Sort all students
+[2024-03-21 12:27:40]: Successful command: exit
+[2024-03-21 12:27:46]: Successful command: Sort all students
+[2024-03-21 12:28:55]: Successful command: exit
+[2024-03-21 12:30:41]: Successful command: exit
+[2024-03-21 12:30:51]: Successful command: exit
+[2024-03-21 12:32:20]: Successful command: exit
+[2024-03-21 12:35:05]: Successful command: exit
+[2024-03-21 12:36:29]: Successful command: exit
+[2024-03-21 12:37:00]: Successful command: exit
+[2024-03-21 12:37:39]: Successful command: exit
+[2024-03-21 12:38:18]: Successful command: exit
+[2024-03-21 13:27:47]: Successful command: exit
+[2024-03-21 13:28:06]: Successful command: Sort all students
+[2024-03-21 13:29:15]: Successful command: exit
+[2024-03-21 13:29:51]: Successful command: Sort all students
+[2024-03-21 13:30:20]: Error opening file: (null)
+[2024-03-21 13:30:30]: Successful command: Sort all students
+[2024-03-21 13:31:07]: Successful command: exit
+[2024-03-21 13:31:14]: Successful command: Sort all students
+[2024-03-21 13:31:24]: Successful command: Sort all students
+[2024-03-21 13:31:29]: Successful command: Sort all students
+[2024-03-21 13:32:27]: Successful command: exit
+[2024-03-21 13:32:45]: Successful command: Sort all students
+[2024-03-21 13:33:19]: Successful command: exit
+[2024-03-21 13:35:30]: Successful command: exit
+[2024-03-21 13:35:37]: Successful command: Sort all students
+[2024-03-21 13:36:46]: Successful command: exit
+[2024-03-21 13:37:21]: Successful command: quit
+[2024-03-21 13:37:23]: Successful command: exit
+[2024-03-21 13:38:39]: Successful command: exit
+[2024-03-21 13:39:17]: Successful command: exit
+[2024-03-21 13:42:40]: Successful command: exit
+[2024-03-21 13:43:52]: Successful command: exit
+[2024-03-21 13:44:24]: Successful command: exit
+[2024-03-21 13:44:50]: Successful command: exit
+[2024-03-21 13:44:55]: Successful command: Sort all students
+[2024-03-21 13:45:02]: Successful command: Sort all students
+[2024-03-21 13:45:13]: Successful command: exit
+[2024-03-21 13:45:19]: Successful command: Sort all students
+[2024-03-21 13:45:24]: Successful command: exit
+[2024-03-21 13:45:30]: Error opening file: grade.txt
+[2024-03-21 13:45:30]: Error: Invalid command or arguments
+[2024-03-21 13:45:30]: Error: Invalid command or arguments
+[2024-03-21 13:45:36]: Error: Invalid command or arguments
+[2024-03-21 13:45:36]: Error: Invalid command or arguments
+[2024-03-21 13:45:36]: Error: Invalid command or arguments
+[2024-03-21 13:45:43]: Successful command: exit
+[2024-03-21 13:45:47]: Error: Invalid command or arguments
+[2024-03-21 13:45:49]: Error: Invalid command or arguments
+[2024-03-21 13:45:55]: Successful command: exit
+[2024-03-21 13:46:13]: Successful command: Sort all students
+[2024-03-21 13:47:01]: Successful command: exit
+[2024-03-21 13:47:48]: Successful command: exit
+[2024-03-21 13:48:10]: Successful command: exit
+[2024-03-21 13:48:17]: Error: Invalid command or arguments
+[2024-03-21 13:48:43]: Successful command: exit
+[2024-03-21 13:48:55]: Successful command: Sort all students
+[2024-03-21 13:49:58]: Successful command: exit
+[2024-03-21 13:50:21]: Successful command: exit
+[2024-03-21 13:50:45]: Successful command: exit
+[2024-03-21 13:51:09]: Error: Invalid command or arguments
+[2024-03-21 13:51:10]: Successful command: exit
+[2024-03-21 13:51:29]: Successful command: exit
+[2024-03-21 13:52:01]: Successful command: Sort all students
+[2024-03-21 13:52:32]: Successful command: exit
+[2024-03-21 13:54:15]: Successful command: exit
+[2024-03-21 13:55:52]: Successful command: Sort all students
+[2024-03-21 13:57:14]: Successful command: Sort all students
+[2024-03-21 13:58:29]: Successful command: exit
+[2024-03-21 14:10:40]: Error: Invalid command or arguments
+[2024-03-21 14:17:12]: Successful command: exit
+[2024-03-21 14:18:21]: Error: Invalid command or arguments
+[2024-03-21 14:19:33]: Successful command: exit
+[2024-03-21 14:19:43]: Error: Invalid command or arguments
+[2024-03-21 14:21:22]: Error opening file: ff emre.txt
+[2024-03-21 14:21:52]: Successful command: exit
+[2024-03-21 14:22:22]: Error opening file: ff
+[2024-03-21 14:27:19]: Successful command: exit
+[2024-03-21 14:27:37]: Error opening file: tarikemir
+[2024-03-21 14:32:24]: Successful command: exit
+[2024-03-21 14:32:49]: Error opening file: cb
+[2024-03-21 14:35:50]: Successful command: exit
+[2024-03-21 14:36:31]: Error opening file: greedy
+[2024-03-21 14:39:29]: Error: Invalid command or arguments
+[2024-03-21 14:39:32]: Successful command: exit
+[2024-03-21 14:39:46]: Error opening file: aysu
+[2024-03-21 14:40:22]: Successful command: exit
+[2024-03-21 14:40:33]: Successful command: exit
+[2024-03-21 14:40:46]: Error opening file: aysu
+[2024-03-21 14:41:09]: Successful command: exit
+[2024-03-21 14:41:19]: Error opening file: aysu
+[2024-03-21 14:42:37]: Successful command: search
+[2024-03-21 14:53:37]: Error: Invalid command or arguments
+[2024-03-21 14:53:38]: Error: Invalid command or arguments
+[2024-03-21 14:53:39]: Successful command: exit
+[2024-03-21 14:53:55]: Error: Invalid command or arguments
+[2024-03-21 15:00:19]: Error: Invalid command or arguments
+[2024-03-21 15:00:21]: Successful command: exit
+[2024-03-21 15:00:56]: Successful command: exit
+[2024-03-21 15:01:07]: Error opening file: (null)
+[2024-03-21 15:05:00]: Successful command: exit
+[2024-03-21 15:06:45]: Error: Invalid command or arguments
+[2024-03-21 15:08:01]: Successful command: exit
+[2024-03-21 15:08:09]: Error: Invalid command or arguments
+[2024-03-21 15:10:01]: Successful command: exit
+[2024-03-21 15:10:11]: Error opening file: (null)
+[2024-03-21 15:12:09]: Successful command: exit
+[2024-03-21 15:12:20]: Error opening file: (null)
+[2024-03-21 15:22:11]: Successful command: exit
+[2024-03-21 15:22:21]: Error: Invalid command or arguments
+[2024-03-21 15:24:55]: Successful command: exit
+[2024-03-21 15:25:37]: Error opening file: cc
+[2024-03-21 15:27:51]: Successful command: exit
+[2024-03-21 15:31:44]: Successful command: exit
+[2024-03-21 15:32:35]: Successful command: exit
+[2024-03-21 15:34:40]: Successful command: exit
+[2024-03-21 15:35:46]: Successful command: exit
+[2024-03-21 15:35:57]: Error: Invalid command or arguments
+[2024-03-21 15:36:39]: Error opening file: (null)
+[2024-03-21 15:39:36]: Error: Invalid command or arguments
+[2024-03-21 15:39:37]: Error: Invalid command or arguments
+[2024-03-21 15:39:38]: Successful command: exit
+[2024-03-21 15:40:23]: Error opening file: (null)
+[2024-03-21 15:40:51]: Successful command: exit
+[2024-03-21 15:41:00]: Error opening file: (null)
+[2024-03-21 15:43:06]: Successful command: exit
+[2024-03-21 15:43:14]: Error: Invalid command or arguments
+[2024-03-21 15:43:50]: Successful command: search
+[2024-03-21 15:44:04]: Successful command: search
+[2024-03-21 15:44:17]: Error opening file: (null)
+[2024-03-21 15:44:38]: Successful command: exit
+[2024-03-21 15:44:46]: Error opening file: (null)
+[2024-03-21 15:45:49]: Successful command: exit
+[2024-03-21 15:45:53]: Error: Invalid command or arguments
+[2024-03-21 15:45:55]: Successful command: exit
+[2024-03-21 15:46:05]: Successful command: search
+[2024-03-21 15:46:14]: Successful command: Sort all students
+[2024-03-21 15:47:06]: Error: Invalid command or arguments
+[2024-03-21 15:47:15]: Successful command: Sort all students
+[2024-03-21 15:47:46]: Successful command: exit
+[2024-03-21 15:48:06]: Error: Invalid command or arguments
+[2024-03-21 15:48:07]: Successful command: exit
+[2024-03-21 15:48:15]: Error: Invalid command or arguments
+[2024-03-21 15:48:16]: Error: Invalid command or arguments
+[2024-03-21 15:49:01]: Successful command: Sort all students
+[2024-03-21 15:49:34]: Successful command: exit
+[2024-03-21 15:49:40]: Successful command: Sort all students
+[2024-03-21 15:50:03]: Successful command: Sort all students
+[2024-03-21 15:52:00]: Successful command: exit
+[2024-03-21 15:52:35]: Successful command: exit
+[2024-03-21 15:52:40]: Successful command: Sort all students
+[2024-03-21 15:53:30]: Successful command: exit
+[2024-03-21 15:53:37]: Successful command: Sort all students
+[2024-03-21 16:01:19]: Successful command: Sort all students
+[2024-03-21 16:01:20]: Successful command: exit
+[2024-03-21 16:01:29]: Successful command: Print a page of students
+[2024-03-21 16:02:16]: Error: Invalid command or arguments
+[2024-03-21 16:03:19]: Successful command: exit
+[2024-03-21 16:03:40]: Successful command: Sort all students
+[2024-03-21 16:03:50]: Successful command: Print a page of students
+[2024-03-21 16:03:58]: Successful command: Print first 5 students
+[2024-03-21 16:05:02]: Successful command: search
+[2024-03-21 16:06:00]: Error: Invalid command or arguments
+[2024-03-21 16:06:01]: Successful command: exit
+[2024-03-21 16:12:17]: Successful command: exit
+[2024-03-21 16:31:07]: Successful command: exit
+[2024-03-21 16:31:30]: Successful command: exit
+[2024-03-21 16:32:02]: Successful command: exit
+[2024-03-21 16:32:12]: Error: Invalid command or arguments
+[2024-03-21 16:34:27]: Successful command: exit
+[2024-03-21 16:35:19]: Error: Invalid command or arguments
+[2024-03-21 16:35:33]: Successful command: search
+[2024-03-21 16:35:44]: Successful command: search
+[2024-03-21 16:36:03]: Successful command: search
+[2024-03-21 16:36:39]: Successful command: search
+[2024-03-21 16:36:47]: Successful command: Print a page of students
+[2024-03-21 16:36:53]: Successful command: Print a page of students
+[2024-03-21 16:36:59]: Successful command: Print first 5 students
+[2024-03-21 16:37:06]: Successful command: Print first 5 students
+[2024-03-21 16:37:16]: Successful command: Sort all students
+[2024-03-21 16:37:38]: Successful command: Sort all students
+[2024-03-21 16:38:08]: Successful command: Sort all students
+[2024-03-21 16:39:35]: Successful command: Sort all students
+[2024-03-21 16:39:50]: Error: Invalid command or arguments
+[2024-03-21 16:39:51]: Successful command: exit

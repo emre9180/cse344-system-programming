@@ -6,10 +6,16 @@
 #include "../Log/log.h"
 #define MAX_INPUT_LENGTH 100
 
-void addStudentGrade(const char *filename, const char *name, const char *surname, const char *grade)
+void addStudentGrade(const char *filename, const char *name, char *grade)
 {
-    printf("Adding student grade: %s, %s, %s\n", name, surname, grade);
-
+    printf("Adding student grade: %s, %s to file %s\n", name, grade, filename);
+    for (int i = 0; i < strlen(grade); i++)
+    {
+        if (islower(grade[i]))
+        {
+            grade[i] = toupper(grade[i]);
+        }
+    }
     int fd = open(filename, O_WRONLY | O_APPEND); // Open the file in write-only mode and append mode
     if (fd == -1)
     {
@@ -31,8 +37,8 @@ void addStudentGrade(const char *filename, const char *name, const char *surname
         exit(EXIT_FAILURE);
     }
 
-    snprintf(buffer, MAX_INPUT_LENGTH, "%s %s %s\n", name, surname, grade); // Format the name and grade as a string
-    ssize_t bytes_written = write(fd, buffer, strlen(buffer));              // Write the string to the file
+    snprintf(buffer, MAX_INPUT_LENGTH, "%s, %s\n", name, grade); // Format the name and grade as a string
+    ssize_t bytes_written = write(fd, buffer, strlen(buffer));   // Write the string to the file
     if (bytes_written == -1)
     {
         perror("write");
