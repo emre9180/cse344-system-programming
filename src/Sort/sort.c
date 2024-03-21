@@ -11,7 +11,6 @@
 // Function to sort all student grades
 LetterGrade findGrade(const char *grade)
 {
-    printf("Finding grade: %s\n", grade);
     // Compare the grade and return the corresponding enum value
     if (strcmp(grade, "AA") == 0)
         return GRADE_AA;
@@ -72,33 +71,30 @@ void sortAll(const char *filename)
     ssize_t bytes_read;
     char **lines = (char **)malloc(500 * sizeof(char *)); // Assuming a maximum of 100 lines
     int numLines = 0;
-    off_t total_bytes_read = 0; // Keep track of total bytes read from the file
+        off_t total_bytes_read = 0; // Keep track of total bytes read from the file
+
 
     while ((bytes_read = read(fd, buffer, 1024)) > 0)
     {
-        total_bytes_read += bytes_read;
+         total_bytes_read += bytes_read;
         char *newline = buffer;
         char *current = buffer; // Pointer to keep track of current position in buffer
 
         while (newline != NULL)
         {
             newline = strchr(newline, '\n'); // Find the newline character
-            if (newline == NULL)
-                break;       // Reached end of buffer
+            if (newline == NULL) break; // Reached end of buffer
             *newline = '\0'; // Replace newline with null terminator
 
             lines[numLines] = strdup(current); // Allocate memory and store the line in the array
             numLines++;
 
-            // buffer[newline - buffer] = '\n';    // Restore newline character
-            newline++;         // Move past the null terminator
+            newline++; // Move past the null terminator
             current = newline; // Update current pointer to point to the next line
         }
 
         lseek(fd, total_bytes_read, SEEK_SET);
-
-        // Clear the buffer
-        memset(buffer, 0, 1024); // Clear the buffer
+        memset(buffer, 0, 1024);                   // Clear the buffer
     }
 
     if (bytes_read == -1)

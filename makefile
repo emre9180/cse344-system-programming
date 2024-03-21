@@ -1,7 +1,7 @@
-CC = gcc-13
+CC = gcc
 CFLAGS = -Wall -Wextra -g
 
-all: main
+all: run
 
 main: main.o sort.o display.o addStudentGrade.o gtuStudentGrades.o searchStudent.o log.o
 	$(CC) $(CFLAGS) -o main main.o searchStudent.o sort.o display.o addStudentGrade.o gtuStudentGrades.o log.o
@@ -27,5 +27,8 @@ addStudentGrade.o: src/Add/addStudentGrade.c
 gtuStudentGrades.o: src/FileCreation/gtuStudentGrades.c
 	$(CC) $(CFLAGS) -c src/FileCreation/gtuStudentGrades.c
 
+run: main
+	./main
+
 clean:
-	rm -f main main.o searchStudent.o sort.o display.o addStudentGrade.o gtuStudentGrades.o log.o 
+	rm -f main main.o searchStudent.o sort.o display.o addStudentGrade.o gtuStudentGrades.o log.o log.txt

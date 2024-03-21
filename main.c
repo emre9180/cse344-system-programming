@@ -5,7 +5,7 @@
 #include <sys/types.h>
 #include <sys/uio.h>
 #include <fcntl.h>
-
+#include <sys/wait.h>
 #include "src/FileCreation/gtuStudentGrades.h"
 #include "src/Add/addStudentGrade.h"
 #include "src/Display/display.h"
@@ -15,21 +15,9 @@
 
 #define MAX_INPUT_LENGTH 100
 
-// Signal handler function
-void handle_sigint(int sig)
-{
-    printf("Ctrl+C signal received. Terminating...\n");
-    exit(EXIT_SUCCESS); // or exit(EXIT_FAILURE) depending on your requirements
-}
-
 int main()
 {
-    if (signal(SIGINT, handle_sigint) == SIG_ERR)
-    {
-        perror("Error setting up signal handler");
-        return EXIT_FAILURE;
-    }
-
+    printf("Welcome to GTU Student Management System\n");
     char input[MAX_INPUT_LENGTH];
     while (1)
     {
@@ -117,11 +105,6 @@ int main()
                     // Rest of the code...
                 }
             }
-            if (strcmp(command, "gtuStudentGrades") == 0 && arg1 != NULL)
-            {
-                gtuStudentGrades(arg1);
-                continue;
-            }
 
             pid_t pid = fork(); // Fork the process
             if (pid == -1)
@@ -132,10 +115,10 @@ int main()
             }
             else if (pid == 0)
             {
-                if (signal(SIGINT, handle_sigint) == SIG_ERR)
+                if (strcmp(command, "gtuStudentGrades") == 0 && arg1 != NULL)
                 {
-                    perror("Error setting up signal handler");
-                    return EXIT_FAILURE;
+                    gtuStudentGrades(arg1);
+                    continue;
                 }
 
                 if (strcmp(command, "gtuStudentGrades") == 0 && arg1 == NULL)
@@ -186,10 +169,10 @@ int main()
                 else if (strcmp(command, "showAll") == 0)
                     showAll(arg1, -1, -1);
 
-                else if (strcmp(command, "lstGrades") == 0)
+                else if (strcmp(command, "listGrades") == 0)
                     showAll(arg1, 5, -1);
 
-                else if (strcmp(command, "lstSome") == 0 && arg1 != NULL && arg2 != NULL && arg3 != NULL)
+                else if (strcmp(command, "listSome") == 0 && arg1 != NULL && arg2 != NULL && arg3 != NULL)
                 {
                     int numEntries;
                     int pageNumber;

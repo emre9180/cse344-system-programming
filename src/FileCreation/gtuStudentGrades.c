@@ -14,7 +14,6 @@ void gtuStudentGrades(const char *file)
     int fd = open(file, O_WRONLY | O_CREAT | O_EXCL, 0644); // Open the file in write-only mode, create if not exists, and fail if already exists
     if (fd == -1)
     {
-        // strcpy(filename, file);
         perror("open");
         char logMessage[100];
         sprintf(logMessage, "Error opening file: %s", file);
