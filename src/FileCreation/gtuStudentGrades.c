@@ -6,6 +6,7 @@
 #include <sys/uio.h>
 #include <fcntl.h>
 #include "gtuStudentGrades.h"
+#include <sys/wait.h>
 #include "../Log/log.h"
 
 void gtuStudentGrades(const char *file)

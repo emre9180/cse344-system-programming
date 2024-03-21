@@ -3,13 +3,14 @@
 #include <unistd.h>
 #include <fcntl.h>
 #include <string.h>
+#include <ctype.h>
 #include "../Log/log.h"
 #define MAX_INPUT_LENGTH 100
 
 void addStudentGrade(const char *filename, const char *name, char *grade)
 {
     printf("Adding student grade: %s, %s to file %s\n", name, grade, filename);
-    for (int i = 0; i < strlen(grade); i++)
+    for (size_t i = 0; i < strlen(grade); i++)
     {
         if (islower(grade[i]))
         {

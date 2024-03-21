@@ -15,8 +15,21 @@
 
 #define MAX_INPUT_LENGTH 100
 
+// Signal handler function
+void handle_sigint(int sig)
+{
+    printf("Ctrl+C signal received. Terminating...\n");
+    exit(EXIT_SUCCESS); // or exit(EXIT_FAILURE) depending on your requirements
+}
+
 int main()
 {
+    if (signal(SIGINT, handle_sigint) == SIG_ERR)
+    {
+        perror("Error setting up signal handler");
+        return EXIT_FAILURE;
+    }
+
     char input[MAX_INPUT_LENGTH];
     while (1)
     {
@@ -55,7 +68,6 @@ int main()
         char *arg2 = strtok(NULL, " \n"); // Extract second argument
         char *arg3 = strtok(NULL, " \n"); // Extract third argument
         char *file = strtok(NULL, " \n");
-        char *arg4 = strtok(NULL, "\"\n");
 
         if (arg1 != NULL)
         {
@@ -120,6 +132,12 @@ int main()
             }
             else if (pid == 0)
             {
+                if (signal(SIGINT, handle_sigint) == SIG_ERR)
+                {
+                    perror("Error setting up signal handler");
+                    return EXIT_FAILURE;
+                }
+
                 if (strcmp(command, "gtuStudentGrades") == 0 && arg1 == NULL)
                 {
                     usage();

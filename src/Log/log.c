@@ -25,7 +25,7 @@ void logToFile(const char *logString)
     else
     {
         // Child process
-        char filePath[] = "../cse344-system-programming/log.txt";
+        char filePath[] = "log.txt";
         int file = open(filePath, O_WRONLY | O_APPEND | O_CREAT, 0644);
         if (file == -1)
         {

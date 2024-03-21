@@ -71,35 +71,34 @@ void sortAll(const char *filename)
     char *buffer = (char *)malloc(1024 * sizeof(char));
     ssize_t bytes_read;
     char **lines = (char **)malloc(500 * sizeof(char *)); // Assuming a maximum of 100 lines
-    char *newline;
     int numLines = 0;
+    off_t total_bytes_read = 0; // Keep track of total bytes read from the file
 
     while ((bytes_read = read(fd, buffer, 1024)) > 0)
     {
-        newline = strchr(buffer, '\n'); // Find the newline character
+        total_bytes_read += bytes_read;
+        char *newline = buffer;
+        char *current = buffer; // Pointer to keep track of current position in buffer
 
         while (newline != NULL)
         {
+            newline = strchr(newline, '\n'); // Find the newline character
+            if (newline == NULL)
+                break;       // Reached end of buffer
             *newline = '\0'; // Replace newline with null terminator
 
-            lines[numLines] = strdup(buffer); // Allocate memory and store the line in the array
+            lines[numLines] = strdup(current); // Allocate memory and store the line in the array
             numLines++;
 
             // buffer[newline - buffer] = '\n';    // Restore newline character
-            strcpy(buffer, newline + 1);        // Update buffer to start from the new newline pointer
-            newline = strchr(buffer + 1, '\n'); // Find the next newline character
-
-            // for taking last string of the document. could be deleted
-            // if (newline == NULL || *newline == '\0')
-            // {
-            //     lines[numLines] = strdup(buffer);
-            //     numLines++;
-            //     break;
-            // }
+            newline++;         // Move past the null terminator
+            current = newline; // Update current pointer to point to the next line
         }
 
-        lseek(fd, newline - buffer + 1, SEEK_CUR); // Move the file pointer to the next line
-        strcpy(buffer, "");                        // Clear the buffer
+        lseek(fd, total_bytes_read, SEEK_SET);
+
+        // Clear the buffer
+        memset(buffer, 0, 1024); // Clear the buffer
     }
 
     if (bytes_read == -1)

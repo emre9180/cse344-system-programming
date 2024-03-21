@@ -7,6 +7,32 @@
 #include <fcntl.h>
 #include "../Log/log.h"
 
+char *toLowerCase(const char *str)
+{
+    int length = strlen(str);
+    char *lowercaseStr = (char *)malloc((length + 1) * sizeof(char)); // Allocate memory for lowercase string
+    if (lowercaseStr == NULL)
+    {
+        perror("malloc");
+        exit(EXIT_FAILURE);
+    }
+
+    for (int i = 0; i < length; i++)
+    {
+        if (str[i] >= 'A' && str[i] <= 'Z')
+        {
+            lowercaseStr[i] = str[i] + 32; // Convert uppercase to lowercase by adding 32
+        }
+        else
+        {
+            lowercaseStr[i] = str[i]; // Copy the character as it is
+        }
+    }
+    lowercaseStr[length] = '\0'; // Add null terminator at the end
+
+    return lowercaseStr;
+}
+
 void searchStudent(const char *target, const char *filename)
 {
     printf("Searching for student: %s in the file %s\n", target, filename);
@@ -33,31 +59,35 @@ void searchStudent(const char *target, const char *filename)
     }
 
     ssize_t bytes_read;
-    char *newline;
+    off_t total_bytes_read = 0; // Keep track of total bytes read from the file
 
     while ((bytes_read = read(fd, buffer, 1024)) > 0)
     {
-        newline = strchr(buffer, '\n'); // Find the newline character
+        total_bytes_read += bytes_read;
+        char *newline = buffer;
+        char *current = buffer; // Pointer to keep track of current position in buffer
 
         while (newline != NULL)
         {
-            *newline = '\0';                  // Replace newline with null terminator
-            char *name = strtok(buffer, ","); // Extract name
-            char *grade = strtok(NULL, ",");  // Extract grade
-            if (name != NULL && strcmp(name, target) == 0)
+            newline = strchr(newline, '\n'); // Find the newline character
+            if (newline == NULL)
+                break;       // Reached end of buffer
+            *newline = '\0'; // Replace newline with null terminator
+
+            char *name = strtok(current, ","); // Extract name
+            char *grade = strtok(NULL, ",");   // Extract grade
+            if (name != NULL && strcmp(toLowerCase(name), toLowerCase(target)) == 0)
             {
                 printf("The record has been found: Name: %s, Grade: %s\n", name, grade);
                 break;
             }
-            // buffer[newline - buffer] = '\n';    // Restore newline character
-            strcpy(buffer, newline + 1);        // Update buffer to start from the new newline pointer
-            newline = strchr(buffer + 1, '\n'); // Find the next newline character
+            newline++;         // Move past the null terminator
+            current = newline; // Update current pointer to point to the next line
 
             // for taking last string of the document. could be deleted
             if (newline == NULL || *newline == '\0')
             {
-                char *name = strtok(buffer, " ");  // Extract name
-                char *surname = strtok(NULL, " "); // Extract surname
+                char *name = strtok(current, " "); // Extract name
                 char *grade = strtok(NULL, " ");   // Extract grade
                 if (name != NULL && strcmp(name, target) == 0)
                 {
@@ -67,8 +97,10 @@ void searchStudent(const char *target, const char *filename)
             }
         }
 
-        lseek(fd, newline - buffer + 1, SEEK_CUR); // Move the file pointer to the next line
-        strcpy(buffer, "");                        // Clear the buffer
+        lseek(fd, total_bytes_read, SEEK_SET);
+
+        // Clear the buffer
+        memset(buffer, 0, 1024); // Clear the buffer
     }
 
     if (bytes_read == -1)

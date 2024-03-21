@@ -226,3 +226,8 @@
 [2024-03-21 16:39:35]: Successful command: Sort all students
 [2024-03-21 16:39:50]: Error: Invalid command or arguments
 [2024-03-21 16:39:51]: Successful command: exit
+[2024-03-21 22:12:31]: Successful command: search
+[2024-03-21 22:13:08]: Successful command: exit
+[2024-03-21 22:13:16]: Successful command: search
+[2024-03-21 22:13:26]: Error: Invalid command or arguments
+[2024-03-21 22:13:30]: Successful command: exit
