@@ -22,7 +22,7 @@ void gtuStudentGrades(const char *file)
     }
 
     // strcpy(filename, file);
-    printf("Filename set to: %s\n", file);
+    printf("File has been created successfuly %s: \n", file);
 
     close(fd); // Close the file
     char logMessage[100];

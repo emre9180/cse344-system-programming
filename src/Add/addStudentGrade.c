@@ -21,6 +21,7 @@ void addStudentGrade(const char *filename, const char *name, char *grade)
     if (fd == -1)
     {
         perror("open");
+        printf("There is no such file!\n");
         char logMessage[100];
         sprintf(logMessage, "Error opening file: %s", filename);
         logToFile(logMessage);

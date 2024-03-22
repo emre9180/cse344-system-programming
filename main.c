@@ -12,11 +12,20 @@
 #include "src/Search/searchStudent.h"
 #include "src/Sort/sort.h"
 #include "src/Log/log.h"
+#include <signal.h>
 
 #define MAX_INPUT_LENGTH 100
 
+void sigintHandler(int signum)
+{
+    printf("\n%d Ctrl-C received. Terminating the process.\n", signum);
+    logToFile("%d Ctrl-C received. Terminating the process");
+    exit(EXIT_SUCCESS);
+}
+
 int main()
 {
+    signal(SIGINT, sigintHandler);
     printf("Welcome to GTU Student Management System\n");
     char input[MAX_INPUT_LENGTH];
     while (1)
@@ -107,6 +116,7 @@ int main()
             }
 
             pid_t pid = fork(); // Fork the process
+
             if (pid == -1)
             {
                 perror("fork");
@@ -186,6 +196,13 @@ int main()
                         pageNumber = -1;
                     else
                         pageNumber = atoi(arg2);
+                    
+                    if(pageNumber < -1 || numEntries < -1)
+                    {
+                        printf("Invalid command or arguments. Number of entries and page number must be greater than -1.\n");
+                        logToFile("Error: Invalid command or arguments. Number of entries and page number must be greater than -1.");
+                        exit(EXIT_SUCCESS); // Exit child process (error code
+                    }
 
                     showAll(arg3, numEntries, pageNumber);
                 }

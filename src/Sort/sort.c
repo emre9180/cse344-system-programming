@@ -69,7 +69,7 @@ void sortAll(const char *filename)
     // Read the file and store the lines in a string array
     char *buffer = (char *)malloc(1024 * sizeof(char));
     ssize_t bytes_read;
-    char **lines = (char **)malloc(500 * sizeof(char *)); // Assuming a maximum of 100 lines
+    char **lines = (char **)malloc(1024 * sizeof(char *)); // Assuming a maximum of 100 lines
     int numLines = 0;
         off_t total_bytes_read = 0; // Keep track of total bytes read from the file
 
@@ -104,6 +104,10 @@ void sortAll(const char *filename)
         logToFile(logMessage);
         close(fd); // Close the file
         free(buffer);
+        for (int i = 0; i < numLines; i++)
+        {
+            free(lines[i]);
+        }
         free(lines);
         perror("read");
         exit(EXIT_FAILURE);

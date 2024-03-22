@@ -70,9 +70,7 @@ void showAll(const char *filename, int numEntries, int pageNumber)
         }
         
         // Move the file pointer to the next line
-                lseek(fd, total_bytes_read, SEEK_SET);
-
-
+        lseek(fd, total_bytes_read, SEEK_SET);
         // Clear the buffer
         memset(buffer, 0, 1024);
     }
@@ -97,7 +95,6 @@ void showAll(const char *filename, int numEntries, int pageNumber)
         char logMessage[100];
         sprintf(logMessage, "Error reading file: %s", filename);
         logToFile(logMessage);
-        free(buffer); // Free the allocated memory
         exit(EXIT_FAILURE);
     }
 
@@ -113,7 +110,5 @@ void showAll(const char *filename, int numEntries, int pageNumber)
         sprintf(logMessage, "Successful command: %s", "Print a page of students");
         logToFile(logMessage);
     }
-    close(fd);    // Close the file
-    free(buffer); // Free the allocated memory
     exit(EXIT_SUCCESS);
 }
