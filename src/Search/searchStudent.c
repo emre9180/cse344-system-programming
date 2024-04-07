@@ -1,4 +1,3 @@
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -6,64 +5,106 @@
 #include <sys/types.h>
 #include <sys/uio.h>
 #include <fcntl.h>
+#include "../Log/log.h"
 
-void searchStudent(const char *filename, const char *target)
+char* convertToLower(const char* str) {
+    char* result = (char*)malloc((strlen(str) + 1) * sizeof(char)); // Allocate memory for the result string
+    if (result == NULL) {
+        perror("malloc");
+        exit(EXIT_FAILURE);
+    }
+
+    strcpy(result, str); // Copy the original string to the result string
+
+    for (int i = 0; result[i] != '\0'; i++) {
+        if (result[i] >= 'A' && result[i] <= 'Z') {
+            result[i] += 32; // Convert uppercase character to lowercase
+        }
+    }
+
+    return result;
+}
+
+void searchStudent(const char *target, const char *filename)
 {
-    printf("Searching for student: %s\n", target);
-
+    printf("Searching for student: %s in the file %s\n", target, filename);
+    int found = 0;
     int fd = open(filename, O_RDONLY); // Open the file in read-only mode
     if (fd == -1)
     {
         perror("open");
-        return;
+        char logMessage[100];
+        sprintf(logMessage, "Error opening file: %s", filename);
+        logToFile(logMessage);
+        exit(EXIT_FAILURE);
     }
 
-    char buffer[1024];
-    ssize_t bytes_read;
-    char *newline;
-
-    while ((bytes_read = read(fd, buffer, sizeof(buffer))) > 0)
+    char *buffer = (char *)malloc(1024 * sizeof(char)); // Allocate memory for buffer
+    if (buffer == NULL)
     {
-        newline = strchr(buffer, '\n'); // Find the newline character
-        // printf("%s, buffer", buffer);
+        perror("malloc");
+        close(fd);
+        char logMessage[100];
+        sprintf(logMessage, "Error allocating memory for buffer");
+        logToFile(logMessage);
+        exit(EXIT_FAILURE);
+    }
+
+    ssize_t bytes_read;
+    off_t total_bytes_read = 0; // Keep track of total bytes read from the file
+
+    while ((bytes_read = read(fd, buffer, 1024)) > 0)
+    {
+        total_bytes_read += bytes_read;
+        char *newline = buffer;
+        char *current = buffer; // Pointer to keep track of current position in buffer
 
         while (newline != NULL)
         {
-            *newline = '\0';                   // Replace newline with null terminator
-            char *name = strtok(buffer, " ");  // Extract name
-            char *surname = strtok(NULL, " "); // Extract surname
-            char *grade = strtok(NULL, " ");   // Extract grade
-            if (name != NULL && strcmp(name, target) == 0)
+            newline = strchr(newline, '\n'); // Find the newline character
+            if (newline == NULL) break; // Reached end of buffer
+            *newline = '\0'; // Replace newline with null terminator
+                             
+            char *name = strtok(current, ","); // Extract name
+            char *grade = strtok(NULL, ",");  // Extract grade
+
+            char *name_lower = convertToLower(name);
+            char *target_lower = convertToLower(target);
+
+            if (name != NULL && strcmp(name_lower, target_lower) == 0)
             {
-                printf("The record has been found: Name: %s, Surname: %s, Grade: %s\n", name, surname, grade);
+                found = 1;
+                printf("The record has been found: Name: %s, Grade: %s\n", name, grade);
+                free(name_lower);
+                free(target_lower);
                 break;
             }
-            buffer[newline - buffer] = '\n';    // Restore newline character
-            strcpy(buffer, newline + 1);        // Update buffer to start from the new newline pointer
-            newline = strchr(buffer + 1, '\n'); // Find the next newline character
-
-            // for taking last string of the document. could be deleted
-            if (newline == NULL || *newline == '\0')
-            {
-                char *name = strtok(buffer, " ");  // Extract name
-                char *surname = strtok(NULL, " "); // Extract surname
-                char *grade = strtok(NULL, " ");   // Extract grade
-                if (name != NULL && strcmp(name, target) == 0)
-                {
-                    printf("The record has been found: Name: %s, Surname: %s, Grade: %s\n", name, surname, grade);
-                    break;
-                }
-            }
+            newline++; // Move past the null terminator
+            current = newline; // Update current pointer to point to the next line
         }
-
-        lseek(fd, newline - buffer + 1, SEEK_CUR); // Move the file pointer to the next line
-        strcpy(buffer, "");                        // Clear the buffer
+        lseek(fd, total_bytes_read, SEEK_SET);
+        // Clear the buffer
+        memset(buffer, 0, 1024); 
     }
 
     if (bytes_read == -1)
     {
         perror("read");
+        close(fd);
+        free(buffer); // Free the allocated memory
+        char logMessage[100];
+        sprintf(logMessage, "Error reading file: %s", filename);
+        logToFile(logMessage);
+        exit(EXIT_FAILURE);
     }
-
-    close(fd); // Close the file
+    if(found==0){
+        printf("The record has not been found\n");
+    }
+    
+    close(fd);    // Close the file
+    free(buffer); // Free the allocated memory
+    char logMessage[100];
+    sprintf(logMessage, "Successful command: %s", "search");
+    logToFile(logMessage);
+    exit(EXIT_SUCCESS);
 }
