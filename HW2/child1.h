@@ -1,0 +1,1 @@
+void child1_function();
