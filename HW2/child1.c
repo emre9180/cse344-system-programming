@@ -8,50 +8,88 @@
 #include <unistd.h>
 #include "child1.h"
 
-void child1_function() {
-    // Open the first named pipe for reading
-    int fd1 = open("/home/emre/Desktop/ödev2/fifo1", O_RDONLY);
-    if (fd1 == -1) {
-        perror("Error opening fifo1 for reading");
-        exit(1); // Exiting because this is a fatal error for this child process
-    }
-    int numbers[10];
-    if (read(fd1, numbers, sizeof(numbers)) == -1) {
-        perror("Error reading from fifo1");
-        close(fd1);
+void child1_function(int fd1, int inputNumber, int fd2) {
+    int tempInt;
+    int numInts = 0;
+    ssize_t bytesRead;
+
+    int* numbers = (int*)malloc(inputNumber * sizeof(int));
+    if (numbers == NULL) 
+    {
+        perror("Error allocating memory for numbers");
         exit(1); // Exiting because this is a fatal error for this child process
     }
 
+    while ((bytesRead = read(fd1, &tempInt, sizeof(tempInt))) > 0) 
+    {
+        if (numInts < inputNumber) {
+            numbers[numInts] = tempInt;
+        } 
+
+        else 
+        {
+            fprintf(stderr, "Integer array capacity exceeded\n");
+            close(fd1);
+            free(numbers);
+            exit(EXIT_FAILURE);
+        }
+
+        numInts++;
+        if (numInts >= inputNumber) 
+        { // Check for \0 indicating end of integers
+            break;
+        }
+    }
+
+    if (bytesRead == -1) 
+    {
+        perror("Failed to read string from FIFO");
+        close(fd1);
+        free(numbers);
+        exit(EXIT_FAILURE);
+    }
+
     // Print the numbers
-    printf("Numbers: ");
-    for (int i = 0; i < 10; i++) {
+    printf("(from CHILD-1) Numbers: ");
+    for (int i = 0; i < inputNumber; i++) 
+    {
         printf("%d ", numbers[i]);
     }
     printf("\n");
 
-    // Close the first named pipe after reading
-    close(fd1);
-
     // Calculate the sum of the numbers
     int sum = 0;
-    for (int i = 0; i < 10; i++) {
+    for (int i = 0; i < inputNumber; i++) 
+    {
         sum += numbers[i];
     }
-    // Open the second named pipe for writing
-    int fd2 = open("/home/emre/Desktop/ödev2/fifo2", O_WRONLY);
-    if (fd2 == -1) {
-        perror("Error opening fifo2 for writing");
-        exit(1); // Exiting because this is a fatal error for this child process
-    }
+    free(numbers);
 
-    if (write(fd2, &sum, sizeof(sum)) == -1) {
+    ssize_t bytesWritten;
+
+    bytesWritten = write(fd2, &sum, sizeof(sum));
+    if (bytesWritten == -1) 
+    {
+        // An error occurred during the write operation
         perror("Error writing to fifo2");
         close(fd2);
         exit(1); // Exiting because this is a fatal error for this child process
+    } 
+    
+    else if (bytesWritten != sizeof(sum)) 
+    {
+        // Not all bytes were written
+        fprintf(stderr, "Incomplete write to fifo2\n");
+        close(fd2);
+        exit(1); // Exiting because this is a critical issue for this child process
     }
 
+    else
+        printf("(from CHILD-1) Sum: %d\n", sum);
+    
+
     // Close the second named pipe after writing
+    close(fd1);
     close(fd2);
-    sleep(4);
     exit(EXIT_SUCCESS);
 }
