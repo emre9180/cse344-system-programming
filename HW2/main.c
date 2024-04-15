@@ -15,19 +15,25 @@ int child_counter = 0;
 const int NUMBER_OF_CHILDREN = 2; // Total number of child processes
 
 void sigchld_handler(int signum) {
-    pid_t pid;
-    int status;
-    
-        while ((pid = waitpid(-1, &status, WNOHANG)) > 0) {
-            printf("SIGNUM %d is got. Reaped child PID %d exited normally with status: %d\n", signum, pid, WEXITSTATUS(status));
-            child_counter++;
-    }
+    if (signum == SIGCHLD) {
+        pid_t pid;
+        int status;
 
-    if (child_counter >= NUMBER_OF_CHILDREN) {
-        // Cleanup code if necessary
-        printf("All child processes have terminated. Exiting...\n");
-        unlink("/tmp/fifo1");
-        unlink("/tmp/fifo2");
+        while ((pid = waitpid(-1, &status, WNOHANG)) > 0) {
+            printf("SIGCHLD received. Reaped child PID %d exited normally with status: %d\n", pid, WEXITSTATUS(status));
+            child_counter++;
+        }
+
+        if (child_counter >= NUMBER_OF_CHILDREN) {
+            printf("All child processes have terminated. Exiting...\n");
+            unlink("/tmp/eyhw1_fifo1");
+            unlink("/tmp/eyhw1_fifo2");
+            exit(0);
+        }
+    } else if (signum == SIGINT) {
+        printf("SIGINT caught, cleaning up FIFOs...\n");
+        unlink("/tmp/eyhw1_fifo1");
+        unlink("/tmp/eyhw1_fifo2");
         exit(0);
     }
 }
@@ -36,9 +42,9 @@ void setup_signal_handler() {
     struct sigaction sa;
     sa.sa_handler = sigchld_handler;
     sigemptyset(&sa.sa_mask);
-    //sa.sa_flags = SA_RESTART | SA_NOCLDSTOP;
+    sa.sa_flags = 0;
 
-    if (sigaction(SIGCHLD, &sa, NULL) == -1) {
+    if (sigaction(SIGCHLD, &sa, NULL) == -1 || sigaction(SIGINT, &sa, NULL) == -1) {
         perror("Error setting up sigaction");
         exit(1);
     }
@@ -46,7 +52,7 @@ void setup_signal_handler() {
 
 void create_named_pipes() {
     // Create named pipes (FIFOs) if they do not exist
-    const char* fifo_paths[2] = {"//tmp/fifo1", "//tmp/fifo2"};
+    const char* fifo_paths[2] = {"/tmp/eyhw1_fifo1", "/tmp/eyhw1_fifo2"};
     for (int i = 0; i < 2; i++) {
         if (access(fifo_paths[i], F_OK) == -1) {
             if (mkfifo(fifo_paths[i], S_IWUSR | S_IRUSR) == -1) {
@@ -61,7 +67,7 @@ void create_named_pipes() {
 int main(int argc, char *argv[]) {
     if (argc < 2) {
         // If there are not enough arguments provided, display an error message.
-        printf("Usage: %s <integer>\n", argv[0]);
+        printf("Be careful pls. Correct Usage of Command: %s <integer>\n", argv[0]);
         return 1;
     }
 
@@ -76,19 +82,21 @@ int main(int argc, char *argv[]) {
     if (child1_pid == -1) 
     {
         perror("Error forking child1");
+        unlink("/tmp/eyhw1_fifo1");
+        unlink("/tmp/eyhw1_fifo2");
         exit(1);
     } 
 
     else if (child1_pid == 0) 
     {
          // Open the second named pipe for writing
-        int fd2 = open("/tmp/fifo2", O_WRONLY);
+        int fd2 = open("/tmp/eyhw1_fifo2", O_WRONLY);
         if (fd2 == -1) {
             perror("Error opening fifo2 for writing");
             exit(1); // Exiting because this is a fatal error for this child process
         }
         // Open the first named pipe for reading
-        int fd1 = open("/tmp/fifo1", O_RDONLY);
+        int fd1 = open("/tmp/eyhw1_fifo1", O_RDONLY);
         if (fd1 == -1) {
             perror("Error opening fifo1 for reading");
             exit(1); // Exiting because this is a fatal error for this child process
@@ -104,10 +112,12 @@ int main(int argc, char *argv[]) {
         pid_t child2_pid = fork();
         if (child2_pid == -1) {
             perror("Error forking child2");
+            unlink("/tmp/eyhw1_fifo1");
+            unlink("/tmp/eyhw1_fifo2");
             exit(1);
         } else if (child2_pid == 0) {
             // Child process 2 logic
-            int fd2 = open("/tmp/fifo2", O_RDONLY);
+            int fd2 = open("/tmp/eyhw1_fifo2", O_RDONLY);
             if (fd2 == -1) {
                 perror("Error opening fifo2 for reading");
                 exit(1); // Exiting because this is a fatal error for this child process
@@ -120,18 +130,22 @@ int main(int argc, char *argv[]) {
         {
             // Parent process logic
             // Open fifo1 in write mode
-            int fifo1_fd = open("/tmp/fifo1", O_WRONLY);
+            int fifo1_fd = open("/tmp/eyhw1_fifo1", O_WRONLY);
             if (fifo1_fd == -1) 
             {
                 perror("Error opening fifo1");
+                unlink("/tmp/eyhw1_fifo1");
+                unlink("/tmp/eyhw1_fifo2");
                 exit(1);
             }
 
             // Open fifo2 in write mode
-            int fifo2_fd = open("/tmp/fifo2", O_WRONLY);
+            int fifo2_fd = open("/tmp/eyhw1_fifo2", O_WRONLY);
             if (fifo2_fd == -1) 
             {
                 perror("Error opening fifo1");
+                unlink("/tmp/eyhw1_fifo1");
+                unlink("/tmp/eyhw1_fifo2");
                 exit(1);
             }
 
@@ -139,6 +153,8 @@ int main(int argc, char *argv[]) {
             if (write(fifo2_fd, mult_string, strlen(mult_string) + 1) == -1) 
             {
                 perror("Error writing to fifo2");
+                unlink("/tmp/eyhw1_fifo1");
+                unlink("/tmp/eyhw1_fifo2");
                 exit(1);
             }
 
@@ -152,12 +168,16 @@ int main(int argc, char *argv[]) {
                 if (write(fifo1_fd, &random_number, sizeof(int)) == -1) 
                 {
                     perror("Error writing to fifo1");
+                    unlink("/tmp/eyhw1_fifo1");
+                    unlink("/tmp/eyhw1_fifo2");
                     exit(1);
                 }
 
                 if (write(fifo2_fd, &random_number, sizeof(int)) == -1) 
                 {
                     perror("Error writing to fifo2");
+                    unlink("/tmp/eyhw1_fifo1");
+                    unlink("/tmp/eyhw1_fifo2");
                     exit(1);
                 }
                 

@@ -101,6 +101,28 @@ void child2_function(int fd, int inputNumber)
         printf("(from CHILD-2) Sum result: %lf.3\n", result);
     }
 
+    else if(strcmp(str, "div") == 0)
+    {
+        double result = numbers[0];
+        for(int i = 1; i < numInts; i++)
+        {
+            result /= numbers[i];
+        }
+
+        printf("(from CHILD-2) Divison result: %lf.3\n", result);
+    }
+
+    else if(strcmp(str, "sub") == 0)
+    {
+        double result = numbers[0];
+        for(int i = 1; i < numInts; i++)
+        {
+            result -= numbers[i];
+        }
+
+        printf("(from CHILD-2) Subtraction result: %lf.3\n", result);
+    }
+
     else
     {
         printf("Invalid operation\n");
