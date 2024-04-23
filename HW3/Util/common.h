@@ -17,7 +17,7 @@
 #include <semaphore.h>
 #include <errno.h>
 #include "common.h"
-
+#include "../Sync/synch.h"
 
 #define MAX_CLIENTS 1
 
@@ -35,11 +35,14 @@
 
 
 
-typedef struct {
-    sem_t mutex;
-    sem_t empty;
-    sem_t full;
-} Semaphores;
+// typedef struct {
+//     sem_t mutex;
+//     sem_t empty;
+//     sem_t full;
+
+//     //Shared
+//     sem_t list_dir_mutex;
+// } Semaphores;
 
 struct request_header {
     pid_t pid;
@@ -53,14 +56,14 @@ struct response_header {
 // Function to create a named pipe
 void create_named_pipe(const char* server_fifo);
 
-// Function to initialize shared memory
-Semaphores *initialize_shared_memory();
+// // Function to initialize shared memory
+// Semaphores *initialize_shared_memory();
 
-// Function to cleanup shared memory
-void cleanup_shared_memory(Semaphores* sems);
+// // Function to cleanup shared memory
+void cleanup_shared_memory(struct dir_sync *dir_syncs);
 
 // Function to cleanup child processes
-void cleanup_child_processes(Semaphores* sems);
+void cleanup_child_processes(struct dir_sync *dir_syncs);
 
 // Function to open shared memory
 void open_shared_memory(int *shm_fd, void **shm_addr);
