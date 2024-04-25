@@ -19,6 +19,8 @@
 #include "common.h"
 #include "../Sync/synch.h"
 
+#define EOF_COMMAND "EOF_IS_REACHED_05319346629"
+
 #define MAX_CLIENTS 1
 
 #define SHM_NAME "/my_shared_memory"
@@ -32,6 +34,35 @@
 #define SERVER_FIFO_LEN 256
 
 #define CWD_SIZE 256
+
+typedef struct 
+{
+    char file [256];
+    int line_number;
+} readF_command;
+
+typedef struct 
+{
+    char file [256];
+    int line_number;
+    char string[256];
+} writeF_command;
+
+typedef struct 
+{
+    char file [256];
+} upload_command;
+
+typedef struct 
+{
+    char file [256];
+
+} download_command;
+
+typedef struct 
+{
+    char file [256];
+} arch_command;
 
 
 

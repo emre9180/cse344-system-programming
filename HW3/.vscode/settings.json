@@ -9,6 +9,7 @@
         "common.h": "c",
         "initializer_list": "c",
         "utility": "c",
-        "shared_mutex": "c"
+        "shared_mutex": "c",
+        "random": "c"
     }
 }
