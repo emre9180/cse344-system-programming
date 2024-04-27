@@ -67,37 +67,19 @@ void create_named_pipe(const char* server_fifo) {
 //     return sems;
 // }
 
-// // Function to cleanup shared memory
-void cleanup_shared_memory(struct dir_sync *dir_syncs) {
-    closeSafeDir(dir_syncs);
-    //TODO munmap(sems, SHM_SIZE);
-    shm_unlink(SHM_NAME);
-}
 
-// Function to cleanup child processes
-void cleanup_child_processes(struct dir_sync *dir_syncs) {
-    int status;
-    // const char *msg = "Cleanup child\n";
-    while (waitpid(-1, &status, WNOHANG) > 0) {
-        // write(STDOUT_FILENO, msg, strlen(msg));  // Using write for safety
-        sem_post(&dir_syncs->sems.empty);
-    }
-}
+//     // Open the existing shared memory object
+//     *shm_fd = shm_open(SHM_NAME, O_RDWR, 0666);
+//     if (*shm_fd == -1) {
+//         perror("shm_open");
+//         exit(EXIT_FAILURE);
+//     }
 
-// // Function to open shared memory
-void open_shared_memory(int *shm_fd, void **shm_addr) {
-    // Open the existing shared memory object
-    *shm_fd = shm_open(SHM_NAME, O_RDWR, 0666);
-    if (*shm_fd == -1) {
-        perror("shm_open");
-        exit(EXIT_FAILURE);
-    }
-
-    // Map the shared memory object
-    *shm_addr = mmap(0, SHM_SIZE, PROT_READ | PROT_WRITE, MAP_SHARED, *shm_fd, 0);
-    if (*shm_addr == MAP_FAILED) {
-        perror("mmap");
-        close(*shm_fd);
-        exit(EXIT_FAILURE);
-    }
-}
+//     // Map the shared memory object
+//     *shm_addr = mmap(0, SHM_SIZE, PROT_READ | PROT_WRITE, MAP_SHARED, *shm_fd, 0);
+//     if (*shm_addr == MAP_FAILED) {
+//         perror("mmap");
+//         close(*shm_fd);
+//         exit(EXIT_FAILURE);
+//     }
+// }

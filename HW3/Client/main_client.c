@@ -9,11 +9,14 @@
 
 #include "../Util/common.h"
 #include "../Util/client_info_queue.h"
+#include "client_command_operations.h"
 
 char server_req_fifo[256];
 char client_res_fifo[256];
 int fd_client_cmd = -1;
 int fd_client_res = -1;
+struct dir_sync *dir_syncs;
+
 
 int write_command_to_server_fifo(int fd_client_cmd, char *command)
 {
@@ -55,7 +58,9 @@ void cleanup()
 
 void sigint_handler(int signum)
 {
-    cleanup();
+    // Write to the terminal without printf
+    write(STDOUT_FILENO, "SIGINT received. Exiting...\n", 28);
+    handle_quit_command(&fd_client_cmd, &fd_client_res, "quit", cleanup);
     exit(EXIT_SUCCESS);
 }
 
@@ -177,351 +182,50 @@ void handle_user_input()
 
         if(strcmp(words[0], "list")==0)
         {
-            // Write the command to the server
-            printf("len: %d\n", strlen(words[0]));
-            if(!write_command_to_server_fifo(fd_client_cmd, words[0]))
-            {
-                printf("You cannot list at the time being!\n");
-                continue;
-            }
-            // Read the response from the server
-            ssize_t bytes_read_res = read(fd_client_res, response, sizeof(response));
-            if (bytes_read_res == -1)
-            {
-                perror("Failed to read response from server");
-                cleanup();
-                exit(EXIT_FAILURE);
-            }
-
-            // Print the response
-            if(strcmp(response, "Nothing has been found.")==0)
-            {
-                printf("Server directory is empty!\n");
-            }
-            else
-                printf("This is what server directory includes:\n%s\n", response);
-
+            handle_list_command(&fd_client_cmd, &fd_client_res, words, cleanup);
         }
 
         
         else if(strcmp(command, "quit")==0)
         {
-            // Write the command to the server
-            if(!write_command_to_server_fifo(fd_client_cmd, command))
-            {
-                printf("You cannot quit at the time being!\n");
-                continue;
-            }
-
-            int response;
-            ssize_t bytes_read_res = read(fd_client_res, &response, sizeof(int));
-            if (bytes_read_res == -1)
-            {
-                perror("Failed to read response from server");
-                cleanup();
-                exit(EXIT_FAILURE);
-            }
-
-            else if(response == 1)
-            {
-                cleanup();
-                printf("You are disconnected!\n");
-                exit(EXIT_SUCCESS);
-            }
-
-            else
-            {
-                printf("You cannot disconnect at the time being!\n");
-                continue;
-            }
+            handle_quit_command(&fd_client_cmd, &fd_client_res, command, cleanup);
         }
 
         else if(strcmp(command, "killServer")==0)
-        {   
-            printf("command: %s\n", command);
-            // Write the command to the server
-            if(!write_command_to_server_fifo(fd_client_cmd, command))
-            {
-                printf("You cannot kill the server at the time being!\n");
-                continue;
-            }
-            // Read the response from the server
-            int response;
-            ssize_t bytes_read_res = read(fd_client_res, &response, sizeof(int));
-            if (bytes_read_res == -1)
-            {
-                perror("Failed to read response from server");
-                cleanup();
-                exit(EXIT_FAILURE);
-            }
-
-            // Print the response
-            if(response==1)
-            {
-                cleanup();
-                printf("Server is killed!\n");
-                exit(EXIT_SUCCESS);
-            }
-
-            else
-            {
-                printf("You cannot kill the server at the time being!\n");
-                continue;
-            }
+        {
+            handle_killServer_command(&fd_client_cmd, &fd_client_res, command, cleanup);
         }
 
         else if(strcmp(command, "help")==0)
         {
-            printf("Commands:\n");
-            printf("list: List the files in the server directory\n");
-            printf("quit: Disconnect from the server\n");
-            printf("killServer: Kill the server\n");
-            printf("help: Display this help message\n");
+            handle_help_command();
         }
 
         else if(strcmp(command, "readF")==0)
         {
-            if(num_words < 2 || num_words > 3)
-            {
-                printf("Invalid number of arguments!\n");
-                continue;
-            }
-
-            readF_command readF;
-            if(num_words == 2)
-            {
-                strcpy(readF.file, words[1]);
-                readF.line_number = -1;
-            }
-            else
-            {
-                strcpy(readF.file, words[1]);
-                readF.line_number = atoi(words[2]);
-            }
-
-            // Write words array to the FIFO with spaces separated form
-            char fifo_message[256];
-            strcpy(fifo_message, words[0]);
-            for (int i = 1; i < num_words; i++) {
-                strcat(fifo_message, " ");
-                strcat(fifo_message, words[i]);
-            }
-            write(fd_client_cmd, fifo_message, strlen(fifo_message));
-                        
-
-            // Read the response from the server
-
-            // Read until the end of the file character
-
-            // Try to down the semaphore
-            // sem_wait(sem);
-
-                ssize_t bytes_read_res;
-            printf("hoohho");
-            while (1) {
-                    bytes_read_res = read(fd_client_res, response, sizeof(response) - 1); // Leave space for null terminator
-                if (bytes_read_res == -1) {
-                    perror("Failed to read response from server");
-                    cleanup();
-                    exit(EXIT_FAILURE);
-                } else if (bytes_read_res == 0) {
-                    // End of file or no more data
-                    break;
-                }
-                
-                response[bytes_read_res] = '\0'; // Null-terminate the string
-                printf("%s", response); // Print the response
-            }
-            
-            int garbage = 1;
-            int bytes_written = write(fd_client_cmd, &garbage, sizeof(int));
-            if (bytes_written == -1) {
-                perror("Failed to write to fd_client_cmd");
-                cleanup();
-                exit(EXIT_FAILURE);
-            }
-            printf("Successfully written %d bytes\n", bytes_written);
-            //Unlink the semaphore
-            // sem_unlink("readyToRead");
+            handle_readF_command(&fd_client_cmd, &fd_client_res, words, num_words, cleanup);
         }
 
         else if(strcmp(command, "writeF")==0)
         {
-            writeF_command writeF;
-            if(num_words <= 3 || num_words > 4)
-            {
-                printf("Invalid number of arguments!\n");
-                continue;
-            }
-
-            if(num_words==3)
-            {
-                
-                strcpy(writeF.file, words[1]);
-                //writeF.line_number = atoi(words[2]);
-                strcpy(writeF.string, words[2]);
-            }
-
-            else
-            {
-                strcpy(writeF.file, words[1]);
-                writeF.line_number = atoi(words[2]);
-                strcpy(writeF.string, words[3]);
-            }
-
-            
-
-            // Write the command to the server
-            if(!write_command_to_server_fifo(fd_client_cmd, command))
-            {
-                printf("You cannot write to the file at the time being!\n");
-                continue;
-            }
-
-
-            // Write the writeF parameters to the server
-            ssize_t bytes_written = write(fd_client_cmd, &writeF, sizeof(writeF));
-            if (bytes_written == -1)
-            {
-                perror("Failed to write command to server");
-                cleanup();
-                exit(EXIT_FAILURE);
-            }
-
-            // Read the response from the server
-            ssize_t bytes_read_res = read(fd_client_res, response, sizeof(response));
-            if (bytes_read_res == -1)
-            {
-                perror("Failed to read response from server");
-                cleanup();
-                exit(EXIT_FAILURE);
-            }
-
-            // Print the response
-            printf("%s\n", response);
+            handle_writeF_command(&fd_client_cmd, &fd_client_res, words, num_words, cleanup);
         }
 
-        else if(strcmp(command, "upload")==0)
+       else if(strcmp(command, "upload")==0)
         {
-            if(num_words != 2)
-            {
-                printf("Invalid number of arguments!\n");
-                continue;
-            }
-
-            upload_command upload;
-            strcpy(upload.file, words[1]);
-
-            // Write the command to the server
-            if(!write_command_to_server_fifo(fd_client_cmd, command))
-            {
-                printf("You cannot upload the file at the time being!\n");
-                continue;
-            }
-
-            // Write the upload parameters to the server
-            ssize_t bytes_written = write(fd_client_cmd, &upload, sizeof(upload));
-            if (bytes_written == -1)
-            {
-                perror("Failed to write command to server");
-                cleanup();
-                exit(EXIT_FAILURE);
-            }
-
-            // Read the response from the server
-            ssize_t bytes_read_res = read(fd_client_res, response, sizeof(response));
-            if (bytes_read_res == -1)
-            {
-                perror("Failed to read response from server");
-                cleanup();
-                exit(EXIT_FAILURE);
-            }
-
-            // Print the response
-            printf("%s\n", response);
-        }
+            handle_upload_command(&fd_client_cmd, &fd_client_res, words, num_words, cleanup, dir_syncs, server_req_fifo);
+        }   
 
         else if(strcmp(command, "download")==0)
         {
-            if(num_words != 2)
-            {
-                printf("Invalid number of arguments!\n");
-                continue;
-            }
-
-            download_command download;
-            strcpy(download.file, words[1]);
-
-            // Write the command to the server
-            if(!write_command_to_server_fifo(fd_client_cmd, command))
-            {
-                printf("You cannot download the file at the time being!\n");
-                continue;
-            }
-
-            // Write the download parameters to the server
-            ssize_t bytes_written = write(fd_client_cmd, &download, sizeof(download));
-            if (bytes_written == -1)
-            {
-                perror("Failed to write command to server");
-                cleanup();
-                exit(EXIT_FAILURE);
-            }
-
-            // Read the response from the server
-            ssize_t bytes_read_res = read(fd_client_res, response, sizeof(response));
-            if (bytes_read_res == -1)
-            {
-                perror("Failed to read response from server");
-                cleanup();
-                exit(EXIT_FAILURE);
-            }
-
-            // Print the response
-            printf("%s\n", response);
+            handle_download_command(&fd_client_cmd, &fd_client_res, words, num_words, cleanup);
         }
 
         else if(strcmp(command, "arch")==0)
         {
-            if(num_words != 2)
-            {
-                printf("Invalid number of arguments!\n");
-                continue;
-            }
-
-            arch_command arch;
-            strcpy(arch.file, words[1]);
-
-            // Write the command to the server
-            if(!write_command_to_server_fifo(fd_client_cmd, command))
-            {
-                printf("You cannot archive the file at the time being!\n");
-                continue;
-            }
-
-            // Write the arch parameters to the server
-            ssize_t bytes_written = write(fd_client_cmd, &arch, sizeof(arch));
-            if (bytes_written == -1)
-            {
-                perror("Failed to write command to server");
-                cleanup();
-                exit(EXIT_FAILURE);
-            }
-
-            // Read the response from the server
-            ssize_t bytes_read_res = read(fd_client_res, response, sizeof(response));
-            if (bytes_read_res == -1)
-            {
-                perror("Failed to read response from server");
-                cleanup();
-                exit(EXIT_FAILURE);
-            }
-
-            // Print the response
-            printf("%s\n", response);
+            handle_arch_command(&fd_client_cmd, &fd_client_res, words, num_words, cleanup, write_command_to_server_fifo);
         }
-
-        else
+                else
         {
             printf("Invalid command!\n");
         }
@@ -545,6 +249,17 @@ int main(int argc, char *argv[])
 
     printf("Waiting for connection...\n");
 
+    // Get the current directory
+    char dirname[256];
+    getcwd(dirname, sizeof(dirname));
+
+    dir_syncs = (struct dir_sync *)malloc(sizeof(struct dir_sync) * NUM_OF_DIR_FILE);
+
+    if (initSafeDir(dirname, dir_syncs) == -1)
+    {
+        exit(EXIT_FAILURE);
+    }
+
     // Set up signal handler for SIGINT (Ctrl+C) using sigaction
     struct sigaction sa;
     sa.sa_handler = sigint_handler;
@@ -560,7 +275,6 @@ int main(int argc, char *argv[])
     int server_pid = atoi(argv[2]);
     int child_pid = getpid();
 
-    // open_shared_memory(&shm_fd, &shm_addr);
     write_to_server_fifo(server_pid, child_pid);
     open_named_pipes();
     handle_client_response();

@@ -132,3 +132,17 @@ int closeSafeDir(struct dir_sync *sdir) {
     sdir->size = 0;
     return 0;
 }
+
+// Remove a safe file from the directory
+int *removeSafeFile(struct dir_sync *sdir, const char *fname) {
+    for (int i = 0; i < sdir->size; i++) {
+        if (strcmp(sdir->files[i].fname, fname) == 0) {
+            for (int j = i; j < sdir->size - 1; j++) {
+                sdir->files[j] = sdir->files[j + 1];
+            }
+            sdir->size--;
+            return 0;
+        }
+    }
+    return -1;
+}

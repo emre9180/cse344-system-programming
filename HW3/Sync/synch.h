@@ -1,3 +1,14 @@
+/**
+ * @file synch.h
+ * @brief Header file for synchronization primitives and data structures.
+ * 
+ * This file defines the synchronization primitives and data structures used for safe file operations.
+ * It includes the necessary headers and defines constants and structures.
+ * 
+ * @note This file is part of the synchronization module of the system programming project.
+ * 
+ */
+
 #ifndef SYNCH_H
 #define SYNCH_H
 
@@ -9,48 +20,164 @@
 #define FNAME_LEN 128
 #define NUM_OF_DIR_FILE 128
 
+/**
+ * @struct Semaphores
+ * @brief Structure to hold the semaphores used for synchronization.
+ * 
+ * This structure holds the semaphores used for synchronization in the system.
+ * It includes semaphores for mutex, empty, full, and list directory mutex.
+ */
 typedef struct {
-    sem_t mutex;
-    sem_t empty;
-    sem_t full;
-
-    //Shared
-    sem_t list_dir_mutex;
+    sem_t mutex;            /**< Semaphore for mutual exclusion */
+    sem_t empty;            /**< Semaphore for empty condition */
+    sem_t full;             /**< Semaphore for full condition */
+    sem_t list_dir_mutex;   /**< Semaphore for list directory mutex */
 } Semaphores;
 
+/**
+ * @struct file_sync
+ * @brief Structure to represent a safe file.
+ * 
+ * This structure represents a safe file in the directory.
+ * It includes the file name, reader count, writer count, and various semaphores for synchronization.
+ */
 struct file_sync {
-    char fname[FNAME_LEN]; // file name
-    int readerCount; // number of readers
-    int writerCount; // number of writers
-    sem_t readTry; // semaphore for readers trying to enter the critical region
-    sem_t rMutex; // semaphore for readers mutual exclusion
-    sem_t wMutex; // semaphore for writers mutual exclusion
-    sem_t rsc; // semaphore for readers synchronization
+    char fname[FNAME_LEN];  /**< File name */
+    int readerCount;        /**< Number of readers */
+    int writerCount;        /**< Number of writers */
+    sem_t readTry;          /**< Semaphore for readers trying to enter the critical region */
+    sem_t rMutex;           /**< Semaphore for readers mutual exclusion */
+    sem_t wMutex;           /**< Semaphore for writers mutual exclusion */
+    sem_t rsc;              /**< Semaphore for readers synchronization */
 };
 
+/**
+ * @struct dir_sync
+ * @brief Structure to represent a safe directory.
+ * 
+ * This structure represents a safe directory.
+ * It includes an array of safe files, semaphores for synchronization, and other metadata.
+ */
 struct dir_sync {
-    struct file_sync files[NUM_OF_DIR_FILE]; // array of safe files in the directory
-    Semaphores sems;
-    int size; // current number of files in the directory
-    int capacity; // maximum capacity of the directory
+    struct file_sync files[NUM_OF_DIR_FILE];   /**< Array of safe files in the directory */
+    Semaphores sems;                           /**< Semaphores for synchronization */
+    int size;                                  /**< Current number of files in the directory */
+    int capacity;                              /**< Maximum capacity of the directory */
 };
 
-int enterRegionReader(struct file_sync *sfile); // function for a reader to enter the critical region
+/**
+ * @brief Function for a reader to enter the critical region.
+ * 
+ * This function is used by a reader to enter the critical region.
+ * It acquires the necessary semaphores for synchronization.
+ * 
+ * @param sfile Pointer to the file_sync structure representing the safe file.
+ * @return 0 if successful, -1 if an error occurred.
+ */
+int enterRegionReader(struct file_sync *sfile);
 
-int exitRegionReader(struct file_sync *sfile); // function for a reader to exit the critical region
+/**
+ * @brief Function for a reader to exit the critical region.
+ * 
+ * This function is used by a reader to exit the critical region.
+ * It releases the acquired semaphores for synchronization.
+ * 
+ * @param sfile Pointer to the file_sync structure representing the safe file.
+ * @return 0 if successful, -1 if an error occurred.
+ */
+int exitRegionReader(struct file_sync *sfile);
 
-int enterRegionWriter(struct file_sync *sfile); // function for a writer to enter the critical region
+/**
+ * @brief Function for a writer to enter the critical region.
+ * 
+ * This function is used by a writer to enter the critical region.
+ * It acquires the necessary semaphores for synchronization.
+ * 
+ * @param sfile Pointer to the file_sync structure representing the safe file.
+ * @return 0 if successful, -1 if an error occurred.
+ */
+int enterRegionWriter(struct file_sync *sfile);
 
-int exitRegionWriter(struct file_sync *sfile); // function for a writer to exit the critical region
+/**
+ * @brief Function for a writer to exit the critical region.
+ * 
+ * This function is used by a writer to exit the critical region.
+ * It releases the acquired semaphores for synchronization.
+ * 
+ * @param sfile Pointer to the file_sync structure representing the safe file.
+ * @return 0 if successful, -1 if an error occurred.
+ */
+int exitRegionWriter(struct file_sync *sfile);
 
-int initSafeDir(const char *server_dir, struct dir_sync *sdir); // initialize the safe directory
+/**
+ * @brief Initialize the safe directory.
+ * 
+ * This function initializes the safe directory.
+ * It creates and initializes the necessary semaphores and sets the initial values for metadata.
+ * 
+ * @param server_dir The directory path for the safe directory.
+ * @param sdir Pointer to the dir_sync structure representing the safe directory.
+ * @return 0 if successful, -1 if an error occurred.
+ */
+int initSafeDir(const char *server_dir, struct dir_sync *sdir);
 
-int closeSafeDir(struct dir_sync *sdir); // close the safe directory
+/**
+ * @brief Close the safe directory.
+ * 
+ * This function closes the safe directory.
+ * It releases the acquired resources and destroys the semaphores.
+ * 
+ * @param sdir Pointer to the dir_sync structure representing the safe directory.
+ * @return 0 if successful, -1 if an error occurred.
+ */
+int closeSafeDir(struct dir_sync *sdir);
 
-struct file_sync *addSafeFile(struct dir_sync *sdir, const char *fname); // add a safe file to the directory
+/**
+ * @brief Add a safe file to the directory.
+ * 
+ * This function adds a safe file to the directory.
+ * It creates and initializes the necessary semaphores and updates the metadata.
+ * 
+ * @param sdir Pointer to the dir_sync structure representing the safe directory.
+ * @param fname The file name of the safe file.
+ * @return Pointer to the file_sync structure representing the added safe file, or NULL if an error occurred.
+ */
+struct file_sync *addSafeFile(struct dir_sync *sdir, const char *fname);
 
-int initSafeFile(struct file_sync *sfile, const char *fname); // initialize a safe file
+/**
+ * @brief Remove a safe file from the directory.
+ * 
+ * This function removes a safe file from the directory.
+ * It releases the acquired resources and updates the metadata.
+ * 
+ * @param sdir Pointer to the dir_sync structure representing the safe directory.
+ * @param fname The file name of the safe file to be removed.
+ * @return Pointer to the file_sync structure representing the removed safe file, or NULL if the file was not found.
+ */
+int *removeSafeFile(struct dir_sync *sdir, const char *fname);
 
-struct file_sync *getSafeFile(struct dir_sync *sdir, const char *file); // get a safe file from the directory
+/**
+ * @brief Initialize a safe file.
+ * 
+ * This function initializes a safe file.
+ * It creates and initializes the necessary semaphores and sets the initial values for metadata.
+ * 
+ * @param sfile Pointer to the file_sync structure representing the safe file.
+ * @param fname The file name of the safe file.
+ * @return 0 if successful, -1 if an error occurred.
+ */
+int initSafeFile(struct file_sync *sfile, const char *fname);
+
+/**
+ * @brief Get a safe file from the directory.
+ * 
+ * This function retrieves a safe file from the directory based on the file name.
+ * 
+ * @param sdir Pointer to the dir_sync structure representing the safe directory.
+ * @param file The file name of the safe file to retrieve.
+ * @return Pointer to the file_sync structure representing the retrieved safe file, or NULL if the file was not found.
+ */
+struct file_sync *getSafeFile(struct dir_sync *sdir, const char *file);
 
 #endif
+

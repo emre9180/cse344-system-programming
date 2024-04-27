@@ -1,7 +1,9 @@
 #include "../Util/common.h"
 #include "../Util/client_info_queue.h"
-#include <dirent.h>
 #include "../Sync/synch.h"
+#include "server_util.h"
+#include "command_operation.h"
+#include <dirent.h>
 
 // Function prototypes
 void handle_signal(int sig);
@@ -24,6 +26,7 @@ int main(int argc, char *argv[])
 
     char *dirname = argv[1];
     int max_clients = atoi(argv[2]);
+    int server_pid = getpid();
 
     //create_named_pipe(SERVER_FIFO);
 
@@ -87,6 +90,8 @@ void handle_signal(int sig)
         char server_fifo[256];
         sprintf(server_fifo, SERVER_FIFO, getpid());
         closeSafeDir(dir_syncs);
+
+        // Cloes and unlink server_fifo
         unlink(server_fifo);
         exit(0);
     }
@@ -221,272 +226,45 @@ void server_loop(const char *dirname, int max_clients)
                
                 printf("test");
                 ssize_t num_read = read(server_req_fd, command, sizeof(command));
-                printf("test, ommand %s\n", command);
+                printf("test, ommand %s and %d\n", command, num_read);
                 
                 // List the folders in the current dir and write them to the pipe client_res_fd
 
                 if (strcmp(command, "list") == 0)
-                {printf("test");
-                    enterRegionReader(getSafeFile(dir_syncs, "05319346629"));
-                    printf("lst command\n");
-                    ftruncate(client_res_fd, 0);
-                    // printf("dirname: %s\n", dirname);
-                    DIR *dir;
-                    struct dirent *ent;
-
-                    if ((dir = opendir(dirname)) != NULL) 
-                    {
-                        int hasEntry = 0; // Flag to check if there is any file or folder
-                        while ((ent = readdir(dir)) != NULL) {
-                            if (ent->d_type == DT_DIR || ent->d_type == DT_REG) {
-                                char *name = ent->d_name;
-                                // Exclude hidden files and directories
-                                if (name[0] != '.') {
-                                    printf("Entry name: %s\n", name);
-                                    write(client_res_fd, name, strlen(name));
-                                    write(client_res_fd, "\n", 1);
-                                    hasEntry = 1;
-                                }
-                            }
-                        }
-
-                        closedir(dir);
-
-                        // If there is no file or folder, clear the FIFO
-                        if (!hasEntry) {
-                            const char* error_message = "Nothing has been found.";
-                            if (write(client_res_fd, error_message, strlen(error_message)) == -1)
-                            {
-                                perror("Failed to write error message to client response FIFO");
-                                close(server_fd);
-                                close(client_res_fd);
-                                close(server_req_fd);
-                                exitRegionReader(getSafeFile(dir_syncs, "05319346629"));
-                                exit(EXIT_FAILURE);
-                            }
-                        }
-                    } 
-
-                    else
-                    {
-                        perror("Failed to open directory:");
-                        close(server_fd);
-                        close(client_res_fd);
-                        close(server_req_fd);
-                        exitRegionReader(getSafeFile(dir_syncs, "05319346629"));
-                        exit(EXIT_FAILURE);
-                    }
-                    
-                    exitRegionReader(getSafeFile(dir_syncs, "05319346629"));
+                {
+                    handle_list_command(command, dirname, &client_res_fd, server_fd, server_req_fd, dir_syncs, client_res_fifo);
                 }
 
-
                 else if(strcmp(command, "quit") == 0)
-                {
-                    int response = 1;
-                    ssize_t num_written = write(client_res_fd, &response, sizeof(response));
-                    if (num_written == -1)
-                    {
-                        perror("Failed to write to client response FIFO");
-                        close(server_fd);
-                        close(client_res_fd);
-                        exit(EXIT_FAILURE);
-                    }
-                    close(server_fd);
-                    close(client_res_fd);
-                    close(server_req_fd);
-                    printf("Client %d is disconnected!\n", cli_info.pid);
-                    exit(EXIT_SUCCESS);
+                {       
+                    handle_quit_command(client_res_fd, server_fd, server_req_fd, cli_info);
                 }
 
                 else if(strcmp(command, "killServer") == 0)
                 {
-                    int response = 1;
-                    ssize_t num_written = write(client_res_fd, &response, sizeof(int));
-                    if (num_written == -1)
-                    {
-                        perror("Failed to write to client response FIFO");
-                        close(server_fd);
-                        close(client_res_fd);
-                        exit(EXIT_FAILURE);
-                    }
-                    close(server_fd);
-                    close(client_res_fd);
-                    close(server_req_fd);
-                    printf("Server is killed!\n");
-                    // Send SIGTERM to the entire process group
-                    if (kill(-getpgid(0), SIGTERM) == -1) {
-                        perror("Failed to send SIGTERM to the process group");
-                        exit(EXIT_FAILURE);
-                    }
+                    handle_killServer_command(client_res_fd, server_fd, server_req_fd, dir_syncs, server_pid);
                 }
 
                 else if(strncmp(command, "readF", 5)==0)
                 {
-                    /* */
-                    // Parse the command into separate words
-                    char *words[4];
-                    int num_words = 0;
-                    char *token = strtok(command, " ");
-                    while (token != NULL && num_words < 4) {
-                        words[num_words] = token;
-                        num_words++;
-                        token = strtok(NULL, " ");
-                    }
-
-                
-                    readF_command readF;
-                    strcpy(readF.file,words[1]);
-                    if(num_words>2) readF.line_number = atoi(words[2]);
-                    else readF.line_number = -1;
-                    printf("File1: %s\n", readF.file);
-                    //Put \0 char to the end of the command
-                    // command[num_read] = '\0';
-                    // printf("Command: %s\n", command[0]);
-                    if (num_read == -1)
-                    {
-                        perror("Failed to read from server request FIFO");
-                        close(server_fd);
-                        close(client_res_fd);
-                        close(server_req_fd);
-                        exit(EXIT_FAILURE);
-                    }
-                    /* */
-
-                    // int response = 1;
-                    // ssize_t num_written = write(client_res_fd, &response, sizeof(response));
-                    printf("readf command\n");
-                    // readF_command readF;
-                    // ssize_t num_read = read(server_req_fd, &readF, sizeof(readF));
-                    // if (num_read == -1)
-                    // {
-                    //     perror("Failed to read from server request FIFO");
-                    //     close(server_fd);
-                    //     close(client_res_fd);
-                    //     close(server_req_fd);
-                    //     exit(EXIT_FAILURE);
-                    // }
-
-                    enterRegionReader(getSafeFile(dir_syncs, readF.file));
-
-                    // File name is the directory of server + file name
-                    char file_path[512];
-                    sprintf(file_path, "%s/%s", dirname, readF.file);
-
-                    FILE *file = fopen(file_path, "r");
-                    printf("File2: %s\n", file_path);
-                    if (file == NULL)
-                    {
-                        perror("Failed to open file");
-                        close(server_fd);
-                        close(client_res_fd);
-                        close(server_req_fd);
-                        exitRegionReader(getSafeFile(dir_syncs, readF.file));
-                        exit(EXIT_FAILURE);
-                    }
-
-                    // If the user wants a specific line
-                    if(readF.line_number!=-1)
-                    {
-                        printf("Line number: %d\n", readF.line_number);
-                        char line[256];
-                        int line_number = 0;
-                        while (fgets(line, sizeof(line), file) != NULL)
-                        {
-                            line_number++;
-                            if (line_number == readF.line_number)
-                            {
-                                break;
-                            }
-                        }
-
-                        if (line_number != readF.line_number)
-                        {
-                            const char *error_message = "Line number is out of range";
-                            if (write(client_res_fd, error_message, strlen(error_message)) == -1)
-                            {
-                                perror("Failed to write error message to client response FIFO");
-                                close(server_fd);
-                                close(client_res_fd);
-                                close(server_req_fd);
-                                exitRegionReader(getSafeFile(dir_syncs, readF.file));
-                                exit(EXIT_FAILURE);
-                            }
-                        }
-                        else
-                        {
-                            // OPen the named semaphore "readyToRead"
-                            // sem_t *sem = sem_open("readyToRead", O_CREAT, 0666, 0);
-
-                            if (write(client_res_fd, line, strlen(line)) == -1)
-                            {
-                                perror("Failed to write to client response FIFO");
-                                close(server_fd);
-                                close(client_res_fd);
-                                close(server_req_fd);
-                                exitRegionReader(getSafeFile(dir_syncs, readF.file));
-                                exit(EXIT_FAILURE);
-                            }
-                            printf("Writing is ok:");
-                            
-                            //Up the semaphore
-                            // sem_post(sem);
-                        }
-
-                        fclose(file);
-                        close(client_res_fd);
-                        client_res_fd = -1;
-                        exitRegionReader(getSafeFile(dir_syncs, readF.file));
-
-                        // read from fifo
-                        int garbage;
-                        ssize_t num_read = read(server_req_fd, &garbage, sizeof(int));
-                        printf("num_read: %zd\n", num_read);
-                         // if it is closed, open it: client_res_fd
-                        if (client_res_fd == -1)
-                        {
-                            printf("Client response FIFO is closed. Reopening...\n");
-                            client_res_fd = open(client_res_fifo, O_WRONLY);
-                            if (client_res_fd == -1)
-                            {
-                                perror("Failed to open client response FIFO");
-                                close(server_fd);
-                                close(client_res_fd);
-                                close(server_req_fd);
-                                exit(EXIT_FAILURE);
-                            }
-                        }
-
-                    }
-                    
-                    // If the user wants the whole file}
-                    else
-                    {
-                        printf("Whole file\n");
-                        char line[256];
-                        while (fgets(line, sizeof(line), file) != NULL)
-                        {
-                            if (write(client_res_fd, line, strlen(line)) == -1)
-                            {
-                                perror("Failed to write to client response FIFO");
-                                close(server_fd);
-                                close(client_res_fd);
-                                close(server_req_fd);
-                                exitRegionReader(getSafeFile(dir_syncs, readF.file));
-                                exit(EXIT_FAILURE);
-                            }
-                        }
-
-                        fclose(file);
-                        close(client_res_fd);
-                        client_res_fd = -1;
-                        exitRegionReader(getSafeFile(dir_syncs, readF.file));
-                    }
-                    
-
-                    printf("eof is reached\n");
+                    handle_readF_command(command, dirname, &client_res_fd, server_fd, server_req_fd, dir_syncs, client_res_fifo, num_read);
                 }
-            
+
+                else if(strncmp(command, "writeF", 6)==0)
+                {
+                    handle_writeF_command(command, dirname, &client_res_fd, server_fd, server_req_fd, dir_syncs, client_res_fifo, num_read);
+                }
+
+                else if(strncmp(command, "download", 8)==0)
+                {
+                    handle_download_command(command, dirname, &client_res_fd, server_fd, server_req_fd, dir_syncs, client_res_fifo, num_read);
+                }
+
+                else if(strncmp(command, "upload", 6)==0)
+                {
+                    handle_upload_command(command, dirname, &client_res_fd, server_fd, server_req_fd, dir_syncs, client_res_fifo, num_read);
+                }
+
                 else
                 {
                     printf("Invalid command\n");

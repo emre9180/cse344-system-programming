@@ -10,6 +10,12 @@
         "initializer_list": "c",
         "utility": "c",
         "shared_mutex": "c",
-        "random": "c"
+        "random": "c",
+        "command_operation.h": "c",
+        "synch.h": "c",
+        "*.tcc": "c",
+        "cstdlib": "c",
+        "*.inc": "c",
+        "client_command_operations.h": "c"
     }
 }
