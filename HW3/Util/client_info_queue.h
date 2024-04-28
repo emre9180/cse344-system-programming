@@ -7,7 +7,7 @@
 struct client_info
 {
     pid_t pid;
-    int wait;
+    int mode;
     char cwd[CWD_SIZE];
 };
 

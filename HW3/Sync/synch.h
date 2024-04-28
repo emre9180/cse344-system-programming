@@ -20,6 +20,8 @@
 #define FNAME_LEN 128
 #define NUM_OF_DIR_FILE 128
 
+#define UPLOAD_AND_LIST_SYNC_FILE "05319346629"
+
 /**
  * @struct Semaphores
  * @brief Structure to hold the semaphores used for synchronization.
@@ -64,6 +66,53 @@ struct dir_sync {
     int size;                                  /**< Current number of files in the directory */
     int capacity;                              /**< Maximum capacity of the directory */
 };
+
+/**
+ * @brief Put all files in the directory to the critical section.
+ * 
+ * This function puts all files in the directory to the critical section.
+ * It acquires the necessary semaphores for synchronization.
+ * 
+ * @param sdir Pointer to the dir_sync structure representing the safe directory.
+ * @return 0 if successful, -1 if an error occurred.
+ */
+int putAllFilesToCriticalSection(struct dir_sync *sdir);
+
+/**
+ * @brief Remove all files in the directory from the critical section.
+ * 
+ * This function removes all files in the directory from the critical section.
+ * It releases the acquired semaphores for synchronization.
+ * 
+ * @param sdir Pointer to the dir_sync structure representing the safe directory.
+ * @return 0 if successful, -1 if an error occurred.
+ */
+int removeAllFilesFromCriticalSection(struct dir_sync *sdir);
+
+/*
+    * @brief Put all files in the directory to the critical section except the specified file.
+    * 
+    * This function puts all files in the directory to the critical section except the specified file.
+    * It acquires the necessary semaphores for synchronization.
+    * 
+    * @param sdir Pointer to the dir_sync structure representing the safe directory.
+    * @param file The file name of the file to exclude from the critical section.
+    * @return 0 if successful, -1 if an error occurred.
+    
+*/
+int putAllFilesToCriticalSectionExcept(struct dir_sync *sdir, const char *file);
+
+/*
+* @brief Remove all files in the directory from the critical section except the specified file.
+*
+* This function removes all files in the directory from the critical section except the specified file.
+* It releases the acquired semaphores for synchronization.
+*
+* @param sdir Pointer to the dir_sync structure representing the safe directory.
+* @param file The file name of the file to exclude from the critical section.
+* @return 0 if successful, -1 if an error occurred.
+*/
+int removeAllFilesFromCriticalSectionExcept(struct dir_sync *sdir, const char *file);
 
 /**
  * @brief Function for a reader to enter the critical region.
@@ -117,9 +166,10 @@ int exitRegionWriter(struct file_sync *sfile);
  * 
  * @param server_dir The directory path for the safe directory.
  * @param sdir Pointer to the dir_sync structure representing the safe directory.
+ * @param max_clients The maximum number of clients that can access the directory.
  * @return 0 if successful, -1 if an error occurred.
  */
-int initSafeDir(const char *server_dir, struct dir_sync *sdir);
+int initSafeDir(const char *server_dir, struct dir_sync *sdir, int max_clients);
 
 /**
  * @brief Close the safe directory.
@@ -154,7 +204,7 @@ struct file_sync *addSafeFile(struct dir_sync *sdir, const char *fname);
  * @param fname The file name of the safe file to be removed.
  * @return Pointer to the file_sync structure representing the removed safe file, or NULL if the file was not found.
  */
-int *removeSafeFile(struct dir_sync *sdir, const char *fname);
+int removeSafeFile(struct dir_sync *sdir, const char *fname);
 
 /**
  * @brief Initialize a safe file.

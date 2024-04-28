@@ -5,7 +5,7 @@ CFLAGS = -Wall -Wextra -g
 LDFLAGS = -pthread -lrt
 
 # Source files
-SRCS = Client/main_client.c Server/main_server.c Util/client_info_queue.c Util/common.c Sync/synch.c Server/command_operation.c Server/server_util.c Client/client_command_operations.c
+SRCS = Client/main_client.c Server/main_server.c Util/client_info_queue.c Server/client_list.c Util/common.c Sync/synch.c Server/command_operation.c Server/server_util.c Client/client_command_operations.c
 
 # Object files
 OBJS = $(SRCS:.c=.o)
@@ -15,8 +15,8 @@ all: main_client main_server
 main_client: Client/main_client.o Util/client_info_queue.o Util/common.o Sync/synch.o Client/client_command_operations.o
 	$(CC) $(CFLAGS) -o main_c Client/main_client.o Util/client_info_queue.o Util/common.o Sync/synch.o Client/client_command_operations.o $(LDFLAGS)
 
-main_server: Server/main_server.o Util/client_info_queue.o Util/common.o Sync/synch.o Server/command_operation.o Server/server_util.o
-	$(CC) $(CFLAGS) -o main_s Server/main_server.o Util/client_info_queue.o Util/common.o Sync/synch.o Server/command_operation.o Server/server_util.o $(LDFLAGS)
+main_server: Server/main_server.o Util/client_info_queue.o Util/common.o Sync/synch.o Server/command_operation.o Server/server_util.o Server/client_list.o
+	$(CC) $(CFLAGS) -o main_s Server/main_server.o Util/client_info_queue.o Util/common.o Sync/synch.o Server/command_operation.o Server/client_list.o Server/server_util.o $(LDFLAGS)
 
 main_client.o: Client/main_client.c
 	$(CC) $(CFLAGS) -c Client/main_client.c
@@ -41,6 +41,9 @@ server_util.o: Server/server_util.c
 
 client_command_operations.o: Client/client_command_operations.c
 	$(CC) $(CFLAGS) -c Client/client_command_operations.c
+
+client_list.o: Server/client_list.c
+	$(CC) $(CFLAGS) -c Server/client_list.c
 
 clean:
 	rm -f main_c main_s $(OBJS)

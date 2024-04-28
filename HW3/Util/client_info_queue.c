@@ -11,21 +11,19 @@ void initialize_queue(struct queue *q) {
 }
 
 // Check if the queue is empty
-int is_queue_empty(struct queue *q)
-{
+int is_queue_empty(struct queue *q) {
     return q->count == 0;
 }
 
 // Check if the queue is full
-int is_queue_full(struct queue *q)
-{
+int is_queue_full(struct queue *q) {
     return q->count == QUEUE_SIZE;
 }
 
-
+// Enqueue an item into the queue
 void enqueue(struct queue *q, struct client_info item) {
     if (is_queue_full(q)) {
-        printf("Queue is full. Cannot enqueue more items.\n");
+        // printf("Queue is full. Cannot enqueue more items.\n");
         return;
     }
     q->data[q->rear] = item;  // Place the item in the queue at the current rear position.
@@ -33,10 +31,10 @@ void enqueue(struct queue *q, struct client_info item) {
     q->count++;
 }
 
-
+// Dequeue an item from the queue
 struct client_info dequeue(struct queue *q) {
     if (is_queue_empty(q)) {
-        printf("Queue is empty!\n");
+        // printf("Queue is empty!\n");
         struct client_info empty_client_info = { .pid = -1 };
         return empty_client_info;
     }
@@ -46,30 +44,23 @@ struct client_info dequeue(struct queue *q) {
     return item;
 }
 
-
 // Get the size of the queue
-int get_queue_size(struct queue *q)
-{
+int get_queue_size(struct queue *q) {
     return q->count;
 }
 
-
-//Print all elements in the queue
-void print_queue(struct queue *q)
-{
-    // printf("\n\nFUll queue:\n");
-    if (is_queue_empty(q))
-    {
-        printf("Queue is empty\n");
+// Print all elements in the queue
+void print_queue(struct queue *q) {
+    if (is_queue_empty(q)) {
+        // printf("Queue is empty\n");
         return;
     }
     int i = q->front;
-    for (int j = 0; j < q->count; j++)
-    {
+    for (int j = 0; j < q->count; j++) {
+        // Print client PID, CWD, and wait time
         // printf("Client PID: %d\n", q->data[i].pid);
         // printf("Client CWD: %s\n", q->data[i].cwd);
         // printf("Client wait: %d\n", q->data[i].wait);
         i = (i + 1) % QUEUE_SIZE;
-        // printf("\n\n");
     }
 }

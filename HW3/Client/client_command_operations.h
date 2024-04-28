@@ -108,7 +108,7 @@ void handle_writeF_command(int *fd_client_cmd, int *fd_client_res, char** words,
  * @param dir_syncs Pointer to the directory synchronization data structure.
  * @param server_req_fifo The name of the server request FIFO.
  */
-void handle_upload_command(int *fd_client_cmd, int *fd_client_res, char** words, int num_words, void (*cleanup)(), struct dir_sync* dir_syncs, const char* server_req_fifo);
+void handle_upload_command(int *fd_client_cmd, int *fd_client_res, char** words, int num_words, void (*cleanup)(), const char* server_req_fifo);
 
 /**
  * @brief Handles the download command received from the client.
@@ -137,6 +137,6 @@ void handle_download_command(int *fd_client_cmd, int *fd_client_res, char** word
  * @param cleanup Pointer to the cleanup function to be called after handling the command.
  * @param write_command_to_server_fifo Pointer to the function for writing a command to the server FIFO.
  */
-void handle_arch_command(int *fd_client_cmd, int *fd_client_res, char** words, int num_words, void (*cleanup)(), int (*write_command_to_server_fifo)(int, const char*));
+void handle_arch_command(int *fd_client_cmd, int *fd_client_res, char** words, int num_words, void (*cleanup)(), int (*write_command_to_server_fifo)(int, char*));
 
 #endif
