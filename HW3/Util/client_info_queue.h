@@ -19,6 +19,9 @@ struct queue
     int count;
 };
 
+// Checks if a PID is in the queue
+int is_in_queue(struct queue *q, pid_t pid);
+
 // Initializes the queue
 void initialize_queue(struct queue *q);
 
@@ -36,5 +39,8 @@ struct client_info dequeue(struct queue *q);
 
 // Returns the size of the queue
 int get_queue_size(struct queue *q);
+
+// Prints all elements in the queue
+void print_queue(struct queue *q);
 
 #endif

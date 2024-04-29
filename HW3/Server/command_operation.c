@@ -158,41 +158,68 @@ void handle_readF_command(char* command, const char* dirname, int *client_res_fd
 
 // Handles reading a specific line from a file.
 void handle_specific_line(FILE *file, readF_command readF, int *client_res_fd, int server_fd, int server_req_fd, struct dir_sync *dir_syncs, char* client_res_fifo) {
-    // printf("Line number: %d\n", readF.line_number);
-    char line[256]; // Buffer to store the line read from the file
+    char buffer[1024];  // Buffer for file reading
+    char line[256];     // Buffer to store the line read from the file
     int line_number = 0;
+    int file_fd = fileno(file);  // Get the file descriptor
+    ssize_t bytes_read;
+    off_t position = 0; // Track position for seek operations
 
     // Read each line from the file until the desired line number is reached
-    while (fgets(line, sizeof(line), file) != NULL)
+    while ((bytes_read = read(file_fd, buffer, sizeof(buffer) - 1)) > 0) 
     {
-        line_number++;
-        if (line_number == readF.line_number)
+        buffer[bytes_read] = '\0'; // Null terminate to handle like a string
+        char *line_start = buffer; // Pointer to track the start of each line in the buffer
+        char *next_line = strchr(line_start, '\n'); // Find the newline character
+
+        while (next_line != NULL) 
         {
-            break;
+            *next_line = '\0'; // Terminate the current line for processing
+            line_number++;
+            if (line_number == readF.line_number) {
+                strncpy(line, line_start, sizeof(line) - 1); // Copy the found line to 'line' buffer
+                line[sizeof(line) - 1] = '\0'; // Ensure null termination
+                break;
+            }
+            line_start = next_line + 1; // Move to the start of the next line
+            next_line = strchr(line_start, '\n'); // Find the next newline character
         }
+
+        if (line_number == readF.line_number) break; // Exit if the desired line is already found
+
+        // Handle any remaining part of the buffer if it doesn't end with a newline
+        if (*line_start && line_number != readF.line_number) 
+        {
+            ssize_t len = strlen(line_start);
+            if (len < (ssize_t)sizeof(line) - 1) 
+            {
+                strcpy(line, line_start);
+                line_number++;
+            }
+        }
+
+        position += bytes_read; // Update position to the amount of data read
+        lseek(file_fd, position, SEEK_SET); // Move the file pointer to the next chunk
     }
 
     // If the desired line number is out of range, send an error message to the client
-    if (line_number != readF.line_number)
+    if (line_number != readF.line_number) 
     {
         const char *error_message = "Line number is out of range";
-        if (write(*client_res_fd, error_message, strlen(error_message)) == -1)
-        {
+        if (write(*client_res_fd, error_message, strlen(error_message)) == -1) {
             perror("Failed to write error message to client response FIFO");
-            cleanup(server_fd, *client_res_fd, server_req_fd, dir_syncs);
             exitRegionReader(getSafeFile(dir_syncs, readF.file));
-            exit(EXIT_FAILURE);
+            cleanup(server_fd, *client_res_fd, server_req_fd, dir_syncs);
         }
-    }
-    else
+    } 
+
+    else 
     {
         // Write the line to the client response FIFO
-        if (write(*client_res_fd, line, strlen(line)) == -1)
-        {
+        if (write(*client_res_fd, line, strlen(line)) == -1) {
             perror("Failed to write to client response FIFO");
-            cleanup(server_fd, *client_res_fd, server_req_fd, dir_syncs);
             exitRegionReader(getSafeFile(dir_syncs, readF.file));
-            exit(EXIT_FAILURE);
+            cleanup(server_fd, *client_res_fd, server_req_fd, dir_syncs);
         }
     }
 
@@ -216,9 +243,7 @@ void handle_specific_line(FILE *file, readF_command readF, int *client_res_fd, i
         if (*client_res_fd == -1)
         {
             perror("Failed to open client response FIFO");
-            close(server_fd);
-            close(*client_res_fd);
-            close(server_req_fd);
+            cleanup(server_fd, *client_res_fd, server_req_fd, dir_syncs);
             exit(EXIT_FAILURE);
         }
     }
@@ -227,12 +252,12 @@ void handle_specific_line(FILE *file, readF_command readF, int *client_res_fd, i
 // Handles sending the entire contents of a file to the client.
 void handle_whole_file(FILE *file, readF_command readF, int *client_res_fd, int server_fd, int server_req_fd, struct dir_sync *dir_syncs, char* client_res_fifo) {
     // printf("Whole file\n");
-    char line[256]; // Buffer to store the line read from the file
+    char line[1024]; // Buffer to store the line read from the file
 
-    // Read each line from the file and send it to the client
-    while (fgets(line, sizeof(line), file) != NULL)
+    ssize_t num_read;
+    while ((num_read = read(fileno(file), line, sizeof(line))) > 0)
     {
-        if (write(*client_res_fd, line, strlen(line)) == -1)
+        if (write(*client_res_fd, line, num_read) == -1)
         {
             perror("Failed to write to client response FIFO");
             cleanup(server_fd, *client_res_fd, server_req_fd, dir_syncs);
@@ -248,7 +273,7 @@ void handle_whole_file(FILE *file, readF_command readF, int *client_res_fd, int 
 
     // Read from the server request FIFO to synchronize with the client
     int garbage;
-    ssize_t num_read = read(server_req_fd, &garbage, sizeof(int));
+    num_read = read(server_req_fd, &garbage, sizeof(int));
     if(num_read == -1) {
         perror("Failed to read from server request FIFO");
     }
@@ -365,12 +390,7 @@ void handle_writeF_command(char* command, char* dirname, int *client_res_fd, int
 
 // Handles writing a specific line to a file.
 void handle_specific_line_write(char *dirname, writeF_command writeF, int *client_res_fd, int server_fd, int server_req_fd, struct dir_sync *dir_syncs) {
-    // printf("Line number: %d\n", writeF.line_number);
-    char line[256]; // Buffer to store the line read from the file
-    int line_number = 0; // Counter to keep track of the line number
-    // long int file_position = 0; // Position in the file
     int successful = 0; // Flag to indicate if the write operation was successful
-
 
     // File name is the directory of server + file name
     char file_path[512];
@@ -402,27 +422,68 @@ void handle_specific_line_write(char *dirname, writeF_command writeF, int *clien
         exit(EXIT_FAILURE);
     }
     // printf("Line number: %d\n", writeF.line_number);
+    int source_fd = fileno(source_file);
+    int temp_fd = fileno(temp_file);
+    char buffer[1024]; // Buffer for file reading
+    int current_line = 1;
+    ssize_t bytes_read;
+    off_t position = 0; // Track position for seek operations
 
     // Step 3: Read from the Source File and Write to the Temporary File
-    while (fgets(line, sizeof(line), source_file) != NULL) {
-        if (ferror(source_file)) {
-            perror("Failed to read from source file");
-            fclose(source_file);
-            fclose(temp_file);
-            cleanup(server_fd, *client_res_fd, server_req_fd, dir_syncs);
-            exitRegionWriter(getSafeFile(dir_syncs, file_path));
-            exit(EXIT_FAILURE);
-        }
-        line_number++;
+    while ((bytes_read = read(source_fd, buffer, sizeof(buffer) - 1)) > 0) {
+        buffer[bytes_read] = '\0'; // Null terminate to handle like a string
+        char *line_start = buffer; // Pointer to track the start of each line in the buffer
+        char *next_line = strchr(line_start, '\n'); // Find the newline character
 
-        // Check if the current line is the line to be replaced
-        if (line_number == writeF.line_number) {
-            fputs(line, temp_file);
-            fputs(writeF.string, temp_file);
-            successful = 1;
-        } else {
-            fputs(line, temp_file);
+        while (next_line != NULL) 
+        {
+            *next_line = '\0'; // Terminate the current line for processing
+            if (current_line == writeF.line_number) {
+                successful = 1; // Set the success flag to true
+                // Write the new string before the original line if it's the target line
+                if (write(temp_fd, writeF.string, strlen(writeF.string)) == -1) {
+                    perror("Failed to write new line to temp file");
+                    cleanup(server_fd, *client_res_fd, server_req_fd, dir_syncs);
+                }
+            }
+
+            // Write the current line
+            if (write(temp_fd, line_start, strlen(line_start)) == -1 || write(temp_fd, "\n", 1) == -1) {
+                perror("Failed to write to temp file");
+                cleanup(server_fd, *client_res_fd, server_req_fd, dir_syncs);
+            }
+
+            line_start = next_line + 1; // Move to the start of the next line
+            next_line = strchr(line_start, '\n'); // Find the next newline character
+            current_line++;
         }
+
+        // Handle any remaining part of the buffer if it doesn't end with a newline
+        if (*line_start) {
+            ssize_t len = strlen(line_start);
+            successful = 1; // Set the success flag to true
+            if (current_line == writeF.line_number) {
+                if (write(temp_fd, writeF.string, strlen(writeF.string)) == -1) {
+                    perror("Failed to write new line to temp file");
+                    cleanup(server_fd, *client_res_fd, server_req_fd, dir_syncs);
+                }
+            }
+
+            if (write(temp_fd, line_start, len) == -1) {
+                perror("Failed to write to temp file");
+                cleanup(server_fd, *client_res_fd, server_req_fd, dir_syncs);
+            }
+            lseek(source_fd, position + (line_start - buffer), SEEK_SET); // Adjust position to reflect current pointer location
+        }
+
+        position += bytes_read; // Update position to the amount of data read
+        lseek(source_fd, position, SEEK_SET); // Move the file pointer to the next chunk
+    }
+
+    // Check for errors after reading loop
+    if (bytes_read == -1) {
+        perror("Failed to read from source file");
+        cleanup(server_fd, *client_res_fd, server_req_fd, dir_syncs);
     }
     // printf("Line number: %d\n", writeF.line_number);
 

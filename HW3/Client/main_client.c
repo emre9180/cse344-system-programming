@@ -300,6 +300,7 @@ void handle_user_input()
         // Clean the buffers
         memset(command, 0, sizeof(command));
         memset(response, 0, sizeof(response));
+        printf("\n");
     }
 }
 

@@ -19,6 +19,7 @@
         "client_command_operations.h": "c",
         "server_util.h": "c",
         "client_list.h": "c",
-        "dirent.h": "c"
+        "dirent.h": "c",
+        "condition_variable": "c"
     }
 }

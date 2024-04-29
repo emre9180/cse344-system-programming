@@ -9,7 +9,7 @@
 // Function prototypes
 void handle_signal(int sig);
 void setup_signal_handler();
-void server_loop(char *dirname);
+void server_loop(char *dirname, int max_clients);
 
 
 // Global variables
@@ -110,13 +110,30 @@ int main(int argc, char *argv[])
     setup_signal_handler();
 
     // Start the server loop
-    server_loop(dirname);
+    server_loop(dirname, max_clients);
 
     return 0;
 }
 
 
+int working_clients(struct client_info cli)
+{
+    int result = 0;
+    for(int i=0;i<get_client_list_size(list_clients);i++)
+    {
+        if(cli.pid!= -1 && get_client(list_clients, i)==cli.pid)
+        {
+            continue;
+        }
 
+        if(!is_in_queue(&client_queue, get_client(list_clients, i)))
+        {
+            result += 1;
+        }
+    }
+    // printf("Result: %d\n", result);
+    return result;
+}
 
 /**
  * Signal handler function to handle SIGINT and SIGCHLD signals.
@@ -175,7 +192,7 @@ void setup_signal_handler()
  * @param dirname The name of the directory to be created if it doesn't exist.
  * @param max_clients The maximum number of clients that can be connected simultaneously.
  */
-void server_loop(char *dirname)
+void server_loop(char *dirname, int max_clients)
 {
     char server_fifo[256];
     int server_pid = getpid();
@@ -206,6 +223,8 @@ void server_loop(char *dirname)
     {
         // Read client info from the server FIFO
         struct client_info cli_info; // Client info structure
+        cli_info.pid = -1; // Initialize the PID to -1
+
         ssize_t num_read = read(server_fd, &cli_info, sizeof(cli_info));
         if (num_read == -1)
         {
@@ -224,24 +243,29 @@ void server_loop(char *dirname)
             char log_message[256];
             sprintf(log_message, "Client %d is queued.\n", cli_info.pid);
             write_log_file(log_message, dir_syncs);
-            enqueue(&client_queue, cli_info);
-            add_client(list_clients, cli_info.pid);
+            if(cli_info.mode!=1)
+            {
+                enqueue(&client_queue, cli_info);
+                add_client(list_clients, cli_info.pid);
+            }
         }
-        
         // Check if the client queue is full
-        if (sem_trywait(&dir_syncs->sems.empty) != 0)
+        if (working_clients(cli_info) == max_clients)
         {
             char log_message[256];
-            sprintf(log_message, "Connection request %d is refused. Queue is full.\n", cli_info.pid);
-            write_log_file(log_message, dir_syncs);
-            printf("Connection request %d is refused. Queue is full. \n", cli_info.pid);
+            if(num_read!=0) 
+            {
+                sprintf(log_message, "Connection request %d is refused. Queue is full.\n", cli_info.pid);
+                write_log_file(log_message, dir_syncs);
+                printf("Connection request %d is refused. Queue is full. \n", cli_info.pid);
+            }
 
-            if(cli_info.mode==1)
+            if(cli_info.mode==1 && cli_info.pid != -1)
             {
                 char log_message[256];
                 sprintf(log_message, "Client %d is refused. Its mode is tryConnect and queue is full.\n", cli_info.pid);
-                write_log_file(log_message, dir_syncs);
-                dequeue(&client_queue);
+                printf("Client %d is refused. Its mode is tryConnect and queue is full.\n", cli_info.pid);
+                write_log_file(log_message, dir_syncs);                
                 char client_res_fifo[256]; // Client response FIFO
                 sprintf(client_res_fifo, CLIENT_RES_FIFO, cli_info.pid); // Create the client response FIFO
                 int client_res_fd = open(client_res_fifo, O_WRONLY); // Open the client response FIFO
@@ -263,7 +287,16 @@ void server_loop(char *dirname)
                 }
                 continue;
             }
-            sem_wait(&dir_syncs->sems.empty);
+            else
+            {
+                continue;
+            }
+        }
+
+        else if(cli_info.pid!=-1 && cli_info.mode==1)
+        {
+            enqueue(&client_queue, cli_info);
+            add_client(list_clients, cli_info.pid);
         }
 
         cli_info = dequeue(&client_queue);

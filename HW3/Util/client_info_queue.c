@@ -58,9 +58,21 @@ void print_queue(struct queue *q) {
     int i = q->front;
     for (int j = 0; j < q->count; j++) {
         // Print client PID, CWD, and wait time
-        // printf("Client PID: %d\n", q->data[i].pid);
-        // printf("Client CWD: %s\n", q->data[i].cwd);
-        // printf("Client wait: %d\n", q->data[i].wait);
+        printf("Client PID: %d\n", q->data[i].pid);
+        printf("Client CWD: %s\n", q->data[i].cwd);
+        printf("Client wait: %d\n", q->data[i].mode);
         i = (i + 1) % QUEUE_SIZE;
     }
+}
+
+// Check if a PID is in the queue
+int is_in_queue(struct queue *q, pid_t pid) {
+    int i = q->front;
+    for (int j = 0; j < q->count; j++) {
+        if (q->data[i].pid == pid) {
+            return 1;
+        }
+        i = (i + 1) % QUEUE_SIZE;
+    }
+    return 0;
 }

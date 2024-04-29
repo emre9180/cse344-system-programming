@@ -8,10 +8,11 @@ void handle_list_command(int *fd_client_cmd, int *fd_client_res, char** words, v
     if(!write_command_to_server_fifo(*fd_client_cmd, words[0]))
     {
         printf("You cannot list at the time being!\n");
+        free(files);
         return;
     }
 
-    
+    printf("Files in the server directory:\n");
     // Read the response from the server
     char response[256]; // Buffer to store the response
     ssize_t bytes_read_res;
@@ -21,6 +22,7 @@ void handle_list_command(int *fd_client_cmd, int *fd_client_res, char** words, v
         if (bytes_read_res == -1) {
             perror("Failed to read response from server");
             cleanup();
+            free(files);
             exit(EXIT_FAILURE);
         } else if (bytes_read_res == 0) {
             // End of file or no more data
@@ -44,6 +46,7 @@ void handle_list_command(int *fd_client_cmd, int *fd_client_res, char** words, v
     {
         perror("Failed to read response from server");
         cleanup();
+        free(files);
         exit(EXIT_FAILURE);
     }
 
@@ -53,6 +56,7 @@ void handle_list_command(int *fd_client_cmd, int *fd_client_res, char** words, v
     if (bytes_written == -1) {
         perror("Failed to write to *fd_client_cmd");
         cleanup();
+        free(files);
         exit(EXIT_FAILURE);
     }
     
@@ -92,6 +96,8 @@ void handle_list_command(int *fd_client_cmd, int *fd_client_res, char** words, v
         // new_words[1][strlen(new_words[1])-1] = '\0';
         // printf("%s\n", new_words[1]);
         // handle_download_command(fd_client_cmd, fd_client_res, new_words, 2, cleanup, arch_flag);
+        printf("\n");
+        free(files);
     }
     
 }
@@ -125,7 +131,7 @@ void handle_quit_command(int *fd_client_cmd, int *fd_client_res, char* command, 
     {
         // Server did not acknowledge the quit command
         cleanup();
-        printf("You are disconnected!\n");
+        printf("You are disconnected. Bye!\n");
     }
 }
 
@@ -181,6 +187,7 @@ void handle_readF_command(int *fd_client_cmd, int *fd_client_res, char** words, 
         return;
     }
 
+    printf("Read request received. Reading file...\nRead string:\n");
     // Create a readF_command struct
     readF_command readF;
     if(num_words == 2)
@@ -248,6 +255,7 @@ void handle_writeF_command(int *fd_client_cmd, int *fd_client_res, char** words,
         return;
     }
 
+    printf("Write request received. Writing to file...\n");
     // Create a writeF_command struct
     writeF_command writeF;
     if(num_words==3)
@@ -283,8 +291,8 @@ void handle_writeF_command(int *fd_client_cmd, int *fd_client_res, char** words,
         return;
     }
     
-    if(garbage != -1) printf("File has been changed successfuly!\n");
-    else printf("There is no such file on the server!\n");
+    if(garbage == 1) printf("File has been changed successfuly!\n");
+    else printf("Line number is not valid or there is no such file on the server!\n");
 }
 
 // Handle the upload command
@@ -295,6 +303,7 @@ void handle_upload_command(int *fd_client_cmd, int *fd_client_res, char** words,
         return;
     }
 
+    printf("File transfer request received. Beginning file transfer...\n");
     upload_command upload;
     strcpy(upload.file, words[1]);
 
@@ -338,13 +347,14 @@ void handle_upload_command(int *fd_client_cmd, int *fd_client_res, char** words,
         ssize_t bytes_written = write(*fd_client_cmd, buffer, bytes_read);
         if (bytes_written == -1) {
             perror("Failed to write to *fd_client_cmd");
+            fclose(file);
             cleanup();
             exit(EXIT_FAILURE);
         }
 
         total_bytes += bytes_written;
     }
-    
+    fclose(file);
     close(*fd_client_cmd);
     *fd_client_cmd = -1;
 
@@ -375,6 +385,7 @@ void handle_download_command(int *fd_client_cmd, int *fd_client_res, char** word
         return;
     }
 
+    printf("File transfer request received. Beginning file transfer...\n");
     char target_dir[256];
     // Get current dir
     getcwd(target_dir, sizeof(target_dir));
@@ -491,6 +502,7 @@ void handle_arch_command(int *fd_client_cmd, int *fd_client_res, char** words, i
         return;
     }
 
+    printf("Archive request received. Server files are being archived...\n");
     // Create an arch_command struct and copy the file name
     arch_command arch;
     strcpy(arch.file, words[1]);
@@ -519,5 +531,5 @@ void handle_arch_command(int *fd_client_cmd, int *fd_client_res, char** words, i
     }
 
     // Print the response
-    printf("Successfully archived the file.\n");
+    printf("Successfully archived the files in server directory.\n");
 }

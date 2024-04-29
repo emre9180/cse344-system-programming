@@ -61,6 +61,20 @@ void traverse_and_kill_children(struct client_list_wrapper *client_list);
 */
 void print_all_clients(struct client_list_wrapper *client_list);
 
+/**
+ * Get the client at the specified index.
+ * @param client_list The client list to get the client from.
+ * @param index The index of the client to get.
+ * @return The client at the specified index.
+*/
+int get_client(struct client_list_wrapper *client_list, int index);
 
+
+/**
+ * Get the size of the client list.
+ * @param client_list The client list to get the size of.
+ * @return The size of the client list.
+*/
+int get_client_list_size(struct client_list_wrapper *client_list);
 
 #endif

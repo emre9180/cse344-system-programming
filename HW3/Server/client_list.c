@@ -69,3 +69,13 @@ void traverse_and_kill_children(struct client_list_wrapper *client_list)
         kill(client_list->clients[i], SIGINT);
     }
 }
+
+int get_client(struct client_list_wrapper *client_list, int index)
+{
+    return client_list->clients[index];
+}
+
+int get_client_list_size(struct client_list_wrapper *client_list)
+{
+    return client_list->counter;
+}
