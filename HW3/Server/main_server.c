@@ -4,7 +4,6 @@
 #include "client_list.h"
 #include "server_util.h"
 #include "command_operation.h"
-
 #include <dirent.h>
 
 // Function prototypes
@@ -14,7 +13,6 @@ void server_loop(char *dirname);
 
 
 // Global variables
-char log_filename[256];
 struct dir_sync *dir_syncs = NULL;
 struct client_list_wrapper *list_clients = NULL;
 struct queue client_queue;
@@ -99,6 +97,12 @@ int main(int argc, char *argv[])
         exit(EXIT_FAILURE);
     }
 
+    addSafeFile(dir_syncs, LOG_FILENAME);
+
+    char log_message[256];
+    sprintf(log_message, "Server Started PID %d...\nWaiting for clients...\n", getpid());
+    write_log_file(log_message, dir_syncs);
+
     // Initialize the client list
     initialize_client_list(list_clients);
 
@@ -110,6 +114,8 @@ int main(int argc, char *argv[])
 
     return 0;
 }
+
+
 
 
 /**
@@ -215,6 +221,9 @@ void server_loop(char *dirname)
         else if (num_read != 0)
         {
             // Enqueue the client info into the client queue and add the client to the list of clients
+            char log_message[256];
+            sprintf(log_message, "Client %d is queued.\n", cli_info.pid);
+            write_log_file(log_message, dir_syncs);
             enqueue(&client_queue, cli_info);
             add_client(list_clients, cli_info.pid);
         }
@@ -222,9 +231,16 @@ void server_loop(char *dirname)
         // Check if the client queue is full
         if (sem_trywait(&dir_syncs->sems.empty) != 0)
         {
+            char log_message[256];
+            sprintf(log_message, "Connection request %d is refused. Queue is full.\n", cli_info.pid);
+            write_log_file(log_message, dir_syncs);
             printf("Connection request %d is refused. Queue is full. \n", cli_info.pid);
+
             if(cli_info.mode==1)
             {
+                char log_message[256];
+                sprintf(log_message, "Client %d is refused. Its mode is tryConnect and queue is full.\n", cli_info.pid);
+                write_log_file(log_message, dir_syncs);
                 dequeue(&client_queue);
                 char client_res_fifo[256]; // Client response FIFO
                 sprintf(client_res_fifo, CLIENT_RES_FIFO, cli_info.pid); // Create the client response FIFO
@@ -251,6 +267,9 @@ void server_loop(char *dirname)
         }
 
         cli_info = dequeue(&client_queue);
+        char log_message[256];
+        sprintf(log_message, "Client %d is dequeued and connected. It is ready for operations.\n", cli_info.pid);
+        write_log_file(log_message, dir_syncs);
 
         pid_t child_pid = fork();
         if (child_pid == -1)
@@ -293,10 +312,20 @@ void server_loop(char *dirname)
                 exit(EXIT_FAILURE);
             }
 
-            char command[256] = {0}; // Command buffer that will store the command received from the client
             while(1)
             {
-                ssize_t num_read = read(server_req_fd, command, sizeof(command)); // Read the command from the server request FIFO
+                char command[256] = {0}; // Command buffer that will store the command received from the client
+                ssize_t num_read = read(server_req_fd, command, sizeof(command) - 1);
+
+                // // print all command
+                // for(int i=0; i<num_read; i++)
+                // {
+                //     printf("%c - %d", command[i], command[i]);
+                // }
+
+                // Put \0 at the end of the command explicitly
+                command[num_read] = '\0';
+                // printf("Command: %s - %d\n", command, num_read);
                 if (num_read == -1)
                 {
                     perror("Failed to read from server request FIFO");
@@ -313,48 +342,74 @@ void server_loop(char *dirname)
                 // Handle different commands
                 if (strcmp(command, "list") == 0)
                 {
+                    sprintf(log_message, "Client %d requested list command.\n", cli_info.pid);
+                    write_log_file(log_message, dir_syncs);
                     handle_list_command(command, dirname, &client_res_fd, server_fd, server_req_fd, dir_syncs, client_res_fifo);
                 }
                 else if(strcmp(command, "quit") == 0)
-                {       
+                {   
+                    sprintf(log_message, "Client %d requested quit command.\n", cli_info.pid);
+                    write_log_file(log_message, dir_syncs);
                     handle_quit_command(client_res_fd, server_fd, server_req_fd, cli_info, list_clients, dir_syncs);
                 }
                 else if(strcmp(command, "killServer") == 0)
                 {
+                    sprintf(log_message, "Client %d requested killServer command.\n", cli_info.pid);
+                    write_log_file(log_message, dir_syncs);
                     handle_killServer_command(client_res_fd, server_fd, server_req_fd, dir_syncs, list_clients);
                 }
                 else if(strncmp(command, "readF", 5)==0)
                 {
+                    sprintf(log_message, "Client %d requested readF command.\n", cli_info.pid);
+                    write_log_file(log_message, dir_syncs);
                     handle_readF_command(command, dirname, &client_res_fd, server_fd, server_req_fd, dir_syncs, client_res_fifo);
                 }
                 else if(strncmp(command, "writeF", 6)==0)
                 {
+                    sprintf(log_message, "Client %d requested writeF command.\n", cli_info.pid);
+                    write_log_file(log_message, dir_syncs);
                     handle_writeF_command(command, dirname, &client_res_fd, server_fd, server_req_fd, dir_syncs);
                 }
                 else if(strncmp(command, "download", 8)==0)
                 {
+                    sprintf(log_message, "Client %d requested download command.\n", cli_info.pid);
+                    write_log_file(log_message, dir_syncs);
                     handle_download_command(command, dirname, &client_res_fd, server_fd, server_req_fd, dir_syncs, client_res_fifo);
                 }
                 else if(strncmp(command, "upload", 6)==0)
                 {
+                    sprintf(log_message, "Client %d requested upload command.\n", cli_info.pid);
+                    write_log_file(log_message, dir_syncs);
                     handle_upload_command(command, dirname, &client_res_fd, server_fd, server_req_fd, dir_syncs);
                 }
                 else if(strncmp(command, "archServer", 10)==0)
                 {
+                    sprintf(log_message, "Client %d requested archServer command.\n", cli_info.pid);
+                    write_log_file(log_message, dir_syncs);
                     handle_archive_command(command, dirname, &client_res_fd, server_fd, server_req_fd, dir_syncs);
                 }
                 else if(strncmp(command, "help", 4)==0)
                 {
+                    sprintf(log_message, "Client %d requested help command.\n", cli_info.pid);
+                    write_log_file(log_message, dir_syncs);
                     handle_help_command(client_res_fd, server_fd, server_req_fd, dir_syncs);
+                }
+                else if(strcmp(command, "download_all")==0)
+                {
+                    sprintf(log_message, "Client %d requested download_all command.\n", cli_info.pid);
+                    write_log_file(log_message, dir_syncs);
+                    handle_download_command(command, dirname, &client_res_fd, server_fd, server_req_fd, dir_syncs, client_res_fifo);
                 }
                 else
                 {
-                    printf("command: %s\n", command);
+                    sprintf(log_message, "Client %d requested invalid command.\n", cli_info.pid);
+                    write_log_file(log_message, dir_syncs);
                     printf("Invalid command\n");
                 }
 
                 // Clear the command buffer
                 memset(command, 0, sizeof(command));
+                fflush(stdout);
             }
         }
 

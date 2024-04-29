@@ -258,7 +258,7 @@ void handle_user_input()
         // Handle different commands based on the first word
         if(strcmp(words[0], "list")==0)
         {
-            handle_list_command(&fd_client_cmd, &fd_client_res, words, cleanup);
+            handle_list_command(&fd_client_cmd, &fd_client_res, words, cleanup, 0);
         }
         else if(strcmp(command, "quit")==0)
         {
@@ -286,7 +286,7 @@ void handle_user_input()
         }   
         else if(strcmp(command, "download")==0)
         {
-            handle_download_command(&fd_client_cmd, &fd_client_res, words, num_words, cleanup);
+            handle_download_command(&fd_client_cmd, &fd_client_res, words, num_words, cleanup, 0);
         }
         else if(strcmp(command, "archServer")==0)
         {

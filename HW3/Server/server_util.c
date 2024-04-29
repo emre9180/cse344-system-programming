@@ -1,4 +1,5 @@
 #include "server_util.h"
+#include "../Sync/synch.h"
 struct client_list *client_list;
 
 
@@ -79,4 +80,27 @@ void create_shared_memory(const char *shm_name, void **shm_ptr, int shm_size)
         perror("Error mapping shared memory segment");
         exit(EXIT_FAILURE);
     }
+}
+
+
+void write_log_file(char *message, struct dir_sync *sync_dir)
+{
+    time_t current_time;
+    char time_string[50];
+    struct tm *time_info;
+
+    time(&current_time);
+    time_info = localtime(&current_time);
+    strftime(time_string, sizeof(time_string), "%Y-%m-%d %H:%M:%S", time_info);
+    enterRegionWriter(getSafeFile(sync_dir, LOG_FILENAME));
+    FILE *log_file = fopen(LOG_FILENAME, "a");
+    if (log_file == NULL)
+    {
+        perror("Failed to open log file");
+        exit(EXIT_FAILURE);
+    }
+
+    fprintf(log_file, "in here include time: [%s] %s", time_string, message);
+    fclose(log_file);
+    exitRegionWriter(getSafeFile(sync_dir, LOG_FILENAME));
 }

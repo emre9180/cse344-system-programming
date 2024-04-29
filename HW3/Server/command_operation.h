@@ -170,4 +170,5 @@ void handle_archive_command(char* command, const char* dirname, int *client_res_
 * @param client_res_fifo The name of the client response FIFO.
 */
 void handle_help_command(int client_res_fd, int server_fd, int server_req_fd, struct dir_sync *dir_syncs);
+
 #endif // COMMAND_OPERATION_H

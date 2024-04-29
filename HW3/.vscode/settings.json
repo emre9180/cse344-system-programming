@@ -18,6 +18,7 @@
         "*.inc": "c",
         "client_command_operations.h": "c",
         "server_util.h": "c",
-        "client_list.h": "c"
+        "client_list.h": "c",
+        "dirent.h": "c"
     }
 }

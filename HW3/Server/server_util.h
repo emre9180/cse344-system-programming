@@ -4,6 +4,7 @@
 #include "../Util/client_info_queue.h"
 #include "../Sync/synch.h"
 #include "../Util/common.h"
+#include <time.h>
 
 /**
  * Cleans up child processes spawned by the server.
@@ -29,4 +30,13 @@ void cleanup(int server_fd, int client_res_fd, int clienet_req_fd, struct dir_sy
  * @param shm_size The size of the shared memory segment.
  */
 void create_shared_memory(const char *shm_name, void **shm_ptr, int shm_size);
+
+/**
+ * Writes a message to the log file. 
+ * 
+ * @param LOG_FILENAME The name of the log file.
+ * @param message The message to be written to the log file.
+ */
+void write_log_file(char *message, struct dir_sync *dir_syncs);
+
 #endif

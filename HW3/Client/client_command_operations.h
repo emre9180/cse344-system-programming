@@ -30,7 +30,7 @@
  * @param words Array of strings containing the command and its arguments.
  * @param cleanup Pointer to the cleanup function to be called after handling the command.
  */
-void handle_list_command(int *fd_client_cmd, int *fd_client_res, char** words, void (*cleanup)());
+void handle_list_command(int *fd_client_cmd, int *fd_client_res, char** words, void (*cleanup)(), int arch_flag);
 
 /**
  * @brief Handles the quit command received from the client.
@@ -122,7 +122,7 @@ void handle_upload_command(int *fd_client_cmd, int *fd_client_res, char** words,
  * @param num_words Number of words in the words array.
  * @param cleanup Pointer to the cleanup function to be called after handling the command.
  */
-void handle_download_command(int *fd_client_cmd, int *fd_client_res, char** words, int num_words, void (*cleanup)());
+void handle_download_command(int *fd_client_cmd, int *fd_client_res, char** words, int num_words, void (*cleanup)(), int arch_flag);
 
 /**
  * @brief Handles the arch command received from the client.

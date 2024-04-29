@@ -97,6 +97,10 @@ void handle_list_command(const char* command, const char* dirname, int *client_r
             }
         }
     }
+
+    char log_message[512];
+    sprintf(log_message, "Client requested to list the files in the server directory.\n");
+    write_log_file(log_message, dir_syncs);
 }
 
 // Handles the "readF" command.
@@ -284,6 +288,9 @@ void handle_quit_command(int client_res_fd, int server_fd, int server_req_fd, st
     
     remove_client(client_list, cli_info.pid); // Remove the client from the client list
     printf("Client %d is disconnected!\n", cli_info.pid);
+    char log_message[512];
+    sprintf(log_message, "Client %d is disconnected.\n", cli_info.pid);
+    write_log_file(log_message, dir_syncs);
     exit(EXIT_SUCCESS);
 }
 
@@ -433,8 +440,10 @@ void handle_specific_line_write(char *dirname, writeF_command writeF, int *clien
         cleanup(server_fd, *client_res_fd, server_req_fd, dir_syncs);
         exit(EXIT_FAILURE);
     }
-    // printf("asdf: %d\n", asdf);
-    // printf("Line number: %d\n", writeF.line_number);
+    
+    char log_message[512];
+    sprintf(log_message, "Line %d of file %s has been written by the client.\n", writeF.line_number, writeF.file);
+    write_log_file(log_message, dir_syncs);
 }
 
 // Handles writing the entire contents of a file.
@@ -491,6 +500,10 @@ void handle_whole_file_write(const char *dirname, writeF_command writeF, int *cl
         exitRegionWriter(getSafeFile(dir_syncs, writeF.file));
         exit(EXIT_FAILURE);
     }
+
+    char log_message[512];
+    sprintf(log_message, "File %s has been written by the client.\n", writeF.file);
+    write_log_file(log_message, dir_syncs);
 }
 
 // Handles the "download" command.
@@ -499,15 +512,17 @@ void handle_download_command(char* command, const char* dirname, int *client_res
     char *words[4];
     int num_words = 0;
     char *token = strtok(command, " ");
-    while (token != NULL && num_words < 4) {
-        words[num_words] = token;
+    while (token != NULL && num_words < 2) {
+        words[num_words] = calloc(strlen(token) + 1, sizeof(char));
+        memset(words[num_words], '\0', strlen(token) + 1);
+        strcpy(words[num_words], token);
         num_words++;
         token = strtok(NULL, " ");
     }
 
     download_command download; // Structure to store the download command
     strcpy(download.file,words[1]); // Copy the file name to the structure
-    // printf("File1: %s\n", download.file);
+    // printf("File1: %s - %d\n", download.file, strlen(download.file));
 
     // printf("download command\n");
 
@@ -526,6 +541,9 @@ void handle_download_command(char* command, const char* dirname, int *client_res
     {
         perror("Failed to open file");
         const char *error_message = "NO_SUCH_FILE_05319346629";
+        char log_message[512];
+        sprintf(log_message, "Client requested file %s, but it does not exist.\n", download.file);
+        write_log_file(log_message, dir_syncs);
         if (write(*client_res_fd, error_message, strlen(error_message)) == -1)
         {
             perror("Failed to write error message to client response FIFO");
@@ -549,6 +567,9 @@ void handle_download_command(char* command, const char* dirname, int *client_res
             *client_res_fd = open(client_res_fifo, O_WRONLY);
             if (*client_res_fd == -1)
             {
+                for(int i = 0; i < num_words; i++) {
+                    free(words[i]);
+                }
                 perror("Failed to open client response FIFO");
                 cleanup(server_fd, *client_res_fd, server_req_fd, dir_syncs);
                 exit(EXIT_FAILURE);
@@ -557,11 +578,16 @@ void handle_download_command(char* command, const char* dirname, int *client_res
         return;
     }
 
-    char line[256]; // Buffer to store the line read from the file
-    while (fgets(line, sizeof(line), file) != NULL)
+    char buffer[256]; // Buffer to store the data read from the file
+    ssize_t num_read;
+    ssize_t total_bytes = 0;
+    while ((num_read = read(fileno(file), buffer, sizeof(buffer))) > 0)
     {
-        if (write(*client_res_fd, line, strlen(line)) == -1)
+        if (total_bytes += write(*client_res_fd, buffer, num_read) == -1)
         {
+            for(int i = 0; i < num_words; i++) {
+                free(words[i]);
+            }
             perror("Failed to write to client response FIFO");
             cleanup(server_fd, *client_res_fd, server_req_fd, dir_syncs);
             exitRegionReader(getSafeFile(dir_syncs, download.file));
@@ -575,7 +601,9 @@ void handle_download_command(char* command, const char* dirname, int *client_res
     exitRegionReader(getSafeFile(dir_syncs, download.file));
     /// Read from the server request FIFO to synchronize with the client
     int garbage;
-    ssize_t num_read = read(server_req_fd, &garbage, sizeof(int));
+    num_read = read(server_req_fd, &garbage, sizeof(int));
+    // printf("garbage readed: %d\n", garbage);
+    fflush(stdout);
     if(num_read == -1) {
         perror("Failed to read from server request FIFO");
     }
@@ -588,16 +616,24 @@ void handle_download_command(char* command, const char* dirname, int *client_res
         *client_res_fd = open(client_res_fifo, O_WRONLY);
         if (*client_res_fd == -1)
         {
+            for(int i = 0; i < num_words; i++) {
+                free(words[i]);
+            }
             perror("Failed to open client response FIFO");
             cleanup(server_fd, *client_res_fd, server_req_fd, dir_syncs);
             exit(EXIT_FAILURE);
         }
     }
-    // printf("eof is reached\n");
+    for(int i = 0; i < num_words; i++) {
+        free(words[i]);
+    }
+    char log_message[512];
+    sprintf(log_message, "File %s has been downloaded by the client. Total %ld bytes is downloaded.\n", download.file, total_bytes);
 }
 
 // Handles the "upload" command.
-void handle_upload_command(char* command, const char* dirname, int *client_res_fd, int server_fd, int server_req_fd, struct dir_sync *dir_syncs) {
+void handle_upload_command(char* command, const char* dirname, int *client_res_fd, int server_fd, int server_req_fd, struct dir_sync *dir_syncs) 
+{
     // Parse the command into separate words
     char *words[4];
     int num_words = 0;
@@ -645,9 +681,11 @@ void handle_upload_command(char* command, const char* dirname, int *client_res_f
 
     // printf("Whole file\n");
     char line[256]; // Buffer to store the line read from the file
+    ssize_t total_bytes = 0;
     while (1)
     {
         ssize_t num_read = read(server_req_fd, line, sizeof(line));
+        total_bytes += num_read;
         if (num_read == -1)
         {
             perror("Failed to read from server request FIFO");
@@ -681,6 +719,10 @@ void handle_upload_command(char* command, const char* dirname, int *client_res_f
 
     exitRegionWriter(getSafeFile(dir_syncs, upload.file));
     exitRegionWriter(getSafeFile(dir_syncs, UPLOAD_AND_LIST_SYNC_FILE));
+
+    char log_message[512];
+    sprintf(log_message, "File %s has been uploaded by the client with %ld bytes\n", upload.file, total_bytes);
+    write_log_file(log_message, dir_syncs);
 }
 
 // Handles the "archive" command.
@@ -765,3 +807,15 @@ const char *help_message = "Commands:\n"
     }
 }
 
+
+/*
+* Returns string array of files in server directory
+* @param command The command string.
+* @param dirname The name of the directory to list.
+* @param client_res_fd The file descriptor for the client response FIFO.
+* @param server_fd The file descriptor for the server FIFO.
+* @param server_req_fd The file descriptor for the server request FIFO.
+* @param dir_syncs An array of dir_sync structures.
+* @param client_res_fifo The name of the client response FIFO.
+*/
+void get_files_list(const char* command, const char* dirname, int *client_res_fd, int server_fd, int server_req_fd, struct dir_sync *dir_syncs, char *client_res_fifo);

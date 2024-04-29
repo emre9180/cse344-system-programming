@@ -51,7 +51,6 @@ int removeAllFilesFromCriticalSectionExcept(struct dir_sync *sdir, const char *f
 
 // Enter the reading region
 int enterRegionReader(struct file_sync *sfile) {
-    fflush(stdout);
     sem_wait(&sfile->readTry);
     sem_wait(&sfile->rMutex);
     sfile->readerCount++;

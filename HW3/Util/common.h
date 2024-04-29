@@ -21,6 +21,7 @@
 #define EOF_COMMAND "EOF_IS_REACHED_05319346629"  // End-of-file command
 #define MAX_CLIENTS 1  // Maximum number of clients
 #define CWD_SIZE 256  // Size of current working directory
+#define LOG_FILENAME "log.txt"  // Log file name
 
 // Shared Memory
 #define SHM_NAME "/my_shared_memory"  // Shared memory name
