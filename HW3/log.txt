@@ -128,3 +128,174 @@ in here include time: [2024-05-01 03:00:39] Client 16405 tries to exit critical 
 in here include time: [2024-05-01 03:00:39] Client 16405 tries to exit critical section for the file 05319346629 for writing
 in here include time: [2024-05-01 03:00:39] File b(1).txt has been uploaded by the client with 13224212 bytes
 in here include time: [2024-05-01 03:00:44] Client 16404 requested killServer command.
+in here include time: [2024-05-01 03:08:13] Server Started PID 16826...
+Waiting for clients...
+in here include time: [2024-05-01 03:08:31] Client 16830 is queued.
+in here include time: [2024-05-01 03:08:31] Client 16830 is dequeued and connected. It is ready for operations.
+in here include time: [2024-05-01 13:20:24] Server Started PID 3695...
+Waiting for clients...
+in here include time: [2024-05-01 13:21:05] Client 4101 is queued.
+in here include time: [2024-05-01 13:21:05] Client 4101 is dequeued and connected. It is ready for operations.
+in here include time: [2024-05-01 13:21:05] Client 4100 is queued.
+in here include time: [2024-05-01 13:21:05] Client 4100 is dequeued and connected. It is ready for operations.
+in here include time: [2024-05-01 13:21:37] Server Started PID 4118...
+Waiting for clients...
+in here include time: [2024-05-01 13:22:05] Client 4124 is queued.
+in here include time: [2024-05-01 13:22:05] Client 4124 is dequeued and connected. It is ready for operations.
+in here include time: [2024-05-01 13:22:05] Client 4126 is queued.
+in here include time: [2024-05-01 13:22:05] Client 4126 is dequeued and connected. It is ready for operations.
+in here include time: [2024-05-01 13:22:05] Client 4125 is queued.
+in here include time: [2024-05-01 13:22:05] Connection request 4125 is refused. Queue is full.
+in here include time: [2024-05-01 13:25:37] Server Started PID 4172...
+Waiting for clients...
+in here include time: [2024-05-01 13:25:50] Client 4176 is queued.
+in here include time: [2024-05-01 13:25:50] Client 4176 is dequeued and connected. It is ready for operations.
+in here include time: [2024-05-01 13:25:50] Client 4175 is queued.
+in here include time: [2024-05-01 13:25:50] Client 4175 is dequeued and connected. It is ready for operations.
+in here include time: [2024-05-01 13:25:50] Client 4177 is queued.
+in here include time: [2024-05-01 13:25:50] Connection request 4177 is refused. Queue is full.
+in here include time: [2024-05-01 13:25:50] Client 4177 is refused. Its mode is tryConnect and queue is full.
+in here include time: [2024-05-01 13:28:22] Server Started PID 4213...
+Waiting for clients...
+in here include time: [2024-05-01 13:28:34] Client 4218 is queued.
+in here include time: [2024-05-01 13:28:34] Client 4218 is dequeued and connected. It is ready for operations.
+in here include time: [2024-05-01 13:28:34] Client 4220 is queued.
+in here include time: [2024-05-01 13:28:34] Client 4220 is dequeued and connected. It is ready for operations.
+in here include time: [2024-05-01 13:28:34] Client 4219 is queued.
+in here include time: [2024-05-01 13:28:34] Connection request 4219 is refused. Queue is full.
+in here include time: [2024-05-01 13:31:43] Client 4289 is queued.
+in here include time: [2024-05-01 13:31:43] Connection request 4289 is refused. Queue is full.
+in here include time: [2024-05-01 13:31:43] Client 4289 is refused. Its mode is tryConnect and queue is full.
+in here include time: [2024-05-01 13:32:05] Client 4296 is queued.
+in here include time: [2024-05-01 13:32:05] Connection request 4296 is refused. Queue is full.
+in here include time: [2024-05-01 13:32:05] Client 4296 is refused. Its mode is tryConnect and queue is full.
+in here include time: [2024-05-01 13:32:10] Client 4298 is queued.
+in here include time: [2024-05-01 13:32:10] Connection request 4298 is refused. Queue is full.
+in here include time: [2024-05-01 13:33:07] Server Started PID 4330...
+Waiting for clients...
+in here include time: [2024-05-01 13:33:19] Client 4334 is queued.
+in here include time: [2024-05-01 13:33:19] Client 4334 is dequeued and connected. It is ready for operations.
+in here include time: [2024-05-01 13:33:19] Client 4336 is queued.
+in here include time: [2024-05-01 13:33:19] Client 4336 is dequeued and connected. It is ready for operations.
+in here include time: [2024-05-01 13:33:19] Client 4335 is queued.
+in here include time: [2024-05-01 13:33:19] Connection request 4335 is refused. Queue is full.
+in here include time: [2024-05-01 13:54:08] Server Started PID 4563...
+Waiting for clients...
+in here include time: [2024-05-01 13:54:23] Client 4565 is queued.
+in here include time: [2024-05-01 13:54:23] Client 4565 is dequeued and connected. It is ready for operations.
+in here include time: [2024-05-01 13:54:23] Client 4564 is queued.
+in here include time: [2024-05-01 13:54:23] Client 4564 is dequeued and connected. It is ready for operations.
+in here include time: [2024-05-01 13:54:23] Client 4566 is queued.
+in here include time: [2024-05-01 13:54:23] Connection request 4566 is refused. Queue is full.
+in here include time: [2024-05-01 13:54:23] Client 4566 is refused. Its mode is tryConnect and queue is full.
+in here include time: [2024-05-01 13:54:46] Server Started PID 4592...
+Waiting for clients...
+in here include time: [2024-05-01 13:54:56] Client 4594 is queued.
+in here include time: [2024-05-01 13:54:56] Client 4594 is dequeued and connected. It is ready for operations.
+in here include time: [2024-05-01 13:54:56] Client 4593 is queued.
+in here include time: [2024-05-01 13:54:56] Client 4593 is dequeued and connected. It is ready for operations.
+in here include time: [2024-05-01 13:54:56] Client 4595 is queued.
+in here include time: [2024-05-01 13:54:56] Connection request 4595 is refused. Queue is full.
+in here include time: [2024-05-01 13:54:56] Client 4595 is refused. Its mode is tryConnect and queue is full.
+in here include time: [2024-05-01 13:55:45] Server Started PID 4682...
+Waiting for clients...
+in here include time: [2024-05-01 13:55:58] Client 4686 is queued.
+in here include time: [2024-05-01 13:55:58] Client 4686 is dequeued and connected. It is ready for operations.
+in here include time: [2024-05-01 13:55:58] Client 4687 is queued.
+in here include time: [2024-05-01 13:55:58] Client 4687 is dequeued and connected. It is ready for operations.
+in here include time: [2024-05-01 13:55:58] Client 4688 is queued.
+in here include time: [2024-05-01 13:55:58] Connection request 4688 is refused. Queue is full.
+in here include time: [2024-05-01 13:55:58] Client 4688 is refused. Its mode is tryConnect and queue is full.
+in here include time: [2024-05-01 13:56:44] Server Started PID 4692...
+Waiting for clients...
+in here include time: [2024-05-01 13:56:54] Client 4696 is queued.
+in here include time: [2024-05-01 13:56:54] Client 4696 is dequeued and connected. It is ready for operations.
+in here include time: [2024-05-01 13:56:54] Client 4698 is queued.
+in here include time: [2024-05-01 13:56:54] Client 4698 is dequeued and connected. It is ready for operations.
+in here include time: [2024-05-01 13:56:54] Client 4697 is queued.
+in here include time: [2024-05-01 13:56:54] Connection request 4697 is refused. Queue is full.
+in here include time: [2024-05-01 13:56:58] Client 4698 requested list command.
+in here include time: [2024-05-01 13:56:58] Client 4700 tries to enter critical section for the file 05319346629 for reading
+in here include time: [2024-05-01 13:56:58] Client 4700 tries to exit critical section for the file 05319346629 for reading
+in here include time: [2024-05-01 13:56:58] Client requested to list the files in the server directory.
+in here include time: [2024-05-01 13:56:59] Client 4698 requested list command.
+in here include time: [2024-05-01 13:56:59] Client 4700 tries to enter critical section for the file 05319346629 for reading
+in here include time: [2024-05-01 13:56:59] Client 4700 tries to exit critical section for the file 05319346629 for reading
+in here include time: [2024-05-01 13:56:59] Client requested to list the files in the server directory.
+in here include time: [2024-05-01 13:57:01] Client 4698 requested list command.
+in here include time: [2024-05-01 13:57:01] Client 4700 tries to enter critical section for the file 05319346629 for reading
+in here include time: [2024-05-01 13:57:01] Client 4700 tries to exit critical section for the file 05319346629 for reading
+in here include time: [2024-05-01 13:57:01] Client requested to list the files in the server directory.
+in here include time: [2024-05-01 13:57:04] Client 4698 requested killServer command.
+in here include time: [2024-05-01 13:57:21] Server Started PID 4747...
+Waiting for clients...
+in here include time: [2024-05-01 13:57:33] Client 4749 is queued.
+in here include time: [2024-05-01 13:57:33] Client 4749 is dequeued and connected. It is ready for operations.
+in here include time: [2024-05-01 13:57:33] Client 4751 is queued.
+in here include time: [2024-05-01 13:57:33] Client 4751 is dequeued and connected. It is ready for operations.
+in here include time: [2024-05-01 13:57:33] Client 4750 is queued.
+in here include time: [2024-05-01 13:57:33] Connection request 4750 is refused. Queue is full.
+in here include time: [2024-05-01 13:57:36] Client 4751 requested list command.
+in here include time: [2024-05-01 13:57:36] Client 4753 tries to enter critical section for the file 05319346629 for reading
+in here include time: [2024-05-01 13:57:36] Client 4753 tries to exit critical section for the file 05319346629 for reading
+in here include time: [2024-05-01 13:57:36] Client requested to list the files in the server directory.
+in here include time: [2024-05-01 13:57:41] Client 4751 requested list command.
+in here include time: [2024-05-01 13:57:41] Client 4753 tries to enter critical section for the file 05319346629 for reading
+in here include time: [2024-05-01 13:57:41] Client 4753 tries to exit critical section for the file 05319346629 for reading
+in here include time: [2024-05-01 13:57:41] Client requested to list the files in the server directory.
+in here include time: [2024-05-01 13:57:42] Client 4751 requested list command.
+in here include time: [2024-05-01 13:57:42] Client 4753 tries to enter critical section for the file 05319346629 for reading
+in here include time: [2024-05-01 13:57:42] Client 4753 tries to exit critical section for the file 05319346629 for reading
+in here include time: [2024-05-01 13:57:42] Client requested to list the files in the server directory.
+in here include time: [2024-05-01 13:57:42] Client 4751 requested list command.
+in here include time: [2024-05-01 13:57:42] Client 4753 tries to enter critical section for the file 05319346629 for reading
+in here include time: [2024-05-01 13:57:42] Client 4753 tries to exit critical section for the file 05319346629 for reading
+in here include time: [2024-05-01 13:57:42] Client requested to list the files in the server directory.
+in here include time: [2024-05-01 13:57:46] Client 4751 requested download command.
+in here include time: [2024-05-01 13:57:46] Client 4753 tries to enter critical section for the file assadf.txt for reading
+in here include time: [2024-05-01 13:57:46] Client requested file assadf.txt, but it does not exist.
+in here include time: [2024-05-01 13:57:46] Client 4753 tries to exit critical section for the file assadf.txt for reading
+in here include time: [2024-05-01 13:58:17] Client 4751 requested list command.
+in here include time: [2024-05-01 13:58:17] Client 4753 tries to enter critical section for the file 05319346629 for reading
+in here include time: [2024-05-01 13:58:17] Client 4753 tries to exit critical section for the file 05319346629 for reading
+in here include time: [2024-05-01 13:58:17] Client requested to list the files in the server directory.
+in here include time: [2024-05-01 14:03:02] Server Started PID 4880...
+Waiting for clients...
+in here include time: [2024-05-01 14:03:09] Client 4881 is queued.
+in here include time: [2024-05-01 14:03:09] Client 4881 is dequeued and connected. It is ready for operations.
+in here include time: [2024-05-01 14:03:13] Client 4881 requested download command.
+in here include time: [2024-05-01 14:03:13] Client 4882 tries to enter critical section for the file sadfsdafas.txt for reading
+in here include time: [2024-05-01 14:03:13] Client requested file sadfsdafas.txt, but it does not exist.
+in here include time: [2024-05-01 14:03:13] Client 4882 tries to exit critical section for the file sadfsdafas.txt for reading
+in here include time: [2024-05-01 14:03:57] Server Started PID 4914...
+Waiting for clients...
+in here include time: [2024-05-01 14:03:59] Client 4915 is queued.
+in here include time: [2024-05-01 14:03:59] Client 4915 is dequeued and connected. It is ready for operations.
+in here include time: [2024-05-01 14:04:03] Client 4915 requested download command.
+in here include time: [2024-05-01 14:04:03] Client 4916 tries to enter critical section for the file sadfdsa.txt for reading
+in here include time: [2024-05-01 14:04:03] Client requested file sadfdsa.txt, but it does not exist.
+in here include time: [2024-05-01 14:04:03] Client 4916 tries to exit critical section for the file sadfdsa.txt for reading
+in here include time: [2024-05-01 14:04:28] Server Started PID 4931...
+Waiting for clients...
+in here include time: [2024-05-01 14:04:31] Client 4932 is queued.
+in here include time: [2024-05-01 14:04:31] Client 4932 is dequeued and connected. It is ready for operations.
+in here include time: [2024-05-01 14:04:37] Client 4932 requested download command.
+in here include time: [2024-05-01 14:04:37] Client 4933 tries to enter critical section for the file belgeyok.ycy for reading
+in here include time: [2024-05-01 14:04:37] Client requested file belgeyok.ycy, but it does not exist.
+in here include time: [2024-05-01 14:04:37] Client 4933 tries to exit critical section for the file belgeyok.ycy for reading
+in here include time: [2024-05-01 14:06:03] Server Started PID 4938...
+Waiting for clients...
+in here include time: [2024-05-01 14:06:15] Client 4941 is queued.
+in here include time: [2024-05-01 14:06:15] Client 4941 is dequeued and connected. It is ready for operations.
+in here include time: [2024-05-01 14:06:15] Client 4942 is queued.
+in here include time: [2024-05-01 14:06:15] Client 4942 is dequeued and connected. It is ready for operations.
+in here include time: [2024-05-01 14:06:15] Client 4943 is queued.
+in here include time: [2024-05-01 14:06:15] Connection request 4943 is refused. Queue is full.
+in here include time: [2024-05-01 14:06:15] Client 4943 is refused. Its mode is tryConnect and queue is full.
+in here include time: [2024-05-01 14:06:43] Client 4949 is queued.
+in here include time: [2024-05-01 14:06:43] Connection request 4949 is refused. Queue is full.
+in here include time: [2024-05-01 14:06:43] Client 4949 is refused. Its mode is tryConnect and queue is full.
+in here include time: [2024-05-01 14:06:43] Client 4947 is queued.
+in here include time: [2024-05-01 14:06:43] Connection request 4947 is refused. Queue is full.
+in here include time: [2024-05-01 14:06:43] Client 4948 is queued.
+in here include time: [2024-05-01 14:06:43] Connection request 4948 is refused. Queue is full.

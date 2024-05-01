@@ -411,6 +411,7 @@ void handle_download_command(int *fd_client_cmd, int *fd_client_res, char** word
         // Check if the file doesn't exist on the server
         if(strcmp(response, "NO_SUCH_FILE_05319346629") == 0) 
         {
+            response[bytes_read_res] = '\0'; // Null-terminate the string
             printf("File does not exist on the server!\n");
             fclose(file);
             char current_dir[256];

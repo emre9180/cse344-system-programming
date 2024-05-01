@@ -621,7 +621,6 @@ void handle_download_command(char* command, const char* dirname, int *client_res
     // printf("File2: %s\n", file_path);
     if (file == NULL)
     {
-        perror("Failed to open file");
         const char *error_message = "NO_SUCH_FILE_05319346629";
         char log_message[512];
         sprintf(log_message, "Client requested file %s, but it does not exist.\n", download.file);

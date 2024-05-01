@@ -254,6 +254,7 @@ void server_loop(char *dirname, int max_clients)
                 sprintf(log_message, "Connection request %d is refused. Queue is full.\n", cli_info.pid);
                 write_log_file(log_message, dir_syncs);
                 printf("Connection request %d is refused. Queue is full. \n", cli_info.pid);
+                fflush(stdout);
             }
 
             if(cli_info.mode==1 && cli_info.pid != -1)
@@ -311,6 +312,7 @@ void server_loop(char *dirname, int max_clients)
         if (child_pid == 0)
         {
             printf("Client %d is connected!\n", cli_info.pid);
+            fflush(stdout);
             char client_res_fifo[256]; // Client response FIFO
             sprintf(client_res_fifo, CLIENT_RES_FIFO, cli_info.pid); // Create the client response FIFO
             int client_res_fd = open(client_res_fifo, O_WRONLY); // Open the client response FIFO
