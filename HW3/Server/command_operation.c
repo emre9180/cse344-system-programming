@@ -7,6 +7,7 @@ void handle_list_command(const char* command, const char* dirname, int *client_r
     if (strcmp(command, "list") == 0)
     {
         // Enter the reader region of the synchronization file
+        region_reader_logger(dir_syncs, getpid(), UPLOAD_AND_LIST_SYNC_FILE, 1);
         enterRegionReader(getSafeFile(dir_syncs, UPLOAD_AND_LIST_SYNC_FILE));
         
         // Clear the client response FIFO
@@ -22,7 +23,7 @@ void handle_list_command(const char* command, const char* dirname, int *client_r
             
             // Iterate over each entry in the directory
             while ((ent = readdir(dir)) != NULL) {
-                if (ent->d_type == DT_DIR || ent->d_type == DT_REG) {
+                if (ent->d_type == DT_REG) {
                     char *name = ent->d_name;
                     
                     // Exclude hidden files and directories
@@ -34,6 +35,7 @@ void handle_list_command(const char* command, const char* dirname, int *client_r
                         if (bytes_written == -1) {
                             perror("Failed to write to client response FIFO");
                             cleanup(server_fd, *client_res_fd, server_req_fd, dir_syncs);
+                            region_reader_logger(dir_syncs, getpid(), UPLOAD_AND_LIST_SYNC_FILE, 0);
                             exitRegionReader(getSafeFile(dir_syncs, UPLOAD_AND_LIST_SYNC_FILE));
                             exit(EXIT_FAILURE);
                         }
@@ -55,6 +57,7 @@ void handle_list_command(const char* command, const char* dirname, int *client_r
                 {
                     perror("Failed to write error message to client response FIFO");
                     cleanup(server_fd, *client_res_fd, server_req_fd, dir_syncs);
+                    region_reader_logger(dir_syncs, getpid(), UPLOAD_AND_LIST_SYNC_FILE, 0);
                     exitRegionReader(getSafeFile(dir_syncs, UPLOAD_AND_LIST_SYNC_FILE));
                     exit(EXIT_FAILURE);
                 }
@@ -69,11 +72,13 @@ void handle_list_command(const char* command, const char* dirname, int *client_r
         {
             perror("Failed to open directory:");
             cleanup(server_fd, *client_res_fd, server_req_fd, dir_syncs);
+            region_reader_logger(dir_syncs, getpid(), UPLOAD_AND_LIST_SYNC_FILE, 0);
             exitRegionReader(getSafeFile(dir_syncs, UPLOAD_AND_LIST_SYNC_FILE));
             exit(EXIT_FAILURE);
         }
         
         // Exit the reader region of the synchronization file
+        region_reader_logger(dir_syncs, getpid(), UPLOAD_AND_LIST_SYNC_FILE, 0);
         exitRegionReader(getSafeFile(dir_syncs, UPLOAD_AND_LIST_SYNC_FILE));
 
         int garbage;
@@ -92,6 +97,7 @@ void handle_list_command(const char* command, const char* dirname, int *client_r
                 // Failed to reopen the client response FIFO
                 perror("Failed to reopen client response FIFO");
                 cleanup(server_fd, *client_res_fd, server_req_fd, dir_syncs);
+                region_reader_logger(dir_syncs, getpid(), UPLOAD_AND_LIST_SYNC_FILE, 0);
                 exitRegionReader(getSafeFile(dir_syncs, UPLOAD_AND_LIST_SYNC_FILE));
                 exit(EXIT_FAILURE);
             }
@@ -141,6 +147,7 @@ void handle_readF_command(char* command, const char* dirname, int *client_res_fd
         return;
     }
     
+    region_reader_logger(dir_syncs, getpid(), readF.file, 1);
     enterRegionReader(getSafeFile(dir_syncs, readF.file)); // Enter the reader region of the synchronization file
 
     // If the user wants to read a specific line
@@ -208,6 +215,7 @@ void handle_specific_line(FILE *file, readF_command readF, int *client_res_fd, i
         const char *error_message = "Line number is out of range";
         if (write(*client_res_fd, error_message, strlen(error_message)) == -1) {
             perror("Failed to write error message to client response FIFO");
+            region_reader_logger(dir_syncs, getpid(), readF.file, 0);
             exitRegionReader(getSafeFile(dir_syncs, readF.file));
             cleanup(server_fd, *client_res_fd, server_req_fd, dir_syncs);
         }
@@ -218,6 +226,7 @@ void handle_specific_line(FILE *file, readF_command readF, int *client_res_fd, i
         // Write the line to the client response FIFO
         if (write(*client_res_fd, line, strlen(line)) == -1) {
             perror("Failed to write to client response FIFO");
+            region_reader_logger(dir_syncs, getpid(), readF.file, 0);
             exitRegionReader(getSafeFile(dir_syncs, readF.file));
             cleanup(server_fd, *client_res_fd, server_req_fd, dir_syncs);
         }
@@ -226,6 +235,7 @@ void handle_specific_line(FILE *file, readF_command readF, int *client_res_fd, i
     fclose(file);
     close(*client_res_fd);
     *client_res_fd = -1;
+    region_reader_logger(dir_syncs, getpid(), readF.file, 0);
     exitRegionReader(getSafeFile(dir_syncs, readF.file));
 
     // Read from the server request FIFO to synchronize with the client
@@ -261,6 +271,7 @@ void handle_whole_file(FILE *file, readF_command readF, int *client_res_fd, int 
         {
             perror("Failed to write to client response FIFO");
             cleanup(server_fd, *client_res_fd, server_req_fd, dir_syncs);
+            region_reader_logger(dir_syncs, getpid(), readF.file, 0);
             exitRegionReader(getSafeFile(dir_syncs, readF.file));
             exit(EXIT_FAILURE);
         }
@@ -269,6 +280,7 @@ void handle_whole_file(FILE *file, readF_command readF, int *client_res_fd, int 
     fclose(file);
     close(*client_res_fd);
     *client_res_fd = -1;
+    region_reader_logger(dir_syncs, getpid(), readF.file, 0);
     exitRegionReader(getSafeFile(dir_syncs, readF.file));
 
     // Read from the server request FIFO to synchronize with the client
@@ -408,6 +420,7 @@ void handle_specific_line_write(char *dirname, writeF_command writeF, int *clien
         int resp = -1;
         write(*client_res_fd, &resp, sizeof(int));
         removeSafeFile(dir_syncs, writeF.file);
+        region_writer_logger(dir_syncs, getpid(), file_path, 0);
         exitRegionWriter(getSafeFile(dir_syncs, file_path));
     }
     // printf("Line number: %d\n", writeF.line_number);
@@ -418,6 +431,7 @@ void handle_specific_line_write(char *dirname, writeF_command writeF, int *clien
         perror("Failed to create temporary file");
         fclose(source_file);
         cleanup(server_fd, *client_res_fd, server_req_fd, dir_syncs);
+        region_writer_logger(dir_syncs, getpid(), file_path, 0);
         exitRegionWriter(getSafeFile(dir_syncs, file_path));
         exit(EXIT_FAILURE);
     }
@@ -493,6 +507,7 @@ void handle_specific_line_write(char *dirname, writeF_command writeF, int *clien
     remove(file_path);
     rename("temp.txt", file_path);
     // printf("Line number: %d\n", writeF.line_number);
+    region_writer_logger(dir_syncs, getpid(), writeF.file, 0);
     exitRegionWriter(getSafeFile(dir_syncs, writeF.file));
 
     int asdf = write(*client_res_fd, &successful, sizeof(int)) ;
@@ -521,6 +536,7 @@ void handle_whole_file_write(const char *dirname, writeF_command writeF, int *cl
         addSafeFile(dir_syncs, writeF.file);
 
     // Enter the writer region of the synchronization file
+    region_writer_logger(dir_syncs, getpid(), writeF.file, 1);
     enterRegionWriter(getSafeFile(dir_syncs, writeF.file));
 
     // Check if the file exists
@@ -533,6 +549,7 @@ void handle_whole_file_write(const char *dirname, writeF_command writeF, int *cl
             perror("Failed to create file");
             cleanup(server_fd, *client_res_fd, server_req_fd, dir_syncs);
             removeSafeFile(dir_syncs, writeF.file); // Remove the file from the synchronization file since there is no such file
+            region_writer_logger(dir_syncs, getpid(), writeF.file, 0);
             exitRegionWriter(getSafeFile(dir_syncs, writeF.file));
             exit(EXIT_FAILURE);
         }
@@ -546,6 +563,7 @@ void handle_whole_file_write(const char *dirname, writeF_command writeF, int *cl
         FILE *file = fopen(file_path, "a");
         if (file == NULL) {
             perror("Failed to open file");
+            region_writer_logger(dir_syncs, getpid(), writeF.file, 0);
             exitRegionWriter(getSafeFile(dir_syncs, writeF.file));
         }
         fputs(writeF.string, file);
@@ -553,11 +571,13 @@ void handle_whole_file_write(const char *dirname, writeF_command writeF, int *cl
         success = 1; // Set the success flag to true
     }
 
+    region_writer_logger(dir_syncs, getpid(), writeF.file, 0);
     exitRegionWriter(getSafeFile(dir_syncs, writeF.file));
 
      if (write(*client_res_fd, &success, sizeof(int)) == -1) {
         perror("Failed to write to client response FIFO");
         cleanup(server_fd, *client_res_fd, server_req_fd, dir_syncs);
+        region_writer_logger(dir_syncs, getpid(), writeF.file, 0);
         exitRegionWriter(getSafeFile(dir_syncs, writeF.file));
         exit(EXIT_FAILURE);
     }
@@ -590,6 +610,7 @@ void handle_download_command(char* command, const char* dirname, int *client_res
     // If there is no file name in the synchronization file, add it
     if(getSafeFile(dir_syncs, download.file) == NULL) 
         addSafeFile(dir_syncs, download.file);
+    region_reader_logger(dir_syncs, getpid(), download.file, 1);
     enterRegionReader(getSafeFile(dir_syncs, download.file));
 
     // File name is the directory of server + file name
@@ -612,6 +633,7 @@ void handle_download_command(char* command, const char* dirname, int *client_res
         }
         close(*client_res_fd);
         *client_res_fd = -1;
+        region_reader_logger(dir_syncs, getpid(), download.file, 0);
         exitRegionReader(getSafeFile(dir_syncs, download.file));
         removeSafeFile(dir_syncs, download.file);
 
@@ -651,6 +673,7 @@ void handle_download_command(char* command, const char* dirname, int *client_res
             }
             perror("Failed to write to client response FIFO");
             cleanup(server_fd, *client_res_fd, server_req_fd, dir_syncs);
+            region_reader_logger(dir_syncs, getpid(), download.file, 0);
             exitRegionReader(getSafeFile(dir_syncs, download.file));
             exit(EXIT_FAILURE);
         }
@@ -659,6 +682,7 @@ void handle_download_command(char* command, const char* dirname, int *client_res
     fclose(file);
     close(*client_res_fd);
     *client_res_fd = -1;
+    region_reader_logger(dir_syncs, getpid(), download.file, 0);
     exitRegionReader(getSafeFile(dir_syncs, download.file));
     /// Read from the server request FIFO to synchronize with the client
     int garbage;
@@ -714,15 +738,35 @@ void handle_upload_command(char* command, const char* dirname, int *client_res_f
     if (write(*client_res_fd, &success, sizeof(int)) == -1) {
         perror("Failed to write to client response FIFO");
         cleanup(server_fd, *client_res_fd, server_req_fd, dir_syncs);
+        region_writer_logger(dir_syncs, getpid(), UPLOAD_AND_LIST_SYNC_FILE, 0);
         exitRegionWriter(getSafeFile(dir_syncs, upload.file));
         exit(EXIT_FAILURE);
     }
 
     if(getSafeFile(dir_syncs, upload.file) == NULL) 
         addSafeFile(dir_syncs, upload.file);
+    else // If there is such file, add (1) to the file name just before the '.' character
+    {
+        char *dot = strrchr(upload.file, '.');
+        if (dot != NULL) {
+            char new_file[259];
+            strncpy(new_file, upload.file, dot - upload.file);
+            new_file[dot - upload.file] = '\0';
+            strcat(new_file, "(1)");
+            strcat(new_file, dot);
+            strcpy(upload.file, new_file);
+        }
+        else {
+            strcat(upload.file, "(1)");
+        }
+        addSafeFile(dir_syncs, upload.file);       
+    }
+
     
     // Enter the writer region of the synchronization file
+    region_writer_logger(dir_syncs, getpid(), upload.file, 1);
     enterRegionWriter(getSafeFile(dir_syncs, upload.file));
+    region_writer_logger(dir_syncs, getpid(), UPLOAD_AND_LIST_SYNC_FILE, 1);
     enterRegionWriter(getSafeFile(dir_syncs, UPLOAD_AND_LIST_SYNC_FILE));
 
     // File name is the directory of server + file name
@@ -735,7 +779,9 @@ void handle_upload_command(char* command, const char* dirname, int *client_res_f
     {
         perror("Failed to open file");
         cleanup(server_fd, *client_res_fd, server_req_fd, dir_syncs);
+        region_writer_logger(dir_syncs, getpid(), upload.file, 0);
         exitRegionWriter(getSafeFile(dir_syncs, upload.file));
+        region_writer_logger(dir_syncs, getpid(), UPLOAD_AND_LIST_SYNC_FILE, 0);
         exitRegionWriter(getSafeFile(dir_syncs, UPLOAD_AND_LIST_SYNC_FILE));
         exit(EXIT_FAILURE);
     }
@@ -751,7 +797,9 @@ void handle_upload_command(char* command, const char* dirname, int *client_res_f
         {
             perror("Failed to read from server request FIFO");
             cleanup(server_fd, *client_res_fd, server_req_fd, dir_syncs);
+            region_writer_logger(dir_syncs, getpid(), upload.file, 0);
             exitRegionWriter(getSafeFile(dir_syncs, upload.file));
+            region_writer_logger(dir_syncs, getpid(), UPLOAD_AND_LIST_SYNC_FILE, 0);
             exitRegionWriter(getSafeFile(dir_syncs, UPLOAD_AND_LIST_SYNC_FILE));
             exit(EXIT_FAILURE);
         }
@@ -773,12 +821,16 @@ void handle_upload_command(char* command, const char* dirname, int *client_res_f
     if (bytes_written == -1) {
         perror("Failed to write to client_res_fd");
         cleanup(server_fd, *client_res_fd, server_req_fd, dir_syncs);
+        region_writer_logger(dir_syncs, getpid(), upload.file, 0);
         exitRegionWriter(getSafeFile(dir_syncs, upload.file));
+        region_writer_logger(dir_syncs, getpid(), UPLOAD_AND_LIST_SYNC_FILE, 0);
         exitRegionWriter(getSafeFile(dir_syncs, UPLOAD_AND_LIST_SYNC_FILE));
         exit(EXIT_FAILURE);
     }
 
+    region_writer_logger(dir_syncs, getpid(), upload.file, 0);
     exitRegionWriter(getSafeFile(dir_syncs, upload.file));
+    region_writer_logger(dir_syncs, getpid(), UPLOAD_AND_LIST_SYNC_FILE, 0);
     exitRegionWriter(getSafeFile(dir_syncs, UPLOAD_AND_LIST_SYNC_FILE));
 
     char log_message[512];
@@ -843,11 +895,8 @@ void handle_archive_command(char* command, const char* dirname, int *client_res_
     waitpid(pid, &status, 0);
     removeAllFilesFromCriticalSection(dir_syncs);
 
-    int response = 1;
-    ssize_t num_written = write(*client_res_fd, &response, sizeof(response));
-    if(num_written == -1) {
-        perror("Failed to write to client response FIFO");
-    }
+    int garbage = 1;
+    write(*client_res_fd, &garbage, sizeof(int));
 }
 
 // Handles the "help" command.
@@ -869,6 +918,139 @@ const char *help_message = "Commands:\n"
 }
 
 
+
+// Handles the "download" command.
+void handle_download_arch_command(char* command, const char* dirname, int *client_res_fd, int server_fd, int server_req_fd, struct dir_sync *dir_syncs, char* client_res_fifo) {
+    // Parse the command into separate words
+    char *words[4];
+    int num_words = 0;
+    char *token = strtok(command, " ");
+    while (token != NULL && num_words < 2) {
+        words[num_words] = calloc(strlen(token) + 1, sizeof(char));
+        memset(words[num_words], '\0', strlen(token) + 1);
+        strcpy(words[num_words], token);
+        num_words++;
+        token = strtok(NULL, " ");
+    }
+
+    download_command download; // Structure to store the download command
+    strcpy(download.file,words[1]); // Copy the file name to the structure
+    // printf("File1: %s - %d\n", download.file, strlen(download.file));
+
+    // printf("download command\n");
+
+    // If there is no file name in the synchronization file, add it
+    if(getSafeFile(dir_syncs, download.file) == NULL) 
+        addSafeFile(dir_syncs, download.file);
+    region_reader_logger(dir_syncs, getpid(), download.file, 1);
+    enterRegionReader(getSafeFile(dir_syncs, download.file));
+
+    // File name is the directory of server + file name
+    char file_path[512];
+    sprintf(file_path, "%s/%s", dirname, download.file);
+
+    FILE *file = fopen(file_path, "r");
+    // printf("File2: %s\n", file_path);
+    if (file == NULL)
+    {
+        perror("Failed to open file");
+        const char *error_message = "NO_SUCH_FILE_05319346629";
+        char log_message[512];
+        sprintf(log_message, "Client requested file %s, but it does not exist.\n", download.file);
+        write_log_file(log_message, dir_syncs);
+        if (write(*client_res_fd, error_message, strlen(error_message)) == -1)
+        {
+            perror("Failed to write error message to client response FIFO");
+            close(server_fd);
+        }
+        close(*client_res_fd);
+        *client_res_fd = -1;
+        region_reader_logger(dir_syncs, getpid(), download.file, 0);
+        exitRegionReader(getSafeFile(dir_syncs, download.file));
+        removeSafeFile(dir_syncs, download.file);
+
+        int garbage;
+        ssize_t num_read = read(server_req_fd, &garbage, sizeof(int));
+        if(num_read == -1) {
+            perror("Failed to read from server request FIFO");
+        }
+        // printf("num_read: %zd\n", num_read);
+        // if it is closed, open it: *client_res_fd
+        if (*client_res_fd == -1)
+        {
+            // printf("Client response FIFO is closed. Reopening...\n");
+            *client_res_fd = open(client_res_fifo, O_WRONLY);
+            if (*client_res_fd == -1)
+            {
+                for(int i = 0; i < num_words; i++) {
+                    free(words[i]);
+                }
+                perror("Failed to open client response FIFO");
+                cleanup(server_fd, *client_res_fd, server_req_fd, dir_syncs);
+                exit(EXIT_FAILURE);
+            }
+        }
+        return;
+    }
+
+    char buffer[256]; // Buffer to store the data read from the file
+    ssize_t num_read;
+    ssize_t total_bytes = 0;
+    while ((num_read = read(fileno(file), buffer, sizeof(buffer))) > 0)
+    {
+        if (total_bytes += write(*client_res_fd, buffer, num_read) == -1)
+        {
+            for(int i = 0; i < num_words; i++) {
+                free(words[i]);
+            }
+            perror("Failed to write to client response FIFO");
+            cleanup(server_fd, *client_res_fd, server_req_fd, dir_syncs);
+            region_reader_logger(dir_syncs, getpid(), download.file, 0);
+            exitRegionReader(getSafeFile(dir_syncs, download.file));
+            exit(EXIT_FAILURE);
+        }
+    }
+
+    fclose(file);
+    close(*client_res_fd);
+    *client_res_fd = -1;
+    region_reader_logger(dir_syncs, getpid(), download.file, 0);
+    exitRegionReader(getSafeFile(dir_syncs, download.file));
+    /// Read from the server request FIFO to synchronize with the client
+    int garbage;
+    num_read = read(server_req_fd, &garbage, sizeof(int));
+    // printf("garbage readed: %d\n", garbage);
+    fflush(stdout);
+    if(num_read == -1) {
+        perror("Failed to read from server request FIFO");
+    }
+    // printf("num_read: %zd\n", num_read);
+
+    // if it is closed, open it: *client_res_fd
+    if (*client_res_fd == -1)
+    {
+        // printf("Client response FIFO is closed. Reopening...\n");
+        *client_res_fd = open(client_res_fifo, O_WRONLY);
+        if (*client_res_fd == -1)
+        {
+            for(int i = 0; i < num_words; i++) {
+                free(words[i]);
+            }
+            perror("Failed to open client response FIFO");
+            cleanup(server_fd, *client_res_fd, server_req_fd, dir_syncs);
+            exit(EXIT_FAILURE);
+        }
+    }
+    for(int i = 0; i < num_words; i++) {
+        free(words[i]);
+    }
+    char log_message[512];
+    sprintf(log_message, "Archive %s has been downloaded by the client. Total %ld bytes is downloaded.\n", download.file, total_bytes);
+    // remove the file file_path from the os
+    remove(file_path);
+
+}
+
 /*
 * Returns string array of files in server directory
 * @param command The command string.
@@ -880,3 +1062,4 @@ const char *help_message = "Commands:\n"
 * @param client_res_fifo The name of the client response FIFO.
 */
 void get_files_list(const char* command, const char* dirname, int *client_res_fd, int server_fd, int server_req_fd, struct dir_sync *dir_syncs, char *client_res_fifo);
+

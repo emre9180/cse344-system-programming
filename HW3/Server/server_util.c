@@ -29,18 +29,21 @@ void cleanup(int server_fd, int client_res_fd, int clienet_req_fd, struct dir_sy
     // Close the server file descriptor
     if (server_fd != -1)
     {
+        server_fd = -1;
         close(server_fd);
     }
 
     // Close the client response file descriptor
     if (client_res_fd != -1)
     {
+        client_res_fd = -1;
         close(client_res_fd);
     }
 
     // Close the client request file descriptor
     if (clienet_req_fd != -1)
     {
+        clienet_req_fd = -1;
         close(clienet_req_fd);
     }
 
@@ -103,4 +106,24 @@ void write_log_file(char *message, struct dir_sync *sync_dir)
     fprintf(log_file, "in here include time: [%s] %s", time_string, message);
     fclose(log_file);
     exitRegionWriter(getSafeFile(sync_dir, LOG_FILENAME));
+}
+
+void region_reader_logger(struct dir_sync *sync_dir, int pid, char *filename, int enter)
+{
+    char log_message[256];
+    if(enter)
+        sprintf(log_message, "Client %d tries to enter critical section for the file %s for reading\n", pid, filename);
+    else
+        sprintf(log_message, "Client %d tries to exit critical section for the file %s for reading\n", pid, filename);
+    write_log_file(log_message, sync_dir);
+}
+
+void region_writer_logger(struct dir_sync *sync_dir, int pid, char *filename, int enter)
+{
+    char log_message[256];
+    if(enter)
+        sprintf(log_message, "Client %d tries to enter critical section for the file %s for writing\n", pid, filename);
+    else
+        sprintf(log_message, "Client %d tries to exit critical section for the file %s for writing\n", pid, filename);
+    write_log_file(log_message, sync_dir);
 }

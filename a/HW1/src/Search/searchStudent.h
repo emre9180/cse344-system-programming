@@ -1,0 +1,1 @@
+void searchStudent(const char *filename, const char *name);

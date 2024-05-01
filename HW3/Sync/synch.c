@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "../Util/common.h"
+#include "../Server/server_util.h"
 
 // Put all files in the directory into the critical section for reading
 int putAllFilesToCriticalSection(struct dir_sync *sdir)
@@ -55,7 +56,7 @@ int enterRegionReader(struct file_sync *sfile) {
     sem_wait(&sfile->rMutex);
     sfile->readerCount++;
     if (sfile->readerCount == 1) {
-        sem_wait(&sfile->rsc);
+        sem_wait(&sfile->lock);
     }
     sem_post(&sfile->rMutex);
     sem_post(&sfile->readTry);
@@ -68,7 +69,7 @@ int exitRegionReader(struct file_sync *sfile) {
     sem_wait(&sfile->rMutex);
     sfile->readerCount--;
     if (sfile->readerCount == 0) {
-        sem_post(&sfile->rsc);
+        sem_post(&sfile->lock);
     }
     sem_post(&sfile->rMutex);
     return 0;
@@ -83,14 +84,14 @@ int enterRegionWriter(struct file_sync *sfile) {
         sem_wait(&sfile->readTry);
     }
     sem_post(&sfile->wMutex);
-    sem_wait(&sfile->rsc);
+    sem_wait(&sfile->lock);
     return 0;
 }
 
 // Exit the writing region
 int exitRegionWriter(struct file_sync *sfile) {
     fflush(stdout);
-    sem_post(&sfile->rsc);
+    sem_post(&sfile->lock);
     sem_wait(&sfile->wMutex);
     sfile->writerCount--;
     if (sfile->writerCount == 0) {
@@ -108,7 +109,7 @@ int initSafeFile(struct file_sync *sfile, const char *fname) {
     sem_init(&sfile->readTry, 1, 1);
     sem_init(&sfile->rMutex, 1, 1);
     sem_init(&sfile->wMutex, 1, 1);
-    sem_init(&sfile->rsc, 1, 1);
+    sem_init(&sfile->lock, 1, 1);
     return 0;
 }
 
@@ -176,7 +177,7 @@ int closeSafeDir(struct dir_sync *sdir) {
         sem_destroy(&sdir->files[i].readTry);
         sem_destroy(&sdir->files[i].rMutex);
         sem_destroy(&sdir->files[i].wMutex);
-        sem_destroy(&sdir->files[i].rsc);
+        sem_destroy(&sdir->files[i].lock);
     }
     sem_destroy(&sdir->sems.mutex);
     sem_destroy(&sdir->sems.empty);

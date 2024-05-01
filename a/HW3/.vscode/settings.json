@@ -1,0 +1,24 @@
+{
+    "files.associations": {
+        "array": "c",
+        "deque": "c",
+        "list": "c",
+        "vector": "c",
+        "string_view": "c",
+        "client_info_queue.h": "c",
+        "common.h": "c",
+        "initializer_list": "c",
+        "utility": "c",
+        "shared_mutex": "c",
+        "random": "c",
+        "command_operation.h": "c",
+        "synch.h": "c",
+        "*.tcc": "c",
+        "cstdlib": "c",
+        "*.inc": "c",
+        "client_command_operations.h": "c",
+        "server_util.h": "c",
+        "client_list.h": "c",
+        "dirent.h": "c"
+    }
+}

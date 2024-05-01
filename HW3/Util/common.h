@@ -58,7 +58,7 @@ typedef struct
 
 typedef struct 
 {
-    char file[256];  // File name
+    char file[256]; // File name
 } download_command;  // Download file command
 
 typedef struct 

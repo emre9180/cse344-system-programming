@@ -91,6 +91,13 @@ int main(int argc, char *argv[])
         exit(EXIT_FAILURE);
     }
 
+    // If there is no dirname, create it
+    if (mkdir(dirname, 0777) == -1 && errno != EEXIST)
+    {
+        perror("Failed to create directory");
+        exit(EXIT_FAILURE);
+    }
+
     // Initialize the safe directory
     if (initSafeDir(dirname, dir_syncs, max_clients) == -1)
     {
@@ -197,17 +204,6 @@ void server_loop(char *dirname, int max_clients)
     char server_fifo[256];
     int server_pid = getpid();
     sprintf(server_fifo, SERVER_FIFO, server_pid);
-    DIR *dir = opendir(dirname);
-    // If dirname is not existed, create it
-    if (dir == NULL)
-    {
-        if (mkdir(dirname, 0777) == -1)
-        {
-            perror("Failed to create directory");
-            exit(EXIT_FAILURE);
-        }
-    }
-    closedir(dir);
 
     create_named_pipe(server_fifo); // Create the server FIFO
 
@@ -350,15 +346,9 @@ void server_loop(char *dirname, int max_clients)
                 char command[256] = {0}; // Command buffer that will store the command received from the client
                 ssize_t num_read = read(server_req_fd, command, sizeof(command) - 1);
 
-                // // print all command
-                // for(int i=0; i<num_read; i++)
-                // {
-                //     printf("%c - %d", command[i], command[i]);
-                // }
-
                 // Put \0 at the end of the command explicitly
                 command[num_read] = '\0';
-                // printf("Command: %s - %d\n", command, num_read);
+
                 if (num_read == -1)
                 {
                     perror("Failed to read from server request FIFO");
@@ -403,6 +393,12 @@ void server_loop(char *dirname, int max_clients)
                     write_log_file(log_message, dir_syncs);
                     handle_writeF_command(command, dirname, &client_res_fd, server_fd, server_req_fd, dir_syncs);
                 }
+                else if(strncmp(command, "download_arch", 13)==0)
+                {
+                    sprintf(log_message, "Client %d requested download_all command.\n", cli_info.pid);
+                    write_log_file(log_message, dir_syncs);
+                    handle_download_arch_command(command, dirname, &client_res_fd, server_fd, server_req_fd, dir_syncs, client_res_fifo);
+                }
                 else if(strncmp(command, "download", 8)==0)
                 {
                     sprintf(log_message, "Client %d requested download command.\n", cli_info.pid);
@@ -426,12 +422,6 @@ void server_loop(char *dirname, int max_clients)
                     sprintf(log_message, "Client %d requested help command.\n", cli_info.pid);
                     write_log_file(log_message, dir_syncs);
                     handle_help_command(client_res_fd, server_fd, server_req_fd, dir_syncs);
-                }
-                else if(strcmp(command, "download_all")==0)
-                {
-                    sprintf(log_message, "Client %d requested download_all command.\n", cli_info.pid);
-                    write_log_file(log_message, dir_syncs);
-                    handle_download_command(command, dirname, &client_res_fd, server_fd, server_req_fd, dir_syncs, client_res_fifo);
                 }
                 else
                 {

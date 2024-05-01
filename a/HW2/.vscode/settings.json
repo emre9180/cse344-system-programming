@@ -1,0 +1,7 @@
+{
+    "files.associations": {
+        "child1.h": "c",
+        "stdlib.h": "c",
+        "cerrno": "c"
+    }
+}

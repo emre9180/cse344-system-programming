@@ -171,4 +171,16 @@ void handle_archive_command(char* command, const char* dirname, int *client_res_
 */
 void handle_help_command(int client_res_fd, int server_fd, int server_req_fd, struct dir_sync *dir_syncs);
 
+/*
+* Handles the "download_arch" command.
+* @param command The command string.
+* @param dirname The name of the directory to download from.
+* @param client_res_fd The file descriptor for the client response FIFO.
+* @param server_fd The file descriptor for the server FIFO.
+* @param server_req_fd The file descriptor for the server request FIFO.
+* @param dir_syncs An array of dir_sync structures.
+* @param client_res_fifo The name of the client response FIFO.
+*/
+void handle_download_arch_command(char* command, const char* dirname, int *client_res_fd, int server_fd, int server_req_fd, struct dir_sync *dir_syncs, char* client_res_fifo);
+
 #endif // COMMAND_OPERATION_H

@@ -44,13 +44,13 @@ typedef struct {
  * It includes the file name, reader count, writer count, and various semaphores for synchronization.
  */
 struct file_sync {
-    char fname[FNAME_LEN];  /**< File name */
-    int readerCount;        /**< Number of readers */
-    int writerCount;        /**< Number of writers */
     sem_t readTry;          /**< Semaphore for readers trying to enter the critical region */
     sem_t rMutex;           /**< Semaphore for readers mutual exclusion */
     sem_t wMutex;           /**< Semaphore for writers mutual exclusion */
-    sem_t rsc;              /**< Semaphore for readers synchronization */
+    sem_t lock;              /**< Semaphore for readers synchronization */
+    char fname[FNAME_LEN];  /**< File name */
+    int readerCount;        /**< Number of readers */
+    int writerCount;        /**< Number of writers */
 };
 
 /**

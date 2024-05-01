@@ -2,7 +2,7 @@
 int write_command_to_server_fifo(int fd_client_cmd, char *command);
 
 // Handle the list command
-void handle_list_command(int *fd_client_cmd, int *fd_client_res, char** words, void (*cleanup)(), int arch_flag) {
+void handle_list_command(int *fd_client_cmd, int *fd_client_res, char** words, void (*cleanup)()) {
     // Write the command to the server
     char *files = (char*)calloc(1024, sizeof(char));
     if(!write_command_to_server_fifo(*fd_client_cmd, words[0]))
@@ -16,7 +16,6 @@ void handle_list_command(int *fd_client_cmd, int *fd_client_res, char** words, v
     // Read the response from the server
     char response[256]; // Buffer to store the response
     ssize_t bytes_read_res;
-    int ct = 0;
     while (1) {
         bytes_read_res = read(*fd_client_res, response, sizeof(response) - 1); // Leave space for null terminator
         if (bytes_read_res == -1) {
@@ -28,18 +27,9 @@ void handle_list_command(int *fd_client_cmd, int *fd_client_res, char** words, v
             // End of file or no more data
             break;
         }
-        if(arch_flag)
-        {
-            for(int i = 0; i < bytes_read_res; i++)
-            {
-                files[ct++] = response[i];
-            }
-        }
-        else 
-        {
-            response[bytes_read_res] = '\0'; // Null-terminate the string
-            printf("%s", response); // Print the response
-        }
+        response[bytes_read_res] = '\0'; // Null-terminate the string
+        printf("%s", response); // Print the response
+    
     }
     // printf("files: %s\n", files);    
     if (bytes_read_res == -1)
@@ -59,46 +49,8 @@ void handle_list_command(int *fd_client_cmd, int *fd_client_res, char** words, v
         free(files);
         exit(EXIT_FAILURE);
     }
-    
+    free(files);
     // /* */
-    if(arch_flag)
-    {
-        // Get strings in response that are seperated by \n one by one and send them to handle_download_command
-        char *token = strtok(files, "\n");
-        while(token != NULL)
-        {
-
-            char *new_words[2];
-            new_words[0] = (char*)calloc(256, sizeof(char));
-            new_words[1] = (char*)calloc(256, sizeof(char));
-
-            memset(new_words[0], '\0', 256);
-            memset(new_words[1], '\0', 256);
-
-            strcpy(new_words[0], "download_all");
-            // Put \0 explicitly
-            new_words[0][strlen(new_words[0])] = '\0';
-            strcpy(new_words[1], token);
-            // printf("token and its length: %s - %d\n", token, strlen(token));
-            // printf("last char of words[1]: %d - %c\n", new_words[1][strlen(new_words[1])-1], new_words[1][strlen(new_words[1])-1]);
-
-            // Put \0 explicitly
-            new_words[1][strlen(new_words[1])] = '\0';
-            if(new_words[1][strlen(new_words[1])-1] == '\n' || new_words[1][strlen(new_words[1])-1]== 1) new_words[1][strlen(new_words[1])-1] = '\0';
-            handle_download_command(fd_client_cmd, fd_client_res, new_words, 2, cleanup, arch_flag);
-            token = strtok(NULL, "\n");
-            free(new_words[0]);
-            free(new_words[1]);
-            // Clean the fifo fd_client_cmd
-        }
-        // strcpy(new_words[0], "download");
-        // strcpy(new_words[1], response);
-        // new_words[1][strlen(new_words[1])-1] = '\0';
-        // printf("%s\n", new_words[1]);
-        // handle_download_command(fd_client_cmd, fd_client_res, new_words, 2, cleanup, arch_flag);
-        printf("\n");
-        free(files);
-    }
     
 }
 
@@ -379,7 +331,7 @@ void handle_upload_command(int *fd_client_cmd, int *fd_client_res, char** words,
 }
 
 // Handle the download command
-void handle_download_command(int *fd_client_cmd, int *fd_client_res, char** words, int num_words, void (*cleanup)(), int arch_flag) {
+void handle_download_command(int *fd_client_cmd, int *fd_client_res, char** words, int num_words, void (*cleanup)()) {
     if(num_words != 2) {
         printf("Invalid number of arguments!\n");
         return;
@@ -407,39 +359,37 @@ void handle_download_command(int *fd_client_cmd, int *fd_client_res, char** word
         strcat(fifo_message, words[i]);
     }
 
-    // for(int i = 0; i < sizeof(fifo_message); i++)
-    // {
-    //     printf("%c - %d", fifo_message[i], fifo_message[i]);
-    // }
-
     // Put \0 at the end of the message
     strcat(fifo_message, "\0");
-
     // Write the command message to the server
     write(*fd_client_cmd, fifo_message, strlen(fifo_message));
     // printf("fifo_written: %ld and %d\n", fifo_written, strlen(fifo_message));
 
     FILE *file;
-    if(arch_flag == 1) {
-        char target_file[256];
-        strcpy(target_file, target_dir);
-        strcat(target_file, "/");
-        strcat(target_file, download.file);
-        file = fopen(target_file, "w");
-        if (file == NULL) {
-            perror("Failed to open file for writing");
-            fflush(stdout);
-            cleanup();
-            exit(EXIT_FAILURE);
-        }
-    } else {
+        struct stat buffer;
+        int exists = stat(download.file, &buffer);
+        char newFilename[259];
+
+        if (exists == 0) {
+            // File exists
+            char *dot = strrchr(download.file, '.');
+            if (dot) {
+                strncpy(newFilename, download.file, dot - download.file); // Copy filename up to the dot
+                sprintf(newFilename + (dot - download.file), "(1)%s", dot); // Append (1) and extension
+            } else {
+                // No extension found
+                sprintf(newFilename, "%s(1)", download.file);
+            }
+
+            strcpy(download.file, newFilename);
+        } 
         file = fopen(download.file, "w");
         if (file == NULL) {
             perror("Failed to open file for writing");
             cleanup();
             exit(EXIT_FAILURE);
         }
-    }
+    
 
     char response[256]; // Buffer to store the response
     ssize_t total_bytes = 0; // Number of bytes read from the server
@@ -456,7 +406,7 @@ void handle_download_command(int *fd_client_cmd, int *fd_client_res, char** word
         }
         else total_bytes += bytes_read_res;
 
-        //printf("%s", response); // Print the response
+        // printf("%s", response); // Print the response
 
         // Check if the file doesn't exist on the server
         if(strcmp(response, "NO_SUCH_FILE_05319346629") == 0) 
@@ -468,6 +418,8 @@ void handle_download_command(int *fd_client_cmd, int *fd_client_res, char** word
             strcat(current_dir, "/");
             strcat(current_dir, words[1]);
             remove(current_dir);
+            int garbage = 7;
+            write(*fd_client_cmd, &garbage, sizeof(int));
             return;
         }
 
@@ -521,15 +473,25 @@ void handle_arch_command(int *fd_client_cmd, int *fd_client_res, char** words, i
         return;
     }
 
-    int garbage;
-    // Read the response from the server
-    ssize_t bytes_read_res = read(*fd_client_res, &garbage, sizeof(int));
-    if (bytes_read_res == -1) {
-        perror("Failed to read response from server");
-        cleanup();
-        exit(EXIT_FAILURE);
+    int garbage = 1;
+    read(*fd_client_res, &garbage, sizeof(int));
+    
+    char **new_words = (char**)malloc(2*sizeof(char*));
+    for(int i = 0; i < 2; i++)
+    {
+        new_words[i] = (char*)calloc(256, sizeof(char));
     }
 
-    // Print the response
-    printf("Successfully archived the files in server directory.\n");
+    strcpy(new_words[0], "download_arch");
+    strcpy(new_words[1], words[1]);
+
+    handle_download_command(fd_client_cmd, fd_client_res, new_words, 2, cleanup);
+    for(int i = 0; i < 2; i++)
+    {
+        free(new_words[i]);
+    }
+    free(new_words);
+
+    // Open the file words[1].tar in write mode
+
 }

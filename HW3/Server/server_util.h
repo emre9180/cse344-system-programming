@@ -39,4 +39,23 @@ void create_shared_memory(const char *shm_name, void **shm_ptr, int shm_size);
  */
 void write_log_file(char *message, struct dir_sync *dir_syncs);
 
+/**
+ * Writes a message to the log file with the current time.
+ * 
+ * @param LOG_FILENAME The name of the log file.
+ * @param message The message to be written to the log file.
+ */
+void region_reader_logger(struct dir_sync *sync_dir, int pid, char *filename, int enter);
+
+
+/**
+ * Writes a message to the log file with the current time.
+ * 
+ * @param LOG_FILENAME The name of the log file.
+ * @param message The message to be written to the log file.
+ * @param enter 1 if entering the region, 0 if exiting the region
+ */
+void region_writer_logger(struct dir_sync *sync_dir, int pid, char *filename, int enter);
+
+
 #endif

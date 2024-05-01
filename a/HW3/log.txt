@@ -1,0 +1,1185 @@
+in here include time: [2024-04-29 01:47:18] Server Started PID 34029...
+Waiting for clients...
+in here include time: [2024-04-29 01:47:23] Client 34045 is queued.
+in here include time: [2024-04-29 01:47:23] Client 34045 is dequeued and connected. It is ready for operations.
+in here include time: [2024-04-29 01:47:23] Client 34045 requested list command.
+in here include time: [2024-04-29 01:47:23] Client requested to list the files in the server directory.in here include time: [2024-04-29 01:47:24] Client 34045 requested list command.
+in here include time: [2024-04-29 01:47:24] Client requested to list the files in the server directory.in here include time: [2024-04-29 02:08:36] Server Started PID 34990...
+Waiting for clients...
+in here include time: [2024-04-29 02:09:18] Server Started PID 35084...
+Waiting for clients...
+in here include time: [2024-04-29 02:09:48] Client 35211 is queued.
+in here include time: [2024-04-29 02:09:48] Client 35211 is dequeued and connected. It is ready for operations.
+in here include time: [2024-04-29 02:09:59] Client 35211 requested archServer command.
+in here include time: [2024-04-29 02:12:33] Server Started PID 35306...
+Waiting for clients...
+in here include time: [2024-04-29 02:12:37] Client 35323 is queued.
+in here include time: [2024-04-29 02:12:37] Client 35323 is dequeued and connected. It is ready for operations.
+in here include time: [2024-04-29 02:12:40] Client 35323 requested list command.
+in here include time: [2024-04-29 02:13:54] Server Started PID 35409...
+Waiting for clients...
+in here include time: [2024-04-29 02:14:15] Server Started PID 35470...
+Waiting for clients...
+in here include time: [2024-04-29 02:14:28] Client 35509 is queued.
+in here include time: [2024-04-29 02:14:28] Client 35509 is dequeued and connected. It is ready for operations.
+in here include time: [2024-04-29 02:14:31] Client 35509 requested list command.
+in here include time: [2024-04-29 02:14:31] Client requested to list the files in the server directory.
+in here include time: [2024-04-29 02:14:31] Client 35509 requested invalid command.
+in here include time: [2024-04-29 02:17:04] Server Started PID 35596...
+Waiting for clients...
+in here include time: [2024-04-29 02:17:08] Client 35612 is queued.
+in here include time: [2024-04-29 02:17:08] Client 35612 is dequeued and connected. It is ready for operations.
+in here include time: [2024-04-29 02:17:09] Client 35612 requested download command.
+in here include time: [2024-04-29 02:17:44] Server Started PID 35800...
+Waiting for clients...
+in here include time: [2024-04-29 02:17:48] Client 35826 is queued.
+in here include time: [2024-04-29 02:17:48] Client 35826 is dequeued and connected. It is ready for operations.
+in here include time: [2024-04-29 02:17:49] Client 35826 requested list command.
+in here include time: [2024-04-29 02:17:49] Client requested to list the files in the server directory.
+in here include time: [2024-04-29 02:17:51] Client 35826 requested list command.
+in here include time: [2024-04-29 02:17:51] Client requested to list the files in the server directory.
+in here include time: [2024-04-29 02:17:53] Client 35826 requested download command.
+in here include time: [2024-04-29 02:18:46] Server Started PID 35894...
+Waiting for clients...
+in here include time: [2024-04-29 02:18:49] Client 35910 is queued.
+in here include time: [2024-04-29 02:18:49] Client 35910 is dequeued and connected. It is ready for operations.
+in here include time: [2024-04-29 02:18:52] Client 35910 requested list command.
+in here include time: [2024-04-29 02:18:52] Client requested to list the files in the server directory.
+in here include time: [2024-04-29 02:18:52] Client 35910 requested invalid command.
+in here include time: [2024-04-29 02:19:39] Server Started PID 36074...
+Waiting for clients...
+in here include time: [2024-04-29 02:19:44] Client 36090 is queued.
+in here include time: [2024-04-29 02:19:44] Client 36090 is dequeued and connected. It is ready for operations.
+in here include time: [2024-04-29 02:19:44] Client 36090 requested list command.
+in here include time: [2024-04-29 02:19:44] Client requested to list the files in the server directory.
+in here include time: [2024-04-29 02:19:47] Client 36090 requested list command.
+in here include time: [2024-04-29 02:19:47] Client requested to list the files in the server directory.
+in here include time: [2024-04-29 02:19:47] Client 36090 requested invalid command.
+in here include time: [2024-04-29 02:20:15] Server Started PID 36250...
+Waiting for clients...
+in here include time: [2024-04-29 02:20:19] Client 36269 is queued.
+in here include time: [2024-04-29 02:20:19] Client 36269 is dequeued and connected. It is ready for operations.
+in here include time: [2024-04-29 02:20:21] Client 36269 requested list command.
+in here include time: [2024-04-29 02:20:21] Client requested to list the files in the server directory.
+in here include time: [2024-04-29 02:21:11] Server Started PID 36342...
+Waiting for clients...
+in here include time: [2024-04-29 02:21:21] Server Started PID 36395...
+Waiting for clients...
+in here include time: [2024-04-29 02:21:28] Client 36426 is queued.
+in here include time: [2024-04-29 02:21:28] Client 36426 is dequeued and connected. It is ready for operations.
+in here include time: [2024-04-29 02:21:30] Client 36426 requested list command.
+in here include time: [2024-04-29 02:21:30] Client requested to list the files in the server directory.
+in here include time: [2024-04-29 02:21:56] Server Started PID 36482...
+Waiting for clients...
+in here include time: [2024-04-29 02:21:59] Server Started PID 36500...
+Waiting for clients...
+in here include time: [2024-04-29 02:22:03] Client 36531 is queued.
+in here include time: [2024-04-29 02:22:03] Client 36531 is dequeued and connected. It is ready for operations.
+in here include time: [2024-04-29 02:22:05] Client 36531 requested list command.
+in here include time: [2024-04-29 02:22:05] Client requested to list the files in the server directory.
+in here include time: [2024-04-29 02:22:05] Client 36531 requested invalid command.
+in here include time: [2024-04-29 02:24:16] Server Started PID 36623...
+Waiting for clients...
+in here include time: [2024-04-29 02:24:20] Client 36639 is queued.
+in here include time: [2024-04-29 02:24:20] Client 36639 is dequeued and connected. It is ready for operations.
+in here include time: [2024-04-29 02:24:24] Client 36639 requested list command.
+in here include time: [2024-04-29 02:24:24] Client requested to list the files in the server directory.
+in here include time: [2024-04-29 02:24:24] Client 36639 requested invalid command.
+in here include time: [2024-04-29 02:24:51] Server Started PID 36733...
+Waiting for clients...
+in here include time: [2024-04-29 02:24:55] Client 36752 is queued.
+in here include time: [2024-04-29 02:24:55] Client 36752 is dequeued and connected. It is ready for operations.
+in here include time: [2024-04-29 02:24:58] Client 36752 requested list command.
+in here include time: [2024-04-29 02:24:58] Client requested to list the files in the server directory.
+in here include time: [2024-04-29 02:24:58] Client 36752 requested invalid command.
+in here include time: [2024-04-29 02:25:41] Server Started PID 36814...
+Waiting for clients...
+in here include time: [2024-04-29 02:25:47] Client 36845 is queued.
+in here include time: [2024-04-29 02:25:47] Client 36845 is dequeued and connected. It is ready for operations.
+in here include time: [2024-04-29 02:25:51] Client 36845 requested list command.
+in here include time: [2024-04-29 02:25:51] Client requested to list the files in the server directory.
+in here include time: [2024-04-29 02:25:51] Client 36845 requested invalid command.
+in here include time: [2024-04-29 02:26:25] Server Started PID 36936...
+Waiting for clients...
+in here include time: [2024-04-29 02:26:29] Client 36955 is queued.
+in here include time: [2024-04-29 02:26:29] Client 36955 is dequeued and connected. It is ready for operations.
+in here include time: [2024-04-29 02:26:32] Client 36955 requested list command.
+in here include time: [2024-04-29 02:26:32] Client requested to list the files in the server directory.
+in here include time: [2024-04-29 02:26:32] Client 36955 requested invalid command.
+in here include time: [2024-04-29 02:29:39] Server Started PID 37040...
+Waiting for clients...
+in here include time: [2024-04-29 02:29:45] Client 37071 is queued.
+in here include time: [2024-04-29 02:29:45] Client 37071 is dequeued and connected. It is ready for operations.
+in here include time: [2024-04-29 02:29:49] Client 37071 requested list command.
+in here include time: [2024-04-29 02:29:49] Client requested to list the files in the server directory.
+in here include time: [2024-04-29 02:29:49] Client 37071 requested invalid command.
+in here include time: [2024-04-29 02:31:06] Server Started PID 37149...
+Waiting for clients...
+in here include time: [2024-04-29 02:31:10] Client 37165 is queued.
+in here include time: [2024-04-29 02:31:10] Client 37165 is dequeued and connected. It is ready for operations.
+in here include time: [2024-04-29 02:31:12] Client 37165 requested list command.
+in here include time: [2024-04-29 02:31:12] Client requested to list the files in the server directory.
+in here include time: [2024-04-29 02:31:12] Client 37165 requested invalid command.
+in here include time: [2024-04-29 02:31:23] Server Started PID 37229...
+Waiting for clients...
+in here include time: [2024-04-29 02:31:26] Client 37245 is queued.
+in here include time: [2024-04-29 02:31:26] Client 37245 is dequeued and connected. It is ready for operations.
+in here include time: [2024-04-29 02:31:29] Client 37245 requested list command.
+in here include time: [2024-04-29 02:31:29] Client requested to list the files in the server directory.
+in here include time: [2024-04-29 02:31:29] Client 37245 requested invalid command.
+in here include time: [2024-04-29 02:32:44] Server Started PID 37340...
+Waiting for clients...
+in here include time: [2024-04-29 02:32:48] Client 37356 is queued.
+in here include time: [2024-04-29 02:32:48] Client 37356 is dequeued and connected. It is ready for operations.
+in here include time: [2024-04-29 02:32:50] Client 37356 requested list command.
+in here include time: [2024-04-29 02:32:50] Client requested to list the files in the server directory.
+in here include time: [2024-04-29 02:32:50] Client 37356 requested invalid command.
+in here include time: [2024-04-29 02:33:12] Server Started PID 37418...
+Waiting for clients...
+in here include time: [2024-04-29 02:33:21] Server Started PID 37478...
+Waiting for clients...
+in here include time: [2024-04-29 02:33:27] Client 37507 is queued.
+in here include time: [2024-04-29 02:33:27] Client 37507 is dequeued and connected. It is ready for operations.
+in here include time: [2024-04-29 02:33:32] Client 37507 requested list command.
+in here include time: [2024-04-29 02:33:32] Client requested to list the files in the server directory.
+in here include time: [2024-04-29 02:33:32] Client 37507 requested invalid command.
+in here include time: [2024-04-29 02:35:45] Server Started PID 37615...
+Waiting for clients...
+in here include time: [2024-04-29 02:35:51] Client 37641 is queued.
+in here include time: [2024-04-29 02:35:51] Client 37641 is dequeued and connected. It is ready for operations.
+in here include time: [2024-04-29 02:35:53] Client 37641 requested list command.
+in here include time: [2024-04-29 02:35:53] Client requested to list the files in the server directory.
+in here include time: [2024-04-29 02:35:53] Client 37641 requested invalid command.
+in here include time: [2024-04-29 02:37:04] Server Started PID 37713...
+Waiting for clients...
+in here include time: [2024-04-29 02:37:07] Client 37729 is queued.
+in here include time: [2024-04-29 02:37:07] Client 37729 is dequeued and connected. It is ready for operations.
+in here include time: [2024-04-29 02:37:10] Client 37729 requested list command.
+in here include time: [2024-04-29 02:37:10] Client requested to list the files in the server directory.
+in here include time: [2024-04-29 02:37:10] Client 37729 requested invalid command.
+in here include time: [2024-04-29 02:39:20] Server Started PID 37861...
+Waiting for clients...
+in here include time: [2024-04-29 02:39:24] Server Started PID 37897...
+Waiting for clients...
+in here include time: [2024-04-29 02:39:29] Client 37913 is queued.
+in here include time: [2024-04-29 02:39:29] Client 37913 is dequeued and connected. It is ready for operations.
+in here include time: [2024-04-29 02:40:17] Server Started PID 37975...
+Waiting for clients...
+in here include time: [2024-04-29 02:40:21] Client 38001 is queued.
+in here include time: [2024-04-29 02:40:21] Client 38001 is dequeued and connected. It is ready for operations.
+in here include time: [2024-04-29 02:40:24] Client 38001 requested list command.
+in here include time: [2024-04-29 02:40:24] Client requested to list the files in the server directory.
+in here include time: [2024-04-29 02:40:24] Client 38001 requested invalid command.
+in here include time: [2024-04-29 02:41:44] Client 38001 requested list command.
+in here include time: [2024-04-29 02:41:44] Client requested to list the files in the server directory.
+in here include time: [2024-04-29 02:41:46] Client 38001 requested list command.
+in here include time: [2024-04-29 02:41:46] Client requested to list the files in the server directory.
+in here include time: [2024-04-29 02:41:51] Client 38001 requested readF command.
+in here include time: [2024-04-29 02:43:52] Server Started PID 38231...
+Waiting for clients...
+in here include time: [2024-04-29 02:43:56] Client 38257 is queued.
+in here include time: [2024-04-29 02:43:56] Client 38257 is dequeued and connected. It is ready for operations.
+in here include time: [2024-04-29 02:43:59] Client 38257 requested list command.
+in here include time: [2024-04-29 02:43:59] Client requested to list the files in the server directory.
+in here include time: [2024-04-29 02:43:59] Client 38257 requested invalid command.
+in here include time: [2024-04-29 02:44:12] Client 38257 requested list command.
+in here include time: [2024-04-29 02:44:12] Client requested to list the files in the server directory.
+in here include time: [2024-04-29 02:44:12] Client 38257 requested invalid command.
+in here include time: [2024-04-29 02:48:31] Server Started PID 38368...
+Waiting for clients...
+in here include time: [2024-04-29 02:48:36] Client 38396 is queued.
+in here include time: [2024-04-29 02:48:36] Client 38396 is dequeued and connected. It is ready for operations.
+in here include time: [2024-04-29 02:48:39] Client 38396 requested list command.
+in here include time: [2024-04-29 02:48:39] Client requested to list the files in the server directory.
+in here include time: [2024-04-29 02:48:39] Client 38396 requested invalid command.
+in here include time: [2024-04-29 02:48:49] Client 38396 requested list command.
+in here include time: [2024-04-29 02:48:49] Client requested to list the files in the server directory.
+in here include time: [2024-04-29 02:48:52] Client 38396 requested list command.
+in here include time: [2024-04-29 02:48:52] Client requested to list the files in the server directory.
+in here include time: [2024-04-29 02:48:52] Client 38396 requested list command.
+in here include time: [2024-04-29 02:48:52] Client requested to list the files in the server directory.
+in here include time: [2024-04-29 02:48:53] Client 38396 requested list command.
+in here include time: [2024-04-29 02:48:53] Client requested to list the files in the server directory.
+in here include time: [2024-04-29 02:49:03] Client 38396 requested list command.
+in here include time: [2024-04-29 02:49:03] Client requested to list the files in the server directory.
+in here include time: [2024-04-29 02:49:03] Client 38396 requested invalid command.
+in here include time: [2024-04-29 02:49:20] Client 38396 requested readF command.
+in here include time: [2024-04-29 02:50:05] Server Started PID 38561...
+Waiting for clients...
+in here include time: [2024-04-29 02:50:09] Client 38577 is queued.
+in here include time: [2024-04-29 02:50:09] Client 38577 is dequeued and connected. It is ready for operations.
+in here include time: [2024-04-29 02:50:11] Client 38577 requested list command.
+in here include time: [2024-04-29 02:50:11] Client requested to list the files in the server directory.
+in here include time: [2024-04-29 02:50:11] Client 38577 requested invalid command.
+in here include time: [2024-04-29 02:50:23] Client 38577 requested list command.
+in here include time: [2024-04-29 02:50:23] Client requested to list the files in the server directory.
+in here include time: [2024-04-29 02:50:23] Client 38577 requested invalid command.
+in here include time: [2024-04-29 02:54:55] Server Started PID 38733...
+Waiting for clients...
+in here include time: [2024-04-29 02:55:00] Client 38759 is queued.
+in here include time: [2024-04-29 02:55:00] Client 38759 is dequeued and connected. It is ready for operations.
+in here include time: [2024-04-29 02:55:30] Server Started PID 38848...
+Waiting for clients...
+in here include time: [2024-04-29 02:55:34] Client 38867 is queued.
+in here include time: [2024-04-29 02:55:34] Client 38867 is dequeued and connected. It is ready for operations.
+in here include time: [2024-04-29 02:55:35] Client 38867 requested list command.
+in here include time: [2024-04-29 02:55:35] Client requested to list the files in the server directory.
+in here include time: [2024-04-29 02:55:38] Client 38867 requested download command.
+in here include time: [2024-04-29 02:56:19] Server Started PID 38962...
+Waiting for clients...
+in here include time: [2024-04-29 02:56:23] Client 38978 is queued.
+in here include time: [2024-04-29 02:56:23] Client 38978 is dequeued and connected. It is ready for operations.
+in here include time: [2024-04-29 02:56:42] Server Started PID 39040...
+Waiting for clients...
+in here include time: [2024-04-29 02:56:47] Client 39066 is queued.
+in here include time: [2024-04-29 02:56:47] Client 39066 is dequeued and connected. It is ready for operations.
+in here include time: [2024-04-29 02:57:11] Server Started PID 39126...
+Waiting for clients...
+in here include time: [2024-04-29 02:57:14] Client 39142 is queued.
+in here include time: [2024-04-29 02:57:14] Client 39142 is dequeued and connected. It is ready for operations.
+in here include time: [2024-04-29 02:58:02] Server Started PID 39192...
+Waiting for clients...
+in here include time: [2024-04-29 02:58:07] Client 39208 is queued.
+in here include time: [2024-04-29 02:58:07] Client 39208 is dequeued and connected. It is ready for operations.
+in here include time: [2024-04-29 02:58:34] Server Started PID 39260...
+Waiting for clients...
+in here include time: [2024-04-29 02:58:41] Client 39294 is queued.
+in here include time: [2024-04-29 02:58:41] Client 39294 is dequeued and connected. It is ready for operations.
+in here include time: [2024-04-29 02:58:50] Server Started PID 39348...
+Waiting for clients...
+in here include time: [2024-04-29 02:58:55] Client 39382 is queued.
+in here include time: [2024-04-29 02:58:55] Client 39382 is dequeued and connected. It is ready for operations.
+in here include time: [2024-04-29 03:00:14] Server Started PID 39470...
+Waiting for clients...
+in here include time: [2024-04-29 03:00:24] Server Started PID 39524...
+Waiting for clients...
+in here include time: [2024-04-29 03:00:28] Client 39540 is queued.
+in here include time: [2024-04-29 03:00:28] Client 39540 is dequeued and connected. It is ready for operations.
+in here include time: [2024-04-29 03:00:30] Client 39540 requested list command.
+in here include time: [2024-04-29 03:00:30] Client requested to list the files in the server directory.
+in here include time: [2024-04-29 03:00:51] Server Started PID 39608...
+Waiting for clients...
+in here include time: [2024-04-29 03:00:55] Client 39624 is queued.
+in here include time: [2024-04-29 03:00:55] Client 39624 is dequeued and connected. It is ready for operations.
+in here include time: [2024-04-29 03:00:57] Client 39624 requested list command.
+in here include time: [2024-04-29 03:00:57] Client requested to list the files in the server directory.
+in here include time: [2024-04-29 03:01:02] Client 39624 requested list command.
+in here include time: [2024-04-29 03:01:02] Client requested to list the files in the server directory.
+in here include time: [2024-04-29 03:01:36] Server Started PID 39714...
+Waiting for clients...
+in here include time: [2024-04-29 03:01:40] Client 39730 is queued.
+in here include time: [2024-04-29 03:01:40] Client 39730 is dequeued and connected. It is ready for operations.
+in here include time: [2024-04-29 03:01:42] Client 39730 requested list command.
+in here include time: [2024-04-29 03:01:42] Client requested to list the files in the server directory.
+in here include time: [2024-04-29 03:01:42] Client 39730 requested invalid command.
+in here include time: [2024-04-29 03:06:01] Server Started PID 39845...
+Waiting for clients...
+in here include time: [2024-04-29 03:06:08] Client 39880 is queued.
+in here include time: [2024-04-29 03:06:08] Client 39880 is dequeued and connected. It is ready for operations.
+in here include time: [2024-04-29 03:06:10] Client 39880 requested list command.
+in here include time: [2024-04-29 03:06:10] Client requested to list the files in the server directory.
+in here include time: [2024-04-29 03:06:10] Client 39880 requested invalid command.
+in here include time: [2024-04-29 03:09:51] Server Started PID 39965...
+Waiting for clients...
+in here include time: [2024-04-29 03:09:55] Client 39982 is queued.
+in here include time: [2024-04-29 03:09:55] Client 39982 is dequeued and connected. It is ready for operations.
+in here include time: [2024-04-29 03:09:58] Client 39982 requested list command.
+in here include time: [2024-04-29 03:09:58] Client requested to list the files in the server directory.
+in here include time: [2024-04-29 03:09:58] Client 39982 requested invalid command.
+in here include time: [2024-04-29 03:10:13] Server Started PID 40042...
+Waiting for clients...
+in here include time: [2024-04-29 03:10:18] Client 40068 is queued.
+in here include time: [2024-04-29 03:10:18] Client 40068 is dequeued and connected. It is ready for operations.
+in here include time: [2024-04-29 03:10:20] Client 40068 requested list command.
+in here include time: [2024-04-29 03:10:20] Client requested to list the files in the server directory.
+in here include time: [2024-04-29 03:10:20] Client 40068 requested invalid command.
+in here include time: [2024-04-29 03:10:33] Server Started PID 40113...
+Waiting for clients...
+in here include time: [2024-04-29 03:10:37] Client 40130 is queued.
+in here include time: [2024-04-29 03:10:37] Client 40130 is dequeued and connected. It is ready for operations.
+in here include time: [2024-04-29 03:10:44] Client 40130 requested list command.
+in here include time: [2024-04-29 03:10:44] Client requested to list the files in the server directory.
+in here include time: [2024-04-29 03:10:44] Client 40130 requested invalid command.
+in here include time: [2024-04-29 03:11:57] Server Started PID 40220...
+Waiting for clients...
+in here include time: [2024-04-29 03:12:00] Client 40236 is queued.
+in here include time: [2024-04-29 03:12:00] Client 40236 is dequeued and connected. It is ready for operations.
+in here include time: [2024-04-29 03:12:02] Client 40236 requested list command.
+in here include time: [2024-04-29 03:12:02] Client requested to list the files in the server directory.
+in here include time: [2024-04-29 03:12:02] Client 40236 requested invalid command.
+in here include time: [2024-04-29 03:14:34] Server Started PID 40328...
+Waiting for clients...
+in here include time: [2024-04-29 03:14:38] Client 40346 is queued.
+in here include time: [2024-04-29 03:14:38] Client 40346 is dequeued and connected. It is ready for operations.
+in here include time: [2024-04-29 03:14:40] Client 40346 requested list command.
+in here include time: [2024-04-29 03:14:40] Client requested to list the files in the server directory.
+in here include time: [2024-04-29 03:14:40] Client 40346 requested invalid command.
+in here include time: [2024-04-29 03:28:18] Server Started PID 40486...
+Waiting for clients...
+in here include time: [2024-04-29 03:28:22] Client 40502 is queued.
+in here include time: [2024-04-29 03:28:22] Client 40502 is dequeued and connected. It is ready for operations.
+in here include time: [2024-04-29 03:28:24] Client 40502 requested invalid command.
+in here include time: [2024-04-29 03:28:40] Server Started PID 40563...
+Waiting for clients...
+in here include time: [2024-04-29 03:28:44] Client 40582 is queued.
+in here include time: [2024-04-29 03:28:44] Client 40582 is dequeued and connected. It is ready for operations.
+in here include time: [2024-04-29 03:28:45] Client 40582 requested invalid command.
+in here include time: [2024-04-29 03:29:14] Server Started PID 40655...
+Waiting for clients...
+in here include time: [2024-04-29 03:29:18] Client 40671 is queued.
+in here include time: [2024-04-29 03:29:18] Client 40671 is dequeued and connected. It is ready for operations.
+in here include time: [2024-04-29 03:29:21] Client 40671 requested list command.
+in here include time: [2024-04-29 03:29:21] Client requested to list the files in the server directory.
+in here include time: [2024-04-29 03:29:21] Client 40671 requested invalid command.
+in here include time: [2024-04-29 03:29:33] Client 40671 requested list command.
+in here include time: [2024-04-29 03:29:33] Client requested to list the files in the server directory.
+in here include time: [2024-04-29 03:29:40] Client 40671 requested readF command.
+in here include time: [2024-04-29 03:29:46] Client 40671 requested list command.
+in here include time: [2024-04-29 03:29:46] Client requested to list the files in the server directory.
+in here include time: [2024-04-29 03:29:46] Client 40671 requested invalid command.
+in here include time: [2024-04-29 03:31:09] Server Started PID 40818...
+Waiting for clients...
+in here include time: [2024-04-29 03:31:12] Client 40834 is queued.
+in here include time: [2024-04-29 03:31:12] Client 40834 is dequeued and connected. It is ready for operations.
+in here include time: [2024-04-29 03:31:14] Client 40834 requested list command.
+in here include time: [2024-04-29 03:31:14] Client requested to list the files in the server directory.
+in here include time: [2024-04-29 03:31:14] Client 40834 requested invalid command.
+in here include time: [2024-04-29 03:32:22] Server Started PID 40929...
+Waiting for clients...
+in here include time: [2024-04-29 03:32:25] Client 40945 is queued.
+in here include time: [2024-04-29 03:32:25] Client 40945 is dequeued and connected. It is ready for operations.
+in here include time: [2024-04-29 03:32:26] Client 40945 requested list command.
+in here include time: [2024-04-29 03:32:26] Client requested to list the files in the server directory.
+in here include time: [2024-04-29 03:32:32] Client 40945 requested list command.
+in here include time: [2024-04-29 03:32:32] Client requested to list the files in the server directory.
+in here include time: [2024-04-29 03:32:32] Client 40945 requested invalid command.
+in here include time: [2024-04-29 03:32:45] Client 40945 requested list command.
+in here include time: [2024-04-29 03:32:45] Client requested to list the files in the server directory.
+in here include time: [2024-04-29 03:32:45] Client 40945 requested invalid command.
+in here include time: [2024-04-29 03:33:43] Server Started PID 41082...
+Waiting for clients...
+in here include time: [2024-04-29 03:33:48] Client 41108 is queued.
+in here include time: [2024-04-29 03:33:48] Client 41108 is dequeued and connected. It is ready for operations.
+in here include time: [2024-04-29 03:33:50] Client 41108 requested list command.
+in here include time: [2024-04-29 03:33:50] Client requested to list the files in the server directory.
+in here include time: [2024-04-29 03:33:50] Client 41108 requested invalid command.
+in here include time: [2024-04-29 03:34:11] Client 41108 requested list command.
+in here include time: [2024-04-29 03:34:11] Client requested to list the files in the server directory.
+in here include time: [2024-04-29 03:34:11] Client 41108 requested invalid command.
+in here include time: [2024-04-29 03:34:32] Server Started PID 41200...
+Waiting for clients...
+in here include time: [2024-04-29 03:34:38] Client 41234 is queued.
+in here include time: [2024-04-29 03:34:38] Client 41234 is dequeued and connected. It is ready for operations.
+in here include time: [2024-04-29 03:34:41] Client 41234 requested list command.
+in here include time: [2024-04-29 03:34:41] Client requested to list the files in the server directory.
+in here include time: [2024-04-29 03:34:41] Client 41234 requested invalid command.
+in here include time: [2024-04-29 03:38:37] Client 41234 requested quit command.
+in here include time: [2024-04-29 03:38:37] Client 41234 is disconnected.
+in here include time: [2024-04-29 03:44:44] Server Started PID 41453...
+Waiting for clients...
+in here include time: [2024-04-29 03:44:49] Client 41469 is queued.
+in here include time: [2024-04-29 03:44:49] Client 41469 is dequeued and connected. It is ready for operations.
+in here include time: [2024-04-29 03:44:51] Client 41469 requested list command.
+in here include time: [2024-04-29 03:44:51] Client requested to list the files in the server directory.
+in here include time: [2024-04-29 03:44:51] Client 41469 requested invalid command.
+in here include time: [2024-04-29 03:47:22] Server Started PID 41586...
+Waiting for clients...
+in here include time: [2024-04-29 03:47:27] Client 41618 is queued.
+in here include time: [2024-04-29 03:47:27] Client 41618 is dequeued and connected. It is ready for operations.
+in here include time: [2024-04-29 03:47:32] Client 41618 requested download command.
+in here include time: [2024-04-29 03:47:56] Client 41618 requested list command.
+in here include time: [2024-04-29 03:47:56] Client requested to list the files in the server directory.
+in here include time: [2024-04-29 03:48:21] Server Started PID 41737...
+Waiting for clients...
+in here include time: [2024-04-29 03:48:25] Client 41763 is queued.
+in here include time: [2024-04-29 03:48:25] Client 41763 is dequeued and connected. It is ready for operations.
+in here include time: [2024-04-29 03:48:26] Client 41763 requested list command.
+in here include time: [2024-04-29 03:48:26] Client requested to list the files in the server directory.
+in here include time: [2024-04-29 03:48:31] Client 41763 requested download command.
+in here include time: [2024-04-29 03:48:37] Client 41763 requested list command.
+in here include time: [2024-04-29 03:48:37] Client requested to list the files in the server directory.
+in here include time: [2024-04-29 03:48:37] Client 41763 requested invalid command.
+in here include time: [2024-04-29 03:49:36] Server Started PID 41862...
+Waiting for clients...
+in here include time: [2024-04-29 03:49:40] Client 41888 is queued.
+in here include time: [2024-04-29 03:49:40] Client 41888 is dequeued and connected. It is ready for operations.
+in here include time: [2024-04-29 03:49:42] Client 41888 requested list command.
+in here include time: [2024-04-29 03:49:42] Client requested to list the files in the server directory.
+in here include time: [2024-04-29 03:49:47] Client 41888 requested list command.
+in here include time: [2024-04-29 03:49:47] Client requested to list the files in the server directory.
+in here include time: [2024-04-29 03:49:47] Client 41888 requested invalid command.
+in here include time: [2024-04-29 03:49:47] Client 41888 requested invalid command.
+in here include time: [2024-04-29 03:50:49] Server Started PID 42014...
+Waiting for clients...
+in here include time: [2024-04-29 03:50:52] Client 42033 is queued.
+in here include time: [2024-04-29 03:50:52] Client 42033 is dequeued and connected. It is ready for operations.
+in here include time: [2024-04-29 03:50:55] Client 42033 requested list command.
+in here include time: [2024-04-29 03:50:55] Client requested to list the files in the server directory.
+in here include time: [2024-04-29 03:50:55] Client 42033 requested invalid command.
+in here include time: [2024-04-29 03:50:55] Client 42033 requested invalid command.
+in here include time: [2024-04-29 03:50:55] Client 42033 requested invalid command.
+in here include time: [2024-04-29 03:50:55] Client 42033 requested invalid command.
+in here include time: [2024-04-29 03:50:55] Client 42033 requested invalid command.
+in here include time: [2024-04-29 03:50:55] Client 42033 requested invalid command.
+in here include time: [2024-04-29 03:50:55] Client 42033 requested invalid command.
+in here include time: [2024-04-29 03:50:55] Client 42033 requested invalid command.
+in here include time: [2024-04-29 03:50:55] Client 42033 requested invalid command.
+in here include time: [2024-04-29 03:50:55] Client 42033 requested invalid command.
+in here include time: [2024-04-29 03:50:55] Client 42033 requested invalid command.
+in here include time: [2024-04-29 03:50:55] Client 42033 requested invalid command.
+in here include time: [2024-04-29 03:50:55] Client 42033 requested invalid command.
+in here include time: [2024-04-29 03:50:55] Client 42033 requested invalid command.
+in here include time: [2024-04-29 03:50:55] Client 42033 requested invalid command.
+in here include time: [2024-04-29 03:50:55] Client 42033 requested invalid command.
+in here include time: [2024-04-29 03:50:55] Client 42033 requested invalid command.
+in here include time: [2024-04-29 03:51:22] Server Started PID 42134...
+Waiting for clients...
+in here include time: [2024-04-29 03:51:26] Client 42150 is queued.
+in here include time: [2024-04-29 03:51:26] Client 42150 is dequeued and connected. It is ready for operations.
+in here include time: [2024-04-29 03:51:29] Client 42150 requested list command.
+in here include time: [2024-04-29 03:51:29] Client requested to list the files in the server directory.
+in here include time: [2024-04-29 03:51:29] Client 42150 requested invalid command.
+in here include time: [2024-04-29 03:51:29] Client 42150 requested invalid command.
+in here include time: [2024-04-29 03:51:29] Client 42150 requested invalid command.
+in here include time: [2024-04-29 03:51:29] Client 42150 requested invalid command.
+in here include time: [2024-04-29 03:51:29] Client 42150 requested invalid command.
+in here include time: [2024-04-29 03:51:29] Client 42150 requested invalid command.
+in here include time: [2024-04-29 03:51:29] Client 42150 requested invalid command.
+in here include time: [2024-04-29 03:51:29] Client 42150 requested invalid command.
+in here include time: [2024-04-29 03:51:29] Client 42150 requested invalid command.
+in here include time: [2024-04-29 03:51:29] Client 42150 requested invalid command.
+in here include time: [2024-04-29 03:51:29] Client 42150 requested invalid command.
+in here include time: [2024-04-29 03:51:29] Client 42150 requested invalid command.
+in here include time: [2024-04-29 03:51:29] Client 42150 requested invalid command.
+in here include time: [2024-04-29 03:51:29] Client 42150 requested invalid command.
+in here include time: [2024-04-29 03:51:29] Client 42150 requested invalid command.
+in here include time: [2024-04-29 03:51:29] Client 42150 requested invalid command.
+in here include time: [2024-04-29 03:51:42] Server Started PID 42221...
+Waiting for clients...
+in here include time: [2024-04-29 03:51:46] Client 42237 is queued.
+in here include time: [2024-04-29 03:51:46] Client 42237 is dequeued and connected. It is ready for operations.
+in here include time: [2024-04-29 03:51:49] Client 42237 requested list command.
+in here include time: [2024-04-29 03:51:49] Client requested to list the files in the server directory.
+in here include time: [2024-04-29 03:51:49] Client 42237 requested download command.
+in here include time: [2024-04-29 03:51:49] Client 42237 requested download command.
+in here include time: [2024-04-29 03:51:49] Client 42237 requested download command.
+in here include time: [2024-04-29 03:51:49] Client 42237 requested download command.
+in here include time: [2024-04-29 03:52:10] Client 42237 requested download command.
+in here include time: [2024-04-29 03:52:12] Client 42237 requested download command.
+in here include time: [2024-04-29 03:52:12] Client 42237 requested download command.
+in here include time: [2024-04-29 03:52:12] Client 42237 requested download command.
+in here include time: [2024-04-29 03:52:12] Client 42237 requested download command.
+in here include time: [2024-04-29 03:52:12] Client 42237 requested download command.
+in here include time: [2024-04-29 03:52:12] Client 42237 requested download command.
+in here include time: [2024-04-29 03:52:12] Client 42237 requested download command.
+in here include time: [2024-04-29 03:52:12] Client 42237 requested download command.
+in here include time: [2024-04-29 03:52:12] Client 42237 requested download command.
+in here include time: [2024-04-29 03:52:12] Client 42237 requested download command.
+in here include time: [2024-04-29 03:52:12] Client 42237 requested list command.
+in here include time: [2024-04-29 03:52:12] Client requested to list the files in the server directory.
+in here include time: [2024-04-29 03:52:50] Server Started PID 42349...
+Waiting for clients...
+in here include time: [2024-04-29 03:53:09] Client 42384 is queued.
+in here include time: [2024-04-29 03:53:09] Client 42384 is dequeued and connected. It is ready for operations.
+in here include time: [2024-04-29 03:53:10] Client 42384 requested list command.
+in here include time: [2024-04-29 03:53:10] Client requested to list the files in the server directory.
+in here include time: [2024-04-29 03:53:13] Client 42384 requested download command.
+in here include time: [2024-04-29 03:53:18] Client 42384 requested list command.
+in here include time: [2024-04-29 03:53:18] Client requested to list the files in the server directory.
+in here include time: [2024-04-29 03:53:18] Client 42384 requested download command.
+in here include time: [2024-04-29 03:53:18] Client 42384 requested download command.
+in here include time: [2024-04-29 03:53:18] Client 42384 requested download command.
+in here include time: [2024-04-29 03:53:18] Client 42384 requested download command.
+in here include time: [2024-04-29 03:55:34] Server Started PID 42548...
+Waiting for clients...
+in here include time: [2024-04-29 03:55:44] Server Started PID 42611...
+Waiting for clients...
+in here include time: [2024-04-29 03:55:47] Client 42637 is queued.
+in here include time: [2024-04-29 03:55:47] Client 42637 is dequeued and connected. It is ready for operations.
+in here include time: [2024-04-29 03:55:50] Client 42637 requested list command.
+in here include time: [2024-04-29 03:55:50] Client requested to list the files in the server directory.
+in here include time: [2024-04-29 03:55:50] Client 42637 requested download command.
+in here include time: [2024-04-29 03:55:50] Client requested file main_server.o, but it does not exist.
+in here include time: [2024-04-29 03:55:50] Client 42637 requested download command.
+in here include time: [2024-04-29 03:55:50] Client requested file command_operation.o, but it does not exist.
+in here include time: [2024-04-29 03:56:54] Server Started PID 42711...
+Waiting for clients...
+in here include time: [2024-04-29 03:57:00] Client 42727 is queued.
+in here include time: [2024-04-29 03:57:00] Client 42727 is dequeued and connected. It is ready for operations.
+in here include time: [2024-04-29 03:57:03] Client 42727 requested list command.
+in here include time: [2024-04-29 03:57:03] Client requested to list the files in the server directory.
+in here include time: [2024-04-29 03:57:03] Client 42727 requested download command.
+in here include time: [2024-04-29 03:57:03] Client 42727 requested download command.
+in here include time: [2024-04-29 03:57:03] Client requested file command_operation.c, but it does not exist.
+in here include time: [2024-04-29 03:57:03] Client 42727 requested invalid command.
+in here include time: [2024-04-29 03:57:16] Server Started PID 42775...
+Waiting for clients...
+in here include time: [2024-04-29 03:57:20] Client 42791 is queued.
+in here include time: [2024-04-29 03:57:20] Client 42791 is dequeued and connected. It is ready for operations.
+in here include time: [2024-04-29 03:57:31] Client 42791 requested download command.
+in here include time: [2024-04-29 04:00:55] Server Started PID 42981...
+Waiting for clients...
+in here include time: [2024-04-29 04:01:00] Client 43012 is queued.
+in here include time: [2024-04-29 04:01:00] Client 43012 is dequeued and connected. It is ready for operations.
+in here include time: [2024-04-29 04:01:07] Client 43012 requested list command.
+in here include time: [2024-04-29 04:01:07] Client requested to list the files in the server directory.
+in here include time: [2024-04-29 04:01:07] Client 43012 requested download command.
+in here include time: [2024-04-29 04:01:07] Client requested file main_server.o, but it does not exist.
+in here include time: [2024-04-29 04:01:07] Client 43012 requested invalid command.
+in here include time: [2024-04-29 04:03:36] Server Started PID 43104...
+Waiting for clients...
+in here include time: [2024-04-29 04:03:50] Client 43135 is queued.
+in here include time: [2024-04-29 04:03:50] Client 43135 is dequeued and connected. It is ready for operations.
+in here include time: [2024-04-29 04:03:52] Client 43135 requested list command.
+in here include time: [2024-04-29 04:03:52] Client requested to list the files in the server directory.
+in here include time: [2024-04-29 04:03:52] Client 43135 requested download command.
+in here include time: [2024-04-29 04:03:52] Client 43135 requested download command.
+in here include time: [2024-04-29 04:03:52] Client requested file command_operation.c, but it does not exist.
+in here include time: [2024-04-29 04:03:52] Client 43135 requested invalid command.
+in here include time: [2024-04-29 04:07:44] Server Started PID 43223...
+Waiting for clients...
+in here include time: [2024-04-29 04:07:47] Client 43243 is queued.
+in here include time: [2024-04-29 04:07:47] Client 43243 is dequeued and connected. It is ready for operations.
+in here include time: [2024-04-29 04:07:50] Client 43243 requested list command.
+in here include time: [2024-04-29 04:07:50] Client requested to list the files in the server directory.
+in here include time: [2024-04-29 04:07:50] Client 43243 requested download command.
+in here include time: [2024-04-29 04:07:50] Client requested file main_server., but it does not exist.
+in here include time: [2024-04-29 04:07:50] Client 43243 requested download command.
+in here include time: [2024-04-29 04:07:50] Client requested file command_operation., but it does not exist.
+in here include time: [2024-04-29 04:07:50] Client 43243 requested invalid command.
+in here include time: [2024-04-29 04:07:50] Client 43243 requested invalid command.
+in here include time: [2024-04-29 04:07:50] Client 43243 requested invalid command.
+in here include time: [2024-04-29 04:07:50] Client 43243 requested invalid command.
+in here include time: [2024-04-29 04:07:50] Client 43243 requested invalid command.
+in here include time: [2024-04-29 04:09:14] Server Started PID 43355...
+Waiting for clients...
+in here include time: [2024-04-29 04:09:19] Client 43389 is queued.
+in here include time: [2024-04-29 04:09:19] Client 43389 is dequeued and connected. It is ready for operations.
+in here include time: [2024-04-29 04:09:22] Client 43389 requested list command.
+in here include time: [2024-04-29 04:09:22] Client requested to list the files in the server directory.
+in here include time: [2024-04-29 04:10:05] Server Started PID 43486...
+Waiting for clients...
+in here include time: [2024-04-29 04:10:10] Client 43512 is queued.
+in here include time: [2024-04-29 04:10:10] Client 43512 is dequeued and connected. It is ready for operations.
+in here include time: [2024-04-29 04:10:14] Client 43512 requested list command.
+in here include time: [2024-04-29 04:10:14] Client requested to list the files in the server directory.
+in here include time: [2024-04-29 04:13:16] Server Started PID 43591...
+Waiting for clients...
+in here include time: [2024-04-29 04:13:20] Client 43607 is queued.
+in here include time: [2024-04-29 04:13:20] Client 43607 is dequeued and connected. It is ready for operations.
+in here include time: [2024-04-29 04:13:23] Client 43607 requested list command.
+in here include time: [2024-04-29 04:13:23] Client requested to list the files in the server directory.
+in here include time: [2024-04-29 04:13:45] Client 43607 requested list command.
+in here include time: [2024-04-29 04:13:45] Client requested to list the files in the server directory.
+in here include time: [2024-04-29 04:13:51] Client 43607 requested list command.
+in here include time: [2024-04-29 04:13:51] Client requested to list the files in the server directory.
+in here include time: [2024-04-29 04:14:28] Server Started PID 43703...
+Waiting for clients...
+in here include time: [2024-04-29 04:14:31] Client 43719 is queued.
+in here include time: [2024-04-29 04:14:31] Client 43719 is dequeued and connected. It is ready for operations.
+in here include time: [2024-04-29 04:14:34] Client 43719 requested list command.
+in here include time: [2024-04-29 04:14:34] Client requested to list the files in the server directory.
+in here include time: [2024-04-29 04:15:22] Server Started PID 43778...
+Waiting for clients...
+in here include time: [2024-04-29 04:15:26] Client 43794 is queued.
+in here include time: [2024-04-29 04:15:26] Client 43794 is dequeued and connected. It is ready for operations.
+in here include time: [2024-04-29 04:15:28] Client 43794 requested list command.
+in here include time: [2024-04-29 04:15:28] Client requested to list the files in the server directory.
+in here include time: [2024-04-29 04:16:03] Server Started PID 43860...
+Waiting for clients...
+in here include time: [2024-04-29 04:16:07] Client 43876 is queued.
+in here include time: [2024-04-29 04:16:07] Client 43876 is dequeued and connected. It is ready for operations.
+in here include time: [2024-04-29 04:16:10] Client 43876 requested list command.
+in here include time: [2024-04-29 04:16:10] Client requested to list the files in the server directory.
+in here include time: [2024-04-29 04:16:10] Client 43876 requested download command.
+in here include time: [2024-04-29 04:16:10] Client 43876 requested download command.
+in here include time: [2024-04-29 04:16:10] Client 43876 requested download command.
+in here include time: [2024-04-29 04:16:10] Client requested file client_list.h, but it does not exist.
+in here include time: [2024-04-29 04:16:10] Client 43876 requested invalid command.
+in here include time: [2024-04-29 04:17:43] Server Started PID 43941...
+Waiting for clients...
+in here include time: [2024-04-29 04:17:47] Client 43957 is queued.
+in here include time: [2024-04-29 04:17:47] Client 43957 is dequeued and connected. It is ready for operations.
+in here include time: [2024-04-29 04:17:50] Client 43957 requested list command.
+in here include time: [2024-04-29 04:17:50] Client requested to list the files in the server directory.
+in here include time: [2024-04-29 04:17:50] Client 43957 requested download command.
+in here include time: [2024-04-29 04:17:50] Client requested file main_server.o, but it does not exist.
+in here include time: [2024-04-29 04:17:50] Client 43957 requested download command.
+in here include time: [2024-04-29 04:17:50] Client requested file command_operation.o, but it does not exist.
+in here include time: [2024-04-29 04:19:13] Server Started PID 44035...
+Waiting for clients...
+in here include time: [2024-04-29 04:19:17] Client 44054 is queued.
+in here include time: [2024-04-29 04:19:17] Client 44054 is dequeued and connected. It is ready for operations.
+in here include time: [2024-04-29 04:19:20] Client 44054 requested list command.
+in here include time: [2024-04-29 04:19:20] Client requested to list the files in the server directory.
+in here include time: [2024-04-29 04:19:20] Client 44054 requested download command.
+in here include time: [2024-04-29 04:19:20] Client 44054 requested download command.
+in here include time: [2024-04-29 04:19:20] Client 44054 requested download command.
+in here include time: [2024-04-29 04:19:20] Client requested file client_list.h, but it does not exist.
+in here include time: [2024-04-29 04:19:20] Client 44054 requested invalid command.
+in here include time: [2024-04-29 04:21:43] Server Started PID 44162...
+Waiting for clients...
+in here include time: [2024-04-29 04:21:47] Client 44178 is queued.
+in here include time: [2024-04-29 04:21:47] Client 44178 is dequeued and connected. It is ready for operations.
+in here include time: [2024-04-29 04:21:49] Client 44178 requested list command.
+in here include time: [2024-04-29 04:21:49] Client requested to list the files in the server directory.
+in here include time: [2024-04-29 04:21:49] Client 44178 requested download command.
+in here include time: [2024-04-29 04:21:49] Client 44178 requested download command.
+in here include time: [2024-04-29 04:21:49] Client 44178 requested download command.
+in here include time: [2024-04-29 04:21:49] Client 44178 requested download command.
+in here include time: [2024-04-29 04:21:49] Client 44178 requested download command.
+in here include time: [2024-04-29 04:21:49] Client 44178 requested download command.
+in here include time: [2024-04-29 04:21:49] Client requested file client_list.o, but it does not exist.
+in here include time: [2024-04-29 04:22:19] Server Started PID 44229...
+Waiting for clients...
+in here include time: [2024-04-29 04:22:24] Client 44248 is queued.
+in here include time: [2024-04-29 04:22:24] Client 44248 is dequeued and connected. It is ready for operations.
+in here include time: [2024-04-29 04:22:26] Client 44248 requested list command.
+in here include time: [2024-04-29 04:22:26] Client requested to list the files in the server directory.
+in here include time: [2024-04-29 04:22:26] Client 44248 requested download command.
+in here include time: [2024-04-29 04:22:26] Client 44248 requested download command.
+in here include time: [2024-04-29 04:22:26] Client requested file command_operation.c, but it does not exist.
+in here include time: [2024-04-29 04:22:26] Client 44248 requested invalid command.
+in here include time: [2024-04-29 04:22:26] Client 44248 requested download command.
+in here include time: [2024-04-29 04:22:26] Client 44248 requested download command.
+in here include time: [2024-04-29 04:22:26] Client requested file server_util.o, but it does not exist.
+in here include time: [2024-04-29 04:22:26] Client 44248 requested invalid command.
+in here include time: [2024-04-29 04:25:14] Server Started PID 44322...
+Waiting for clients...
+in here include time: [2024-04-29 04:25:16] Server Started PID 44341...
+Waiting for clients...
+in here include time: [2024-04-29 04:25:20] Client 44367 is queued.
+in here include time: [2024-04-29 04:25:20] Client 44367 is dequeued and connected. It is ready for operations.
+in here include time: [2024-04-29 04:25:23] Client 44367 requested list command.
+in here include time: [2024-04-29 04:25:23] Client requested to list the files in the server directory.
+in here include time: [2024-04-29 04:25:23] Client 44367 requested download command.
+in here include time: [2024-04-29 04:25:23] Client 44367 requested download command.
+in here include time: [2024-04-29 04:25:23] Client 44367 requested download command.
+in here include time: [2024-04-29 04:25:23] Client 44367 requested download command.
+in here include time: [2024-04-29 04:25:23] Client requested file command_operation.h, but it does not exist.
+in here include time: [2024-04-29 04:25:23] Client 44367 requested invalid command.
+in here include time: [2024-04-29 04:28:14] Server Started PID 44427...
+Waiting for clients...
+in here include time: [2024-04-29 04:28:18] Client 44448 is queued.
+in here include time: [2024-04-29 04:28:18] Client 44448 is dequeued and connected. It is ready for operations.
+in here include time: [2024-04-29 04:28:20] Client 44448 requested list command.
+in here include time: [2024-04-29 04:28:20] Client requested to list the files in the server directory.
+in here include time: [2024-04-29 04:28:20] Client 44448 requested download command.
+in here include time: [2024-04-29 04:28:20] Client 44448 requested download command.
+in here include time: [2024-04-29 04:28:20] Client 44448 requested download command.
+in here include time: [2024-04-29 04:28:20] Client 44448 requested download command.
+in here include time: [2024-04-29 04:28:20] Client 44448 requested download command.
+in here include time: [2024-04-29 04:28:21] Client 44448 requested download command.
+in here include time: [2024-04-29 04:28:21] Client requested file client_list.o, but it does not exist.
+in here include time: [2024-04-29 04:29:40] Client 44448 requested invalid command.
+in here include time: [2024-04-29 04:29:47] Client 44448 requested list command.
+in here include time: [2024-04-29 04:29:47] Client requested to list the files in the server directory.
+in here include time: [2024-04-29 04:29:48] Client 44448 requested list command.
+in here include time: [2024-04-29 04:29:48] Client requested to list the files in the server directory.
+in here include time: [2024-04-29 04:33:14] Server Started PID 44685...
+Waiting for clients...
+in here include time: [2024-04-29 04:33:20] Client 44716 is queued.
+in here include time: [2024-04-29 04:33:20] Client 44716 is dequeued and connected. It is ready for operations.
+in here include time: [2024-04-29 04:33:23] Client 44716 requested list command.
+in here include time: [2024-04-29 04:33:23] Client requested to list the files in the server directory.
+in here include time: [2024-04-29 04:33:23] Client 44716 requested download command.
+in here include time: [2024-04-29 04:33:23] Client requested file main_server.o, but it does not exist.
+in here include time: [2024-04-29 04:33:23] Client 44716 requested download command.
+in here include time: [2024-04-29 04:33:23] Client requested file command_operation.h, but it does not exist.
+in here include time: [2024-04-29 04:33:23] Client 44716 requested download command.
+in here include time: [2024-04-29 04:33:23] Client requested file client_list.o, but it does not exist.
+in here include time: [2024-04-29 04:33:23] Client 44716 requested download command.
+in here include time: [2024-04-29 04:33:23] Client requested file emrenin.txt, but it does not exist.
+in here include time: [2024-04-29 04:33:23] Client 44716 requested download command.
+in here include time: [2024-04-29 04:33:23] Client requested file client_list.c, but it does not exist.
+in here include time: [2024-04-29 04:33:23] Client 44716 requested download command.
+in here include time: [2024-04-29 04:33:23] Client requested file main_server.c, but it does not exist.
+in here include time: [2024-04-29 04:34:00] Server Started PID 44785...
+Waiting for clients...
+in here include time: [2024-04-29 04:34:04] Client 44804 is queued.
+in here include time: [2024-04-29 04:34:04] Client 44804 is dequeued and connected. It is ready for operations.
+in here include time: [2024-04-29 04:34:06] Client 44804 requested list command.
+in here include time: [2024-04-29 04:34:06] Client requested to list the files in the server directory.
+in here include time: [2024-04-29 04:34:06] Client 44804 requested download command.
+in here include time: [2024-04-29 04:34:06] Client 44804 requested invalid command.
+in here include time: [2024-04-29 04:34:14] Client 44804 requested list command.
+in here include time: [2024-04-29 04:34:14] Client requested to list the files in the server directory.
+in here include time: [2024-04-29 04:34:15] Client 44804 requested list command.
+in here include time: [2024-04-29 04:34:15] Client requested to list the files in the server directory.
+in here include time: [2024-04-29 04:34:15] Client 44804 requested list command.
+in here include time: [2024-04-29 04:34:15] Client requested to list the files in the server directory.
+in here include time: [2024-04-29 04:34:16] Client 44804 requested list command.
+in here include time: [2024-04-29 04:34:16] Client requested to list the files in the server directory.
+in here include time: [2024-04-29 04:34:18] Client 44804 requested list command.
+in here include time: [2024-04-29 04:34:18] Client requested to list the files in the server directory.
+in here include time: [2024-04-29 04:34:18] Client 44804 requested download command.
+in here include time: [2024-04-29 04:34:18] Client 44804 requested invalid command.
+in here include time: [2024-04-29 04:35:10] Server Started PID 44949...
+Waiting for clients...
+in here include time: [2024-04-29 04:35:14] Client 44965 is queued.
+in here include time: [2024-04-29 04:35:14] Client 44965 is dequeued and connected. It is ready for operations.
+in here include time: [2024-04-29 04:35:16] Client 44965 requested list command.
+in here include time: [2024-04-29 04:35:16] Client requested to list the files in the server directory.
+in here include time: [2024-04-29 04:35:16] Client 44965 requested download command.
+in here include time: [2024-04-29 04:35:16] Client 44965 requested download command.
+in here include time: [2024-04-29 04:35:16] Client 44965 requested download command.
+in here include time: [2024-04-29 04:35:16] Client 44965 requested download command.
+in here include time: [2024-04-29 04:35:16] Client 44965 requested download command.
+in here include time: [2024-04-29 04:35:16] Client 44965 requested download command.
+in here include time: [2024-04-29 04:35:16] Client 44965 requested download command.
+in here include time: [2024-04-29 04:35:16] Client requested file server_util.o, but it does not exist.
+in here include time: [2024-04-29 04:35:16] Client 44965 requested invalid command.
+in here include time: [2024-04-29 04:35:16] Client 44965 requested download command.
+in here include time: [2024-04-29 04:35:16] Client 44965 requested download command.
+in here include time: [2024-04-29 04:35:16] Client 44965 requested download command.
+in here include time: [2024-04-29 04:35:16] Client requested file client_list.c, but it does not exist.
+in here include time: [2024-04-29 04:35:21] Client 44965 requested quit command.
+in here include time: [2024-04-29 04:35:21] Client 44965 is disconnected.
+in here include time: [2024-04-29 12:12:03] Server Started PID 46361...
+Waiting for clients...
+in here include time: [2024-04-29 12:12:09] Client 46387 is queued.
+in here include time: [2024-04-29 12:12:09] Client 46387 is dequeued and connected. It is ready for operations.
+in here include time: [2024-04-29 12:12:12] Client 46387 requested list command.
+in here include time: [2024-04-29 12:12:12] Client requested to list the files in the server directory.
+in here include time: [2024-04-29 12:12:12] Client 46387 requested download command.
+in here include time: [2024-04-29 12:12:12] Client requested file main_server.o, but it does not exist.
+in here include time: [2024-04-29 12:12:12] Client 46387 requested download command.
+in here include time: [2024-04-29 12:12:12] Client requested file client_list.o, but it does not exist.
+in here include time: [2024-04-29 12:12:12] Client 46387 requested download command.
+in here include time: [2024-04-29 12:12:12] Client requested file command_operation.o, but it does not exist.
+in here include time: [2024-04-29 12:14:53] Server Started PID 46452...
+Waiting for clients...
+in here include time: [2024-04-29 12:14:57] Client 46470 is queued.
+in here include time: [2024-04-29 12:14:57] Client 46470 is dequeued and connected. It is ready for operations.
+in here include time: [2024-04-29 12:15:02] Client 46470 requested list command.
+in here include time: [2024-04-29 12:15:02] Client requested to list the files in the server directory.
+in here include time: [2024-04-29 12:15:02] Client 46470 requested download command.
+in here include time: [2024-04-29 12:15:02] Client requested file main_server.o, but it does not exist.
+in here include time: [2024-04-29 12:15:02] Client 46470 requested download command.
+in here include time: [2024-04-29 12:15:02] Client 46470 requested download command.
+in here include time: [2024-04-29 12:15:02] Client 46470 requested download command.
+in here include time: [2024-04-29 12:15:02] Client 46470 requested download command.
+in here include time: [2024-04-29 12:15:02] Client 46470 requested download command.
+in here include time: [2024-04-29 12:15:02] Client 46470 requested download command.
+in here include time: [2024-04-29 12:15:02] Client 46470 requested download command.
+in here include time: [2024-04-29 12:15:02] Client 46470 requested download command.
+in here include time: [2024-04-29 12:15:02] Client 46470 requested download command.
+in here include time: [2024-04-29 12:15:02] Client 46470 requested download command.
+in here include time: [2024-04-29 12:15:02] Client 46470 requested download command.
+in here include time: [2024-04-29 12:15:33] Client 46470 requested list command.
+in here include time: [2024-04-29 12:15:33] Client requested to list the files in the server directory.
+in here include time: [2024-04-29 12:15:37] Client 46470 requested list command.
+in here include time: [2024-04-29 12:15:37] Client requested to list the files in the server directory.
+in here include time: [2024-04-29 12:15:37] Client 46470 requested download command.
+in here include time: [2024-04-29 12:15:37] Client requested file main_server.o, but it does not exist.
+in here include time: [2024-04-29 12:15:37] Client 46470 requested download command.
+in here include time: [2024-04-29 12:15:37] Client requested file client_list.h, but it does not exist.
+in here include time: [2024-04-29 12:15:37] Client 46470 requested invalid command.
+in here include time: [2024-04-29 12:18:50] Server Started PID 46655...
+Waiting for clients...
+in here include time: [2024-04-29 12:18:54] Client 46671 is queued.
+in here include time: [2024-04-29 12:18:54] Client 46671 is dequeued and connected. It is ready for operations.
+in here include time: [2024-04-29 12:18:56] Client 46671 requested list command.
+in here include time: [2024-04-29 12:18:56] Client requested to list the files in the server directory.
+in here include time: [2024-04-29 12:18:56] Client 46671 requested download command.
+in here include time: [2024-04-29 12:18:56] Client 46671 requested download command.
+in here include time: [2024-04-29 12:18:56] Client 46671 requested download command.
+in here include time: [2024-04-29 12:18:56] Client 46671 requested download command.
+in here include time: [2024-04-29 12:18:56] Client 46671 requested download command.
+in here include time: [2024-04-29 12:18:56] Client 46671 requested download command.
+in here include time: [2024-04-29 12:18:56] Client 46671 requested download command.
+in here include time: [2024-04-29 12:18:56] Client 46671 requested download command.
+in here include time: [2024-04-29 12:18:56] Client 46671 requested download command.
+in here include time: [2024-04-29 12:18:56] Client 46671 requested download command.
+in here include time: [2024-04-29 12:18:56] Client 46671 requested download command.
+in here include time: [2024-04-29 12:18:56] Client 46671 requested download command.
+in here include time: [2024-04-29 12:18:56] Client 46671 requested download command.
+in here include time: [2024-04-29 12:18:56] Client 46671 requested download command.
+in here include time: [2024-04-29 12:18:56] Client 46671 requested download command.
+in here include time: [2024-04-29 12:19:22] Server Started PID 46725...
+Waiting for clients...
+in here include time: [2024-04-29 12:19:25] Client 46744 is queued.
+in here include time: [2024-04-29 12:19:25] Client 46744 is dequeued and connected. It is ready for operations.
+in here include time: [2024-04-29 12:19:28] Client 46744 requested list command.
+in here include time: [2024-04-29 12:19:28] Client requested to list the files in the server directory.
+in here include time: [2024-04-29 12:19:28] Client 46744 requested download command.
+in here include time: [2024-04-29 12:19:28] Client requested file main_server.o, but it does not exist.
+in here include time: [2024-04-29 12:19:28] Client 46744 requested invalid command.
+in here include time: [2024-04-29 12:20:35] Server Started PID 46814...
+Waiting for clients...
+in here include time: [2024-04-29 12:20:38] Client 46830 is queued.
+in here include time: [2024-04-29 12:20:38] Client 46830 is dequeued and connected. It is ready for operations.
+in here include time: [2024-04-29 12:20:41] Client 46830 requested list command.
+in here include time: [2024-04-29 12:20:41] Client requested to list the files in the server directory.
+in here include time: [2024-04-29 12:20:41] Client 46830 requested download command.
+in here include time: [2024-04-29 12:20:41] Client requested file main_server.o, but it does not exist.
+in here include time: [2024-04-29 12:20:41] Client 46830 requested invalid command.
+in here include time: [2024-04-29 12:21:35] Server Started PID 46888...
+Waiting for clients...
+in here include time: [2024-04-29 12:21:40] Client 46904 is queued.
+in here include time: [2024-04-29 12:21:40] Client 46904 is dequeued and connected. It is ready for operations.
+in here include time: [2024-04-29 12:21:43] Client 46904 requested list command.
+in here include time: [2024-04-29 12:21:43] Client requested to list the files in the server directory.
+in here include time: [2024-04-29 12:21:43] Client 46904 requested download command.
+in here include time: [2024-04-29 12:21:43] Client 46904 requested download command.
+in here include time: [2024-04-29 12:21:43] Client requested file command_operation.c, but it does not exist.
+in here include time: [2024-04-29 12:21:43] Client 46904 requested invalid command.
+in here include time: [2024-04-29 12:21:56] Server Started PID 46946...
+Waiting for clients...
+in here include time: [2024-04-29 12:22:10] Client 46978 is queued.
+in here include time: [2024-04-29 12:22:10] Client 46978 is dequeued and connected. It is ready for operations.
+in here include time: [2024-04-29 12:22:13] Client 46978 requested list command.
+in here include time: [2024-04-29 12:22:13] Client requested to list the files in the server directory.
+in here include time: [2024-04-29 12:22:13] Client 46978 requested download command.
+in here include time: [2024-04-29 12:22:13] Client requested file main_server.o, but it does not exist.
+in here include time: [2024-04-29 12:22:13] Client 46978 requested invalid command.
+in here include time: [2024-04-29 12:26:14] Server Started PID 47066...
+Waiting for clients...
+in here include time: [2024-04-29 12:26:22] Client 47099 is queued.
+in here include time: [2024-04-29 12:26:22] Client 47099 is dequeued and connected. It is ready for operations.
+in here include time: [2024-04-29 12:26:23] Client 47099 requested list command.
+in here include time: [2024-04-29 12:26:23] Client requested to list the files in the server directory.
+in here include time: [2024-04-29 12:26:23] Client 47099 requested list command.
+in here include time: [2024-04-29 12:26:23] Client requested to list the files in the server directory.
+in here include time: [2024-04-29 12:26:24] Client 47099 requested list command.
+in here include time: [2024-04-29 12:26:24] Client requested to list the files in the server directory.
+in here include time: [2024-04-29 12:26:24] Client 47099 requested list command.
+in here include time: [2024-04-29 12:26:24] Client requested to list the files in the server directory.
+in here include time: [2024-04-29 12:26:25] Client 47099 requested list command.
+in here include time: [2024-04-29 12:26:25] Client requested to list the files in the server directory.
+in here include time: [2024-04-29 12:26:28] Client 47099 requested download command.
+in here include time: [2024-04-29 12:26:34] Client 47099 requested list command.
+in here include time: [2024-04-29 12:26:34] Client requested to list the files in the server directory.
+in here include time: [2024-04-29 12:26:34] Client 47099 requested download command.
+in here include time: [2024-04-29 12:26:34] Client requested file main_server.o, but it does not exist.
+in here include time: [2024-04-29 12:26:34] Client 47099 requested invalid command.
+in here include time: [2024-04-29 12:27:05] Server Started PID 47196...
+Waiting for clients...
+in here include time: [2024-04-29 12:27:07] Server Started PID 47214...
+Waiting for clients...
+in here include time: [2024-04-29 12:27:09] Client 47230 is queued.
+in here include time: [2024-04-29 12:27:09] Client 47230 is dequeued and connected. It is ready for operations.
+in here include time: [2024-04-29 12:27:11] Client 47230 requested list command.
+in here include time: [2024-04-29 12:27:11] Client requested to list the files in the server directory.
+in here include time: [2024-04-29 12:27:11] Client 47230 requested download command.
+in here include time: [2024-04-29 12:27:11] Client requested file main_server.o, but it does not exist.
+in here include time: [2024-04-29 12:27:11] Client 47230 requested download command.
+in here include time: [2024-04-29 12:27:11] Client requested file client_list.h, but it does not exist.
+in here include time: [2024-04-29 12:27:11] Client 47230 requested invalid command.
+in here include time: [2024-04-29 12:31:58] Server Started PID 47442...
+Waiting for clients...
+in here include time: [2024-04-29 12:32:01] Client 47458 is queued.
+in here include time: [2024-04-29 12:32:01] Client 47458 is dequeued and connected. It is ready for operations.
+in here include time: [2024-04-29 12:32:03] Client 47458 requested list command.
+in here include time: [2024-04-29 12:32:03] Client requested to list the files in the server directory.
+in here include time: [2024-04-29 12:32:03] Client 47458 requested download command.
+in here include time: [2024-04-29 12:32:03] Client requested file main_server.o, but it does not exist.
+in here include time: [2024-04-29 12:32:03] Client 47458 requested invalid command.
+in here include time: [2024-04-29 12:36:09] Server Started PID 47549...
+Waiting for clients...
+in here include time: [2024-04-29 12:36:13] Client 47565 is queued.
+in here include time: [2024-04-29 12:36:13] Client 47565 is dequeued and connected. It is ready for operations.
+in here include time: [2024-04-29 12:36:15] Client 47565 requested list command.
+in here include time: [2024-04-29 12:36:15] Client requested to list the files in the server directory.
+in here include time: [2024-04-29 12:36:15] Client 47565 requested download command.
+in here include time: [2024-04-29 12:36:15] Client requested file main_server.o, but it does not exist.
+in here include time: [2024-04-29 12:36:16] Client 47565 requested invalid command.
+in here include time: [2024-04-29 12:36:16] Client 47565 requested invalid command.
+in here include time: [2024-04-29 12:36:17] Client 47565 requested download command.
+in here include time: [2024-04-29 12:36:18] Client 47565 requested download command.
+in here include time: [2024-04-29 12:36:19] Client 47565 requested download command.
+in here include time: [2024-04-29 12:36:20] Client 47565 requested download command.
+in here include time: [2024-04-29 12:36:21] Client 47565 requested download command.
+in here include time: [2024-04-29 12:36:22] Client 47565 requested download command.
+in here include time: [2024-04-29 12:36:23] Client 47565 requested download command.
+in here include time: [2024-04-29 12:36:24] Client 47565 requested download command.
+in here include time: [2024-04-29 12:36:25] Client 47565 requested download command.
+in here include time: [2024-04-29 12:36:26] Client 47565 requested download command.
+in here include time: [2024-04-29 12:36:27] Client 47565 requested download command.
+in here include time: [2024-04-29 12:36:28] Client 47565 requested download command.
+in here include time: [2024-04-29 12:36:29] Client 47565 requested download command.
+in here include time: [2024-04-29 12:37:28] Server Started PID 47749...
+Waiting for clients...
+in here include time: [2024-04-29 12:37:35] Client 47780 is queued.
+in here include time: [2024-04-29 12:37:35] Client 47780 is dequeued and connected. It is ready for operations.
+in here include time: [2024-04-29 12:37:37] Client 47780 requested list command.
+in here include time: [2024-04-29 12:37:37] Client requested to list the files in the server directory.
+in here include time: [2024-04-29 12:37:38] Client 47780 requested download command.
+in here include time: [2024-04-29 12:37:39] Client 47780 requested download command.
+in here include time: [2024-04-29 12:37:40] Client 47780 requested download command.
+in here include time: [2024-04-29 12:37:41] Client 47780 requested download command.
+in here include time: [2024-04-29 12:37:42] Client 47780 requested download command.
+in here include time: [2024-04-29 12:37:44] Client 47780 requested download command.
+in here include time: [2024-04-29 12:37:45] Client 47780 requested download command.
+in here include time: [2024-04-29 12:37:46] Client 47780 requested download command.
+in here include time: [2024-04-29 12:37:47] Client 47780 requested download command.
+in here include time: [2024-04-29 12:37:48] Client 47780 requested download command.
+in here include time: [2024-04-29 12:37:49] Client 47780 requested download command.
+in here include time: [2024-04-29 12:37:50] Client 47780 requested download command.
+in here include time: [2024-04-29 12:37:51] Client 47780 requested download command.
+in here include time: [2024-04-29 12:37:52] Client 47780 requested download command.
+in here include time: [2024-04-29 12:37:53] Client 47780 requested download command.
+in here include time: [2024-04-29 12:37:58] Client 47780 requested list command.
+in here include time: [2024-04-29 12:37:58] Client requested to list the files in the server directory.
+in here include time: [2024-04-29 12:37:59] Client 47780 requested download command.
+in here include time: [2024-04-29 12:38:00] Client 47780 requested download command.
+in here include time: [2024-04-29 12:38:01] Client 47780 requested download command.
+in here include time: [2024-04-29 12:38:02] Client 47780 requested download command.
+in here include time: [2024-04-29 12:38:03] Client 47780 requested download command.
+in here include time: [2024-04-29 12:38:04] Client 47780 requested download command.
+in here include time: [2024-04-29 12:38:05] Client 47780 requested download command.
+in here include time: [2024-04-29 12:38:06] Client 47780 requested download command.
+in here include time: [2024-04-29 12:38:07] Client 47780 requested download command.
+in here include time: [2024-04-29 12:38:08] Client 47780 requested download command.
+in here include time: [2024-04-29 12:38:09] Client 47780 requested download command.
+in here include time: [2024-04-29 12:38:10] Client 47780 requested download command.
+in here include time: [2024-04-29 12:38:11] Client 47780 requested download command.
+in here include time: [2024-04-29 12:38:12] Client 47780 requested download command.
+in here include time: [2024-04-29 12:38:13] Client 47780 requested download command.
+in here include time: [2024-04-29 12:38:46] Server Started PID 47991...
+Waiting for clients...
+in here include time: [2024-04-29 12:38:52] Client 48025 is queued.
+in here include time: [2024-04-29 12:38:52] Client 48025 is dequeued and connected. It is ready for operations.
+in here include time: [2024-04-29 12:38:54] Client 48025 requested list command.
+in here include time: [2024-04-29 12:38:54] Client requested to list the files in the server directory.
+in here include time: [2024-04-29 12:38:54] Client 48025 requested download command.
+in here include time: [2024-04-29 12:38:54] Client requested file main_server.o, but it does not exist.
+in here include time: [2024-04-29 12:38:54] Client 48025 requested invalid command.
+in here include time: [2024-04-29 12:40:44] Server Started PID 48156...
+Waiting for clients...
+in here include time: [2024-04-29 12:40:48] Client 48172 is queued.
+in here include time: [2024-04-29 12:40:48] Client 48172 is dequeued and connected. It is ready for operations.
+in here include time: [2024-04-29 12:40:51] Client 48172 requested list command.
+in here include time: [2024-04-29 12:40:51] Client requested to list the files in the server directory.
+in here include time: [2024-04-29 12:40:51] Client 48172 requested download command.
+in here include time: [2024-04-29 12:40:51] Client 48172 requested download command.
+in here include time: [2024-04-29 12:40:51] Client 48172 requested download command.
+in here include time: [2024-04-29 12:40:51] Client requested file client_list.h, but it does not exist.
+in here include time: [2024-04-29 12:40:51] Client 48172 requested download command.
+in here include time: [2024-04-29 12:40:51] Client 48172 requested download command.
+in here include time: [2024-04-29 12:40:51] Client 48172 requested download command.
+in here include time: [2024-04-29 12:40:51] Client requested file server_util.o, but it does not exist.
+in here include time: [2024-04-29 12:40:51] Client 48172 requested invalid command.
+in here include time: [2024-04-29 12:40:51] Client 48172 requested invalid command.
+in here include time: [2024-04-29 12:49:55] Server Started PID 48327...
+Waiting for clients...
+in here include time: [2024-04-29 12:49:59] Client 48355 is queued.
+in here include time: [2024-04-29 12:49:59] Client 48355 is dequeued and connected. It is ready for operations.
+in here include time: [2024-04-29 12:50:01] Client 48355 requested list command.
+in here include time: [2024-04-29 12:50:01] Client requested to list the files in the server directory.
+in here include time: [2024-04-29 12:50:01] Client 48355 requested download command.
+in here include time: [2024-04-29 12:50:01] Client 48355 requested download command.
+in here include time: [2024-04-29 12:50:01] Client requested file command_operation.c, but it does not exist.
+in here include time: [2024-04-29 12:50:01] Client 48355 requested invalid command.
+in here include time: [2024-04-29 12:50:01] Client 48355 requested download command.
+in here include time: [2024-04-29 12:50:01] Client 48355 requested download command.
+in here include time: [2024-04-29 12:50:01] Client 48355 requested download command.
+in here include time: [2024-04-29 12:50:01] Client requested file client_list.o, but it does not exist.
+in here include time: [2024-04-29 12:50:01] Client 48355 requested invalid command.
+in here include time: [2024-04-29 13:01:42] Server Started PID 48436...
+Waiting for clients...
+in here include time: [2024-04-29 13:01:46] Client 48452 is queued.
+in here include time: [2024-04-29 13:01:46] Client 48452 is dequeued and connected. It is ready for operations.
+in here include time: [2024-04-29 13:01:48] Client 48452 requested list command.
+in here include time: [2024-04-29 13:01:48] Client requested to list the files in the server directory.
+in here include time: [2024-04-29 13:01:48] Client 48452 requested download command.
+in here include time: [2024-04-29 13:01:48] Client 48452 requested download command.
+in here include time: [2024-04-29 13:01:48] Client 48452 requested download command.
+in here include time: [2024-04-29 13:01:48] Client requested file client_list.h, but it does not exist.
+in here include time: [2024-04-29 13:01:48] Client 48452 requested invalid command.
+in here include time: [2024-04-29 13:05:17] Server Started PID 48578...
+Waiting for clients...
+in here include time: [2024-04-29 13:05:21] Client 48594 is queued.
+in here include time: [2024-04-29 13:05:21] Client 48594 is dequeued and connected. It is ready for operations.
+in here include time: [2024-04-29 13:05:23] Client 48594 requested list command.
+in here include time: [2024-04-29 13:05:23] Client requested to list the files in the server directory.
+in here include time: [2024-04-29 13:05:23] Client 48594 requested download command.
+in here include time: [2024-04-29 13:05:23] Client 48594 requested download command.
+in here include time: [2024-04-29 13:05:23] Client 48594 requested download command.
+in here include time: [2024-04-29 13:05:23] Client 48594 requested download command.
+in here include time: [2024-04-29 13:05:23] Client 48594 requested download command.
+in here include time: [2024-04-29 13:05:23] Client 48594 requested download command.
+in here include time: [2024-04-29 13:05:23] Client 48594 requested invalid command.
+in here include time: [2024-04-29 13:06:14] Server Started PID 48658...
+Waiting for clients...
+in here include time: [2024-04-29 13:06:18] Client 48674 is queued.
+in here include time: [2024-04-29 13:06:18] Client 48674 is dequeued and connected. It is ready for operations.
+in here include time: [2024-04-29 13:06:20] Client 48674 requested list command.
+in here include time: [2024-04-29 13:06:20] Client requested to list the files in the server directory.
+in here include time: [2024-04-29 13:06:20] Client 48674 requested download command.
+in here include time: [2024-04-29 13:06:20] Client 48674 requested download command.
+in here include time: [2024-04-29 13:06:20] Client 48674 requested invalid command.
+in here include time: [2024-04-29 13:10:25] Server Started PID 48758...
+Waiting for clients...
+in here include time: [2024-04-29 13:10:29] Client 48774 is queued.
+in here include time: [2024-04-29 13:10:29] Client 48774 is dequeued and connected. It is ready for operations.
+in here include time: [2024-04-29 13:10:31] Client 48774 requested list command.
+in here include time: [2024-04-29 13:10:31] Client requested to list the files in the server directory.
+in here include time: [2024-04-29 13:10:31] Client 48774 requested download command.
+in here include time: [2024-04-29 13:10:31] Client 48774 requested download command.
+in here include time: [2024-04-29 13:10:31] Client requested file command_operation.c, but it does not exist.
+in here include time: [2024-04-29 13:10:31] Client 48774 requested invalid command.
+in here include time: [2024-04-29 13:10:31] Client 48774 requested download command.
+in here include time: [2024-04-29 13:10:31] Client 48774 requested download command.
+in here include time: [2024-04-29 13:10:31] Client 48774 requested download command.
+in here include time: [2024-04-29 13:10:31] Client 48774 requested download command.
+in here include time: [2024-04-29 13:10:31] Client 48774 requested download command.
+in here include time: [2024-04-29 13:10:31] Client 48774 requested download command.
+in here include time: [2024-04-29 13:10:31] Client 48774 requested download command.
+in here include time: [2024-04-29 13:10:31] Client 48774 requested download command.
+in here include time: [2024-04-29 13:10:31] Client 48774 requested download command.
+in here include time: [2024-04-29 13:10:31] Client 48774 requested download command.
+in here include time: [2024-04-29 13:10:31] Client 48774 requested download command.
+in here include time: [2024-04-29 13:10:31] Client 48774 requested download command.
+in here include time: [2024-04-29 13:10:36] Client 48774 requested list command.
+in here include time: [2024-04-29 13:10:36] Client requested to list the files in the server directory.
+in here include time: [2024-04-29 13:10:39] Client 48774 requested list command.
+in here include time: [2024-04-29 13:10:39] Client requested to list the files in the server directory.
+in here include time: [2024-04-29 13:10:39] Client 48774 requested download command.
+in here include time: [2024-04-29 13:10:39] Client 48774 requested download command.
+in here include time: [2024-04-29 13:10:39] Client 48774 requested download command.
+in here include time: [2024-04-29 13:10:39] Client 48774 requested download command.
+in here include time: [2024-04-29 13:10:39] Client 48774 requested download command.
+in here include time: [2024-04-29 13:10:39] Client 48774 requested download command.
+in here include time: [2024-04-29 13:10:39] Client requested file client_list.o, but it does not exist.
+in here include time: [2024-04-29 13:10:39] Client 48774 requested download command.
+in here include time: [2024-04-29 13:10:39] Client 48774 requested download command.
+in here include time: [2024-04-29 13:10:39] Client 48774 requested download command.
+in here include time: [2024-04-29 13:10:46] Client 48774 requested list command.
+in here include time: [2024-04-29 13:10:46] Client requested to list the files in the server directory.
+in here include time: [2024-04-29 13:10:46] Client 48774 requested download command.
+in here include time: [2024-04-29 13:10:46] Client 48774 requested download command.
+in here include time: [2024-04-29 13:10:46] Client 48774 requested download command.
+in here include time: [2024-04-29 13:10:46] Client 48774 requested download command.
+in here include time: [2024-04-29 13:10:46] Client 48774 requested download command.
+in here include time: [2024-04-29 13:10:46] Client 48774 requested download command.
+in here include time: [2024-04-29 13:10:46] Client 48774 requested download command.
+in here include time: [2024-04-29 13:10:46] Client requested file server_util.o, but it does not exist.
+in here include time: [2024-04-29 13:10:46] Client 48774 requested invalid command.
+in here include time: [2024-04-29 13:10:46] Client 48774 requested download command.
+in here include time: [2024-04-29 13:10:46] Client 48774 requested download command.
+in here include time: [2024-04-29 13:10:46] Client 48774 requested download command.
+in here include time: [2024-04-29 13:10:46] Client requested file main_server.c, but it does not exist.
+in here include time: [2024-04-29 13:11:01] Client 48774 requested invalid command.
+in here include time: [2024-04-29 13:11:02] Client 48774 requested list command.
+in here include time: [2024-04-29 13:11:02] Client requested to list the files in the server directory.
+in here include time: [2024-04-29 13:11:11] Client 48774 requested list command.
+in here include time: [2024-04-29 13:11:11] Client requested to list the files in the server directory.
+in here include time: [2024-04-29 13:11:11] Client 48774 requested list command.
+in here include time: [2024-04-29 13:11:11] Client requested to list the files in the server directory.
+in here include time: [2024-04-29 13:11:13] Client 48774 requested list command.
+in here include time: [2024-04-29 13:11:13] Client requested to list the files in the server directory.
+in here include time: [2024-04-29 13:11:13] Client 48774 requested download command.
+in here include time: [2024-04-29 13:11:13] Client 48774 requested download command.
+in here include time: [2024-04-29 13:11:13] Client 48774 requested download command.
+in here include time: [2024-04-29 13:11:13] Client 48774 requested download command.
+in here include time: [2024-04-29 13:11:13] Client 48774 requested download command.
+in here include time: [2024-04-29 13:11:14] Client 48774 requested download command.
+in here include time: [2024-04-29 13:11:14] Client 48774 requested download command.
+in here include time: [2024-04-29 13:11:14] Client 48774 requested download command.
+in here include time: [2024-04-29 13:11:14] Client 48774 requested download command.
+in here include time: [2024-04-29 13:11:14] Client 48774 requested download command.
+in here include time: [2024-04-29 13:11:14] Client 48774 requested download command.
+in here include time: [2024-04-29 13:11:14] Client 48774 requested download command.
+in here include time: [2024-04-29 13:11:14] Client 48774 requested download command.
+in here include time: [2024-04-29 13:11:14] Client 48774 requested download command.
+in here include time: [2024-04-29 13:11:14] Client 48774 requested download command.
+in here include time: [2024-04-29 13:11:25] Client 48774 requested list command.
+in here include time: [2024-04-29 13:11:25] Client requested to list the files in the server directory.
+in here include time: [2024-04-29 13:11:28] Client 48774 requested list command.
+in here include time: [2024-04-29 13:11:28] Client requested to list the files in the server directory.
+in here include time: [2024-04-29 13:11:28] Client 48774 requested download command.
+in here include time: [2024-04-29 13:11:28] Client 48774 requested download command.
+in here include time: [2024-04-29 13:11:28] Client 48774 requested download command.
+in here include time: [2024-04-29 13:11:28] Client requested file client_list.h, but it does not exist.
+in here include time: [2024-04-29 13:11:28] Client 48774 requested invalid command.
+in here include time: [2024-04-29 13:23:57] Server Started PID 49091...
+Waiting for clients...
+in here include time: [2024-04-29 13:24:26] Server Started PID 49208...
+Waiting for clients...
+in here include time: [2024-04-29 13:24:33] Client 49234 is queued.
+in here include time: [2024-04-29 13:24:33] Client 49234 is dequeued and connected. It is ready for operations.
+in here include time: [2024-04-29 13:24:36] Client 49234 requested list command.
+in here include time: [2024-04-29 13:24:36] Client requested to list the files in the server directory.
+in here include time: [2024-04-29 13:24:36] Client 49234 requested download command.
+in here include time: [2024-04-29 13:24:36] Client requested file main_server.o, but it does not exist.
+in here include time: [2024-04-29 13:24:36] Client 49234 requested invalid command.
+in here include time: [2024-04-29 13:25:43] Server Started PID 49313...
+Waiting for clients...
+in here include time: [2024-04-29 13:26:07] Client 49346 is queued.
+in here include time: [2024-04-29 13:26:07] Client 49346 is dequeued and connected. It is ready for operations.
+in here include time: [2024-04-29 13:26:10] Client 49346 requested list command.
+in here include time: [2024-04-29 13:26:10] Client requested to list the files in the server directory.
+in here include time: [2024-04-29 13:26:10] Client 49346 requested download command.
+in here include time: [2024-04-29 13:26:10] Client requested file main_server.odownload_all, but it does not exist.
+in here include time: [2024-04-29 13:26:10] Client 49346 requested invalid command.
+in here include time: [2024-04-29 13:26:33] Client 49346 requested quit command.
+in here include time: [2024-04-29 13:26:33] Client 49346 is disconnected.
+in here include time: [2024-04-29 13:26:34] Client 49405 is queued.
+in here include time: [2024-04-29 13:26:34] Client 49405 is dequeued and connected. It is ready for operations.
+in here include time: [2024-04-29 13:26:37] Client 49405 requested download command.
+in here include time: [2024-04-29 13:26:43] Client 49405 requested invalid command.
+in here include time: [2024-04-29 13:26:49] Client 49405 requested list command.
+in here include time: [2024-04-29 13:26:49] Client requested to list the files in the server directory.
+in here include time: [2024-04-29 13:26:52] Client 49405 requested list command.
+in here include time: [2024-04-29 13:26:52] Client requested to list the files in the server directory.
+in here include time: [2024-04-29 13:26:52] Client 49405 requested download command.
+in here include time: [2024-04-29 13:26:52] Client 49405 requested invalid command.
+in here include time: [2024-04-29 13:26:52] Client 49405 requested download command.
+in here include time: [2024-04-29 13:26:52] Client 49405 requested invalid command.
+in here include time: [2024-04-29 13:26:52] Client 49405 requested download command.
+in here include time: [2024-04-29 13:26:52] Client 49405 requested invalid command.
+in here include time: [2024-04-29 13:26:52] Client 49405 requested download command.
+in here include time: [2024-04-29 13:26:52] Client 49405 requested invalid command.
+in here include time: [2024-04-29 13:26:52] Client 49405 requested download command.
+in here include time: [2024-04-29 13:26:52] Client 49405 requested invalid command.
+in here include time: [2024-04-29 13:26:52] Client 49405 requested download command.
+in here include time: [2024-04-29 13:26:52] Client 49405 requested invalid command.
+in here include time: [2024-04-29 13:26:52] Client 49405 requested download command.
+in here include time: [2024-04-29 13:27:02] Client 49405 requested invalid command.
+in here include time: [2024-04-29 13:27:19] Client 49405 requested list command.
+in here include time: [2024-04-29 13:27:19] Client requested to list the files in the server directory.
+in here include time: [2024-04-29 13:27:22] Client 49405 requested list command.
+in here include time: [2024-04-29 13:27:22] Client requested to list the files in the server directory.
+in here include time: [2024-04-29 13:27:22] Client 49405 requested download command.
+in here include time: [2024-04-29 13:27:22] Client 49405 requested invalid command.
+in here include time: [2024-04-29 13:31:31] Server Started PID 49664...
+Waiting for clients...
+in here include time: [2024-04-29 13:31:40] Client 49696 is queued.
+in here include time: [2024-04-29 13:31:40] Client 49696 is dequeued and connected. It is ready for operations.
+in here include time: [2024-04-29 13:31:43] Client 49696 requested download command.
+in here include time: [2024-04-29 13:31:49] Client 49696 requested invalid command.
+in here include time: [2024-04-29 13:32:06] Client 49696 requested list command.
+in here include time: [2024-04-29 13:32:06] Client requested to list the files in the server directory.
+in here include time: [2024-04-29 13:32:10] Client 49696 requested list command.
+in here include time: [2024-04-29 13:32:10] Client requested to list the files in the server directory.
+in here include time: [2024-04-29 13:32:10] Client 49696 requested download command.
+in here include time: [2024-04-29 13:32:10] Client requested file main_server.odownload_all, but it does not exist.
+in here include time: [2024-04-29 13:32:10] Client 49696 requested invalid command.
+in here include time: [2024-04-29 13:32:10] Client 49696 requested download command.
+in here include time: [2024-04-29 13:32:10] Client 49696 requested invalid command.
+in here include time: [2024-04-29 13:33:17] Server Started PID 49891...
+Waiting for clients...
+in here include time: [2024-04-29 13:33:20] Client 49922 is queued.
+in here include time: [2024-04-29 13:33:20] Client 49922 is dequeued and connected. It is ready for operations.
+in here include time: [2024-04-29 13:33:22] Client 49922 requested list command.
+in here include time: [2024-04-29 13:33:22] Client requested to list the files in the server directory.
+in here include time: [2024-04-29 13:33:22] Client 49922 requested download command.
+in here include time: [2024-04-29 13:33:22] Client requested file main_server.o, but it does not exist.
+in here include time: [2024-04-29 13:33:22] Client 49922 requested download command.
+in here include time: [2024-04-29 13:33:22] Client requested file server_util.h, but it does not exist.
+in here include time: [2024-04-29 13:33:48] Client 49922 requested invalid command.
+in here include time: [2024-04-29 13:33:50] Client 49922 requested list command.
+in here include time: [2024-04-29 13:33:50] Client requested to list the files in the server directory.
+in here include time: [2024-04-29 13:34:05] Client 49922 requested list command.
+in here include time: [2024-04-29 13:34:05] Client requested to list the files in the server directory.
+in here include time: [2024-04-29 13:34:05] Client 49922 requested download command.
+in here include time: [2024-04-29 13:34:05] Client requested file main_server.o, but it does not exist.
+in here include time: [2024-04-29 13:34:05] Client 49922 requested invalid command.
+in here include time: [2024-04-29 13:41:45] Server Started PID 50380...
+Waiting for clients...
+in here include time: [2024-04-29 13:41:49] Client 50406 is queued.
+in here include time: [2024-04-29 13:41:49] Client 50406 is dequeued and connected. It is ready for operations.
+in here include time: [2024-04-29 13:41:50] Client 50406 requested list command.
+in here include time: [2024-04-29 13:41:50] Client requested to list the files in the server directory.
+in here include time: [2024-04-29 13:41:53] Client 50406 requested archServer command.

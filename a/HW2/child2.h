@@ -1,0 +1,1 @@
+void child2_function(int fd, int inputNumber);

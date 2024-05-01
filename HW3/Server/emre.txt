@@ -1,12 +1,12 @@
-ekledimparasacmalamaimport random
-patladiselamallahekledimimport string
-haberslmmalgpt
-tarikdef generate_random_name():
+import random
+import string
+UCUNCUSatirdef generate_random_name():
     name_length = random.randint(5, 10)
-ohohohsew    name = ''.join(random.choices(string.ascii_uppercase, k=name_length))
-yorgun    return name
+    name = ''.join(random.choices(string.ascii_uppercase, k=name_length))
+    return name
 
-iyiydinames = [generate_random_name() for _ in range(20)]
+names = [generate_random_name() for _ in range(20)]
 
 for name in names:
-    print(name)selamprensestamamulan
+    print(name)
+    SONAekledim
