@@ -805,3 +805,81 @@ in here include time: [2024-05-02 17:54:42] Client 4785 requested quit command.
 in here include time: [2024-05-02 17:54:42] Client 4785 is disconnected.
 in here include time: [2024-05-02 17:54:49] Client 4787 requested quit command.
 in here include time: [2024-05-02 17:54:49] Client 4787 is disconnected.
+in here include time: [2024-05-02 18:36:30] Server Started PID 6113...
+Waiting for clients...
+in here include time: [2024-05-02 18:36:44] Client 6131 is queued.
+in here include time: [2024-05-02 18:36:44] Client 6131 is dequeued and connected. It is ready for operations.
+in here include time: [2024-05-02 18:36:56] Client 6133 is queued.
+in here include time: [2024-05-02 18:36:56] Client 6133 is dequeued and connected. It is ready for operations.
+in here include time: [2024-05-02 18:37:05] Client 6135 is queued.
+in here include time: [2024-05-02 18:37:05] Connection request 6135 is refused. Queue is full.
+in here include time: [2024-05-02 18:37:05] Client 6135 is refused. Its mode is tryConnect and queue is full.
+in here include time: [2024-05-02 18:37:11] Client 6136 is queued.
+in here include time: [2024-05-02 18:37:11] Connection request 6136 is refused. Queue is full.
+in here include time: [2024-05-02 18:37:15] Client 6133 requested list command.
+in here include time: [2024-05-02 18:37:15] Client 6134 tries to enter critical section for the file 05319346629 for reading
+in here include time: [2024-05-02 18:37:15] Client 6134 tries to exit critical section for the file 05319346629 for reading
+in here include time: [2024-05-02 18:37:15] Client requested to list the files in the server directory.
+in here include time: [2024-05-02 18:37:17] Client 6133 requested list command.
+in here include time: [2024-05-02 18:37:17] Client 6134 tries to enter critical section for the file 05319346629 for reading
+in here include time: [2024-05-02 18:37:17] Client 6134 tries to exit critical section for the file 05319346629 for reading
+in here include time: [2024-05-02 18:37:17] Client requested to list the files in the server directory.
+in here include time: [2024-05-02 18:37:21] Client 6131 requested list command.
+in here include time: [2024-05-02 18:37:21] Client 6132 tries to enter critical section for the file 05319346629 for reading
+in here include time: [2024-05-02 18:37:21] Client 6132 tries to exit critical section for the file 05319346629 for reading
+in here include time: [2024-05-02 18:37:21] Client requested to list the files in the server directory.
+in here include time: [2024-05-02 18:37:27] Client 6131 requested readF command.
+in here include time: [2024-05-02 18:37:27] Client 6132 tries to enter critical section for the file emre.txt for reading
+in here include time: [2024-05-02 18:37:27] Client 6132 tries to exit critical section for the file emre.txt for reading
+in here include time: [2024-05-02 18:37:30] Client 6133 requested readF command.
+in here include time: [2024-05-02 18:37:30] Client 6134 tries to enter critical section for the file emre.txt for reading
+in here include time: [2024-05-02 18:37:30] Client 6134 tries to exit critical section for the file emre.txt for reading
+in here include time: [2024-05-02 18:37:47] Client 6133 requested writeF command.
+in here include time: [2024-05-02 18:37:47] Client 6134 tries to enter critical section for the file emre.txt for reading
+in here include time: [2024-05-02 18:37:47] Client 6134 tries to exit critical section for the file emre.txt for writing
+in here include time: [2024-05-02 18:37:47] Client 6134 tries to exit critical section for the file temp.txt for writing
+in here include time: [2024-05-02 18:37:47] Line 2 of file emre.txt has been written by the client.
+in here include time: [2024-05-02 18:37:51] Client 6131 requested readF command.
+in here include time: [2024-05-02 18:37:54] Client 6131 requested readF command.
+in here include time: [2024-05-02 18:37:54] Client 6132 tries to enter critical section for the file emre.txt for reading
+in here include time: [2024-05-02 18:37:54] Client 6132 tries to exit critical section for the file emre.txt for reading
+in here include time: [2024-05-02 18:38:06] Client 6131 requested writeF command.
+in here include time: [2024-05-02 18:38:06] Client 6132 tries to enter critical section for the file yeni.txt for writing
+in here include time: [2024-05-02 18:38:06] Client 6132 tries to exit critical section for the file yeni.txt for writing
+in here include time: [2024-05-02 18:38:06] File yeni.txt has been written by the client.
+in here include time: [2024-05-02 18:38:20] Client 6131 requested download command.
+in here include time: [2024-05-02 18:38:20] Client 6132 tries to enter critical section for the file example.bin for reading
+in here include time: [2024-05-02 18:38:20] Client 6132 tries to exit critical section for the file example.bin for reading
+in here include time: [2024-05-02 18:38:26] Client 6133 requested download command.
+in here include time: [2024-05-02 18:38:26] Client 6134 tries to enter critical section for the file example.bin for reading
+in here include time: [2024-05-02 18:38:26] Client 6134 tries to exit critical section for the file example.bin for reading
+in here include time: [2024-05-02 18:38:37] Client 6133 requested upload command.
+in here include time: [2024-05-02 18:38:37] Client 6134 tries to enter critical section for the file b(1).txt for writing
+in here include time: [2024-05-02 18:38:37] Client 6134 tries to enter critical section for the file 05319346629 for writing
+in here include time: [2024-05-02 18:38:37] Client 6134 tries to exit critical section for the file b(1).txt for writing
+in here include time: [2024-05-02 18:38:37] Client 6134 tries to exit critical section for the file 05319346629 for writing
+in here include time: [2024-05-02 18:38:37] File b(1).txt has been uploaded by the client with 13224212 bytes
+in here include time: [2024-05-02 18:38:40] Client 6131 requested upload command.
+in here include time: [2024-05-02 18:38:40] Client 6132 tries to enter critical section for the file b(1).txt for writing
+in here include time: [2024-05-02 18:38:40] Client 6132 tries to enter critical section for the file 05319346629 for writing
+in here include time: [2024-05-02 18:38:40] Client 6132 tries to exit critical section for the file b(1).txt for writing
+in here include time: [2024-05-02 18:38:40] Client 6132 tries to exit critical section for the file 05319346629 for writing
+in here include time: [2024-05-02 18:38:40] File b(1).txt has been uploaded by the client with 13224212 bytes
+in here include time: [2024-05-02 18:38:54] Client 6131 requested readF command.
+in here include time: [2024-05-02 18:38:54] Client 6132 tries to enter critical section for the file b.txt for reading
+in here include time: [2024-05-02 18:38:56] Client 6132 tries to exit critical section for the file b.txt for reading
+in here include time: [2024-05-02 18:39:04] Client 6131 requested readF command.
+in here include time: [2024-05-02 18:39:04] Client 6132 tries to enter critical section for the file emre.txt for reading
+in here include time: [2024-05-02 18:39:04] Client 6132 tries to exit critical section for the file emre.txt for reading
+in here include time: [2024-05-02 18:39:11] Client 6131 requested readF command.
+in here include time: [2024-05-02 18:39:11] Client 6132 tries to enter critical section for the file emre.txt for reading
+in here include time: [2024-05-02 18:39:11] Client 6132 tries to exit critical section for the file emre.txt for reading
+in here include time: [2024-05-02 18:39:27] Client 6131 requested archServer command.
+in here include time: [2024-05-02 18:39:27] Client 6131 requested download_all command.
+in here include time: [2024-05-02 18:39:27] Client 6132 tries to enter critical section for the file indirdim.tar for reading
+in here include time: [2024-05-02 18:39:28] Client 6132 tries to exit critical section for the file indirdim.tar for reading
+in here include time: [2024-05-02 18:39:32] Client 6133 requested archServer command.
+in here include time: [2024-05-02 18:39:32] Client 6133 requested download_all command.
+in here include time: [2024-05-02 18:39:32] Client 6134 tries to enter critical section for the file indirdim.tar for reading
+in here include time: [2024-05-02 18:39:33] Client 6134 tries to exit critical section for the file indirdim.tar for reading
+in here include time: [2024-05-02 18:39:37] Client 6133 requested killServer command.
