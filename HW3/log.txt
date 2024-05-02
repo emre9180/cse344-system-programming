@@ -299,3 +299,285 @@ in here include time: [2024-05-01 14:06:43] Client 4947 is queued.
 in here include time: [2024-05-01 14:06:43] Connection request 4947 is refused. Queue is full.
 in here include time: [2024-05-01 14:06:43] Client 4948 is queued.
 in here include time: [2024-05-01 14:06:43] Connection request 4948 is refused. Queue is full.
+in here include time: [2024-05-01 14:38:48] Server Started PID 5204...
+Waiting for clients...
+in here include time: [2024-05-01 14:39:03] Client 5218 is queued.
+in here include time: [2024-05-01 14:39:03] Client 5218 is dequeued and connected. It is ready for operations.
+in here include time: [2024-05-01 14:39:06] Client 5218 requested archServer command.
+in here include time: [2024-05-01 14:39:07] Client 5218 requested download_all command.
+in here include time: [2024-05-01 14:39:07] Client 5219 tries to enter critical section for the file selam.tar for reading
+in here include time: [2024-05-01 14:39:08] Client 5219 tries to exit critical section for the file selam.tar for reading
+in here include time: [2024-05-01 22:02:37] Server Started PID 7705...
+Waiting for clients...
+in here include time: [2024-05-01 22:03:05] Client 7721 is queued.
+in here include time: [2024-05-01 22:03:05] Client 7721 is dequeued and connected. It is ready for operations.
+in here include time: [2024-05-01 22:03:09] Client 7721 requested download command.
+in here include time: [2024-05-01 22:03:09] Client 7722 tries to enter critical section for the file target.pdf for reading
+in here include time: [2024-05-01 22:03:09] Client 7722 tries to exit critical section for the file target.pdf for reading
+in here include time: [2024-05-01 22:17:05] Client 7721 requested quit command.
+in here include time: [2024-05-01 22:17:05] Client 7721 is disconnected.
+in here include time: [2024-05-02 02:01:32] Server Started PID 10084...
+Waiting for clients...
+in here include time: [2024-05-02 02:02:58] Server Started PID 10188...
+Waiting for clients...
+in here include time: [2024-05-02 02:03:02] Client 10202 is queued.
+in here include time: [2024-05-02 02:03:02] Client 10202 is dequeued and connected. It is ready for operations.
+in here include time: [2024-05-02 02:03:56] Client 10202 requested list command.
+in here include time: [2024-05-02 02:03:56] Client 10203 tries to enter critical section for the file 05319346629 for reading
+in here include time: [2024-05-02 02:03:56] Client 10203 tries to exit critical section for the file 05319346629 for reading
+in here include time: [2024-05-02 02:03:56] Client requested to list the files in the server directory.
+in here include time: [2024-05-02 02:03:56] Client 10202 requested list command.
+in here include time: [2024-05-02 02:03:56] Client 10203 tries to enter critical section for the file 05319346629 for reading
+in here include time: [2024-05-02 02:03:56] Client 10203 tries to exit critical section for the file 05319346629 for reading
+in here include time: [2024-05-02 02:03:56] Client requested to list the files in the server directory.
+in here include time: [2024-05-02 02:04:10] Server Started PID 10248...
+Waiting for clients...
+in here include time: [2024-05-02 02:04:15] Client 10249 is queued.
+in here include time: [2024-05-02 02:04:15] Client 10249 is dequeued and connected. It is ready for operations.
+in here include time: [2024-05-02 02:06:04] Client 10249 requested quit command.
+in here include time: [2024-05-02 02:06:04] Client 10249 is disconnected.
+in here include time: [2024-05-02 02:06:17] Server Started PID 10371...
+Waiting for clients...
+in here include time: [2024-05-02 02:06:24] Client 10372 is queued.
+in here include time: [2024-05-02 02:06:24] Client 10372 is dequeued and connected. It is ready for operations.
+in here include time: [2024-05-02 02:09:21] Server Started PID 10472...
+Waiting for clients...
+in here include time: [2024-05-02 02:09:27] Client 10473 is queued.
+in here include time: [2024-05-02 02:09:27] Client 10473 is dequeued and connected. It is ready for operations.
+in here include time: [2024-05-02 02:09:31] Client 10475 is queued.
+in here include time: [2024-05-02 02:09:31] Client 10475 is dequeued and connected. It is ready for operations.
+in here include time: [2024-05-02 02:09:35] Client 10477 is queued.
+in here include time: [2024-05-02 02:09:35] Client 10477 is dequeued and connected. It is ready for operations.
+in here include time: [2024-05-02 02:11:28] Server Started PID 10484...
+Waiting for clients...
+in here include time: [2024-05-02 02:11:35] Client 10487 is queued.
+in here include time: [2024-05-02 02:11:35] Client 10487 is dequeued and connected. It is ready for operations.
+in here include time: [2024-05-02 02:11:38] Client 10489 is queued.
+in here include time: [2024-05-02 02:11:38] Client 10489 is dequeued and connected. It is ready for operations.
+in here include time: [2024-05-02 02:11:41] Client 10491 is queued.
+in here include time: [2024-05-02 02:11:41] Connection request 10491 is refused. Queue is full.
+in here include time: [2024-05-02 02:13:11] Server Started PID 10495...
+Waiting for clients...
+in here include time: [2024-05-02 02:13:20] Client 10500 is queued.
+in here include time: [2024-05-02 02:13:20] Client 10500 is dequeued and connected. It is ready for operations.
+in here include time: [2024-05-02 02:13:24] Client 10503 is queued.
+in here include time: [2024-05-02 02:13:24] Client 10503 is dequeued and connected. It is ready for operations.
+in here include time: [2024-05-02 02:13:27] Client 10506 is queued.
+in here include time: [2024-05-02 02:13:27] Connection request 10506 is refused. Queue is full.
+in here include time: [2024-05-02 02:13:38] Server Started PID 10509...
+Waiting for clients...
+in here include time: [2024-05-02 02:14:10] Server Started PID 10535...
+Waiting for clients...
+in here include time: [2024-05-02 02:14:16] Client 10537 is queued.
+in here include time: [2024-05-02 02:14:16] Client 10537 is dequeued and connected. It is ready for operations.
+in here include time: [2024-05-02 02:14:34] Client 10546 is queued.
+in here include time: [2024-05-02 02:14:34] Client 10546 is dequeued and connected. It is ready for operations.
+in here include time: [2024-05-02 02:14:40] Client 10550 is queued.
+in here include time: [2024-05-02 02:14:40] Connection request 10550 is refused. Queue is full.
+in here include time: [2024-05-02 02:22:04] Server Started PID 10702...
+Waiting for clients...
+in here include time: [2024-05-02 02:22:07] Client 10704 is queued.
+in here include time: [2024-05-02 02:22:07] Client 10704 is dequeued and connected. It is ready for operations.
+in here include time: [2024-05-02 02:22:10] Client 10706 is queued.
+in here include time: [2024-05-02 02:22:10] Client 10706 is dequeued and connected. It is ready for operations.
+in here include time: [2024-05-02 02:22:13] Client 10708 is queued.
+in here include time: [2024-05-02 02:22:13] Connection request 10708 is refused. Queue is full.
+in here include time: [2024-05-02 02:26:14] Server Started PID 10796...
+Waiting for clients...
+in here include time: [2024-05-02 02:26:16] Client 10797 is queued.
+in here include time: [2024-05-02 02:26:16] Client 10797 is dequeued and connected. It is ready for operations.
+in here include time: [2024-05-02 02:26:19] Client 10799 is queued.
+in here include time: [2024-05-02 02:26:19] Client 10799 is dequeued and connected. It is ready for operations.
+in here include time: [2024-05-02 02:26:21] Client 10801 is queued.
+in here include time: [2024-05-02 02:26:21] Connection request 10801 is refused. Queue is full.
+in here include time: [2024-05-02 02:28:08] Server Started PID 10861...
+Waiting for clients...
+in here include time: [2024-05-02 02:28:12] Client 10862 is queued.
+in here include time: [2024-05-02 02:28:12] Client 10862 is dequeued and connected. It is ready for operations.
+in here include time: [2024-05-02 02:28:14] Client 10864 is queued.
+in here include time: [2024-05-02 02:28:14] Client 10864 is dequeued and connected. It is ready for operations.
+in here include time: [2024-05-02 02:28:25] Client 10867 is queued.
+in here include time: [2024-05-02 02:28:25] Connection request 10867 is refused. Queue is full.
+in here include time: [2024-05-02 02:29:29] Server Started PID 10899...
+Waiting for clients...
+in here include time: [2024-05-02 02:29:35] Client 10901 is queued.
+in here include time: [2024-05-02 02:29:35] Client 10901 is dequeued and connected. It is ready for operations.
+in here include time: [2024-05-02 02:29:39] Client 10903 is queued.
+in here include time: [2024-05-02 02:29:39] Client 10903 is dequeued and connected. It is ready for operations.
+in here include time: [2024-05-02 02:29:41] Client 10905 is queued.
+in here include time: [2024-05-02 02:29:41] Connection request 10905 is refused. Queue is full.
+in here include time: [2024-05-02 02:30:11] Server Started PID 10919...
+Waiting for clients...
+in here include time: [2024-05-02 02:30:16] Client 10920 is queued.
+in here include time: [2024-05-02 02:30:16] Client 10920 is dequeued and connected. It is ready for operations.
+in here include time: [2024-05-02 02:30:18] Client 10922 is queued.
+in here include time: [2024-05-02 02:30:18] Client 10922 is dequeued and connected. It is ready for operations.
+in here include time: [2024-05-02 02:30:23] Client 10924 is queued.
+in here include time: [2024-05-02 02:30:23] Connection request 10924 is refused. Queue is full.
+in here include time: [2024-05-02 02:32:04] Server Started PID 11052...
+Waiting for clients...
+in here include time: [2024-05-02 02:32:09] Client 11057 is queued.
+in here include time: [2024-05-02 02:32:09] Client 11057 is dequeued and connected. It is ready for operations.
+in here include time: [2024-05-02 02:32:16] Client 11066 is queued.
+in here include time: [2024-05-02 02:32:16] Client 11066 is dequeued and connected. It is ready for operations.
+in here include time: [2024-05-02 02:32:20] Client 11072 is queued.
+in here include time: [2024-05-02 02:32:20] Connection request 11072 is refused. Queue is full.
+in here include time: [2024-05-02 02:34:25] Server Started PID 11103...
+Waiting for clients...
+in here include time: [2024-05-02 02:34:29] Client 11105 is queued.
+in here include time: [2024-05-02 02:34:29] Client 11105 is dequeued and connected. It is ready for operations.
+in here include time: [2024-05-02 02:34:35] Client 11105 requested quit command.
+in here include time: [2024-05-02 02:34:35] Client 11105 is disconnected.
+in here include time: [2024-05-02 02:35:21] Server Started PID 11112...
+Waiting for clients...
+in here include time: [2024-05-02 02:35:30] Client 11114 is queued.
+in here include time: [2024-05-02 02:35:30] Client 11114 is dequeued and connected. It is ready for operations.
+in here include time: [2024-05-02 02:36:03] Server Started PID 11120...
+Waiting for clients...
+in here include time: [2024-05-02 02:36:23] Client 11122 is queued.
+in here include time: [2024-05-02 02:36:23] Client 11122 is dequeued and connected. It is ready for operations.
+in here include time: [2024-05-02 02:36:24] Client 11125 is queued.
+in here include time: [2024-05-02 02:36:24] Client 11125 is dequeued and connected. It is ready for operations.
+in here include time: [2024-05-02 02:36:24] Client 11127 is queued.
+in here include time: [2024-05-02 02:36:24] Connection request 11127 is refused. Queue is full.
+in here include time: [2024-05-02 02:37:25] Server Started PID 11156...
+Waiting for clients...
+in here include time: [2024-05-02 02:37:33] Client 11157 is queued.
+in here include time: [2024-05-02 02:37:33] Client 11157 is dequeued and connected. It is ready for operations.
+in here include time: [2024-05-02 02:37:37] Client 11159 is queued.
+in here include time: [2024-05-02 02:37:37] Client 11159 is dequeued and connected. It is ready for operations.
+in here include time: [2024-05-02 02:37:41] Client 11161 is queued.
+in here include time: [2024-05-02 02:37:41] Connection request 11161 is refused. Queue is full.
+in here include time: [2024-05-02 02:38:25] Server Started PID 11193...
+Waiting for clients...
+in here include time: [2024-05-02 02:38:30] Client 11195 is queued.
+in here include time: [2024-05-02 02:38:30] Client 11195 is dequeued and connected. It is ready for operations.
+in here include time: [2024-05-02 02:38:33] Client 11198 is queued.
+in here include time: [2024-05-02 02:38:33] Client 11198 is dequeued and connected. It is ready for operations.
+in here include time: [2024-05-02 02:38:39] Client 11201 is queued.
+in here include time: [2024-05-02 02:38:39] Connection request 11201 is refused. Queue is full.
+in here include time: [2024-05-02 02:39:12] Server Started PID 11226...
+Waiting for clients...
+in here include time: [2024-05-02 02:39:56] Server Started PID 11234...
+Waiting for clients...
+in here include time: [2024-05-02 02:40:01] Client 11236 is queued.
+in here include time: [2024-05-02 02:40:01] Client 11236 is dequeued and connected. It is ready for operations.
+in here include time: [2024-05-02 02:40:03] Client 11238 is queued.
+in here include time: [2024-05-02 02:40:03] Client 11238 is dequeued and connected. It is ready for operations.
+in here include time: [2024-05-02 02:40:06] Client 11240 is queued.
+in here include time: [2024-05-02 02:40:06] Connection request 11240 is refused. Queue is full.
+in here include time: [2024-05-02 02:40:53] Server Started PID 11273...
+Waiting for clients...
+in here include time: [2024-05-02 02:40:59] Client 11274 is queued.
+in here include time: [2024-05-02 02:40:59] Client 11274 is dequeued and connected. It is ready for operations.
+in here include time: [2024-05-02 02:41:03] Client 11276 is queued.
+in here include time: [2024-05-02 02:41:03] Client 11276 is dequeued and connected. It is ready for operations.
+in here include time: [2024-05-02 02:41:16] Client 11279 is queued.
+in here include time: [2024-05-02 02:41:16] Connection request 11279 is refused. Queue is full.
+in here include time: [2024-05-02 02:48:05] Server Started PID 11336...
+Waiting for clients...
+in here include time: [2024-05-02 02:48:11] Client 11340 is queued.
+in here include time: [2024-05-02 02:48:11] Client 11340 is dequeued and connected. It is ready for operations.
+in here include time: [2024-05-02 02:48:16] Client 11345 is queued.
+in here include time: [2024-05-02 02:48:16] Client 11345 is dequeued and connected. It is ready for operations.
+in here include time: [2024-05-02 02:48:19] Client 11350 is queued.
+in here include time: [2024-05-02 02:48:19] Connection request 11350 is refused. Queue is full.
+in here include time: [2024-05-02 02:49:09] Server Started PID 11401...
+Waiting for clients...
+in here include time: [2024-05-02 02:49:17] Client 11406 is queued.
+in here include time: [2024-05-02 02:49:17] Client 11406 is dequeued and connected. It is ready for operations.
+in here include time: [2024-05-02 02:49:20] Client 11411 is queued.
+in here include time: [2024-05-02 02:49:20] Client 11411 is dequeued and connected. It is ready for operations.
+in here include time: [2024-05-02 02:49:23] Client 11413 is queued.
+in here include time: [2024-05-02 02:49:23] Connection request 11413 is refused. Queue is full.
+in here include time: [2024-05-02 02:51:01] Server Started PID 11445...
+Waiting for clients...
+in here include time: [2024-05-02 02:51:54] Server Started PID 11476...
+Waiting for clients...
+in here include time: [2024-05-02 02:51:59] Client 11480 is queued.
+in here include time: [2024-05-02 02:51:59] Client 11480 is dequeued and connected. It is ready for operations.
+in here include time: [2024-05-02 02:52:04] Client 11485 is queued.
+in here include time: [2024-05-02 02:52:04] Client 11485 is dequeued and connected. It is ready for operations.
+in here include time: [2024-05-02 02:52:07] Client 11490 is queued.
+in here include time: [2024-05-02 02:52:07] Connection request 11490 is refused. Queue is full.
+in here include time: [2024-05-02 02:53:11] Server Started PID 11520...
+Waiting for clients...
+in here include time: [2024-05-02 02:53:15] Client 11522 is queued.
+in here include time: [2024-05-02 02:53:15] Client 11522 is dequeued and connected. It is ready for operations.
+in here include time: [2024-05-02 02:53:21] Client 11525 is queued.
+in here include time: [2024-05-02 02:53:21] Client 11525 is dequeued and connected. It is ready for operations.
+in here include time: [2024-05-02 02:53:24] Client 11528 is queued.
+in here include time: [2024-05-02 02:53:24] Connection request 11528 is refused. Queue is full.
+in here include time: [2024-05-02 02:59:11] Server Started PID 11597...
+Waiting for clients...
+in here include time: [2024-05-02 02:59:18] Client 11598 is queued.
+in here include time: [2024-05-02 02:59:18] Client 11598 is dequeued and connected. It is ready for operations.
+in here include time: [2024-05-02 02:59:22] Client 11600 is queued.
+in here include time: [2024-05-02 02:59:22] Client 11600 is dequeued and connected. It is ready for operations.
+in here include time: [2024-05-02 02:59:25] Client 11602 is queued.
+in here include time: [2024-05-02 02:59:25] Connection request 11602 is refused. Queue is full.
+in here include time: [2024-05-02 03:01:06] Server Started PID 11663...
+Waiting for clients...
+in here include time: [2024-05-02 03:01:10] Client 11664 is queued.
+in here include time: [2024-05-02 03:01:10] Client 11664 is dequeued and connected. It is ready for operations.
+in here include time: [2024-05-02 03:01:14] Client 11666 is queued.
+in here include time: [2024-05-02 03:01:14] Client 11666 is dequeued and connected. It is ready for operations.
+in here include time: [2024-05-02 03:01:17] Client 11668 is queued.
+in here include time: [2024-05-02 03:01:17] Connection request 11668 is refused. Queue is full.
+in here include time: [2024-05-02 03:02:27] Server Started PID 11759...
+Waiting for clients...
+in here include time: [2024-05-02 03:02:33] Client 11764 is queued.
+in here include time: [2024-05-02 03:02:33] Client 11764 is dequeued and connected. It is ready for operations.
+in here include time: [2024-05-02 03:02:59] Client 11776 is queued.
+in here include time: [2024-05-02 03:02:59] Client 11776 is dequeued and connected. It is ready for operations.
+in here include time: [2024-05-02 03:03:05] Client 11783 is queued.
+in here include time: [2024-05-02 03:03:05] Connection request 11783 is refused. Queue is full.
+in here include time: [2024-05-02 03:07:11] Server Started PID 11798...
+Waiting for clients...
+in here include time: [2024-05-02 03:07:18] Client 11804 is queued.
+in here include time: [2024-05-02 03:07:18] Client 11804 is dequeued and connected. It is ready for operations.
+in here include time: [2024-05-02 03:08:04] Client 11804 requested quit command.
+in here include time: [2024-05-02 03:08:04] Client 11804 is disconnected.
+in here include time: [2024-05-02 03:11:36] Client 11825 is queued.
+in here include time: [2024-05-02 03:11:36] Client 11825 is dequeued and connected. It is ready for operations.
+in here include time: [2024-05-02 03:11:37] Client 11825 requested quit command.
+in here include time: [2024-05-02 03:11:37] Client 11825 is disconnected.
+in here include time: [2024-05-02 03:11:51] Server Started PID 11837...
+Waiting for clients...
+in here include time: [2024-05-02 03:12:06] Server Started PID 11843...
+Waiting for clients...
+in here include time: [2024-05-02 03:12:08] Server Started PID 11848...
+Waiting for clients...
+in here include time: [2024-05-02 03:12:12] Client 11853 is queued.
+in here include time: [2024-05-02 03:12:12] Client 11853 is dequeued and connected. It is ready for operations.
+in here include time: [2024-05-02 03:12:16] Client 11855 is queued.
+in here include time: [2024-05-02 03:12:16] Client 11855 is dequeued and connected. It is ready for operations.
+in here include time: [2024-05-02 03:12:19] Client 11860 is queued.
+in here include time: [2024-05-02 03:12:19] Connection request 11860 is refused. Queue is full.
+in here include time: [2024-05-02 03:14:27] Client 11853 requested quit command.
+in here include time: [2024-05-02 03:14:27] Client 11853 is disconnected.
+in here include time: [2024-05-02 03:14:27] Client 11860 is dequeued and connected. It is ready for operations.
+in here include time: [2024-05-02 03:18:40] Client 11855 requested list command.
+in here include time: [2024-05-02 03:18:40] Client 11856 tries to enter critical section for the file 05319346629 for reading
+in here include time: [2024-05-02 03:18:40] Client 11856 tries to exit critical section for the file 05319346629 for reading
+in here include time: [2024-05-02 03:18:40] Client requested to list the files in the server directory.
+in here include time: [2024-05-02 03:18:43] Client 11855 requested readF command.
+in here include time: [2024-05-02 03:18:43] Client 11856 tries to enter critical section for the file a.txt for reading
+in here include time: [2024-05-02 03:18:46] Client 11856 tries to exit critical section for the file a.txt for reading
+in here include time: [2024-05-02 03:18:54] Client 11855 requested download command.
+in here include time: [2024-05-02 03:18:54] Client 11856 tries to enter critical section for the file a.txt for reading
+in here include time: [2024-05-02 03:18:54] Client 11856 tries to exit critical section for the file a.txt for reading
+in here include time: [2024-05-02 03:18:59] Client 11855 requested upload command.
+in here include time: [2024-05-02 03:18:59] Client 11856 tries to enter critical section for the file a(1).txt for writing
+in here include time: [2024-05-02 03:18:59] Client 11856 tries to enter critical section for the file 05319346629 for writing
+in here include time: [2024-05-02 03:18:59] Client 11856 tries to exit critical section for the file a(1).txt for writing
+in here include time: [2024-05-02 03:18:59] Client 11856 tries to exit critical section for the file 05319346629 for writing
+in here include time: [2024-05-02 03:18:59] File a(1).txt has been uploaded by the client with 13224212 bytes
+in here include time: [2024-05-02 03:19:05] Client 11855 requested archServer command.
+in here include time: [2024-05-02 03:19:05] Client 11855 requested download_all command.
+in here include time: [2024-05-02 03:19:05] Client 11856 tries to enter critical section for the file selam.tar for reading
+in here include time: [2024-05-02 03:19:06] Client 11856 tries to exit critical section for the file selam.tar for reading
+in here include time: [2024-05-02 03:19:17] Client 11855 requested readF command.
+in here include time: [2024-05-02 03:19:17] Client 11856 tries to enter critical section for the file emre.txt for reading
+in here include time: [2024-05-02 03:19:17] Client 11856 tries to exit critical section for the file emre.txt for reading
+in here include time: [2024-05-02 03:19:31] Client 11855 requested killServer command.

@@ -36,11 +36,11 @@ void cleanup()
     // Unlink named pipes
     if (unlink(server_req_fifo) == -1)
     {
-        perror("Failed to unlink server request FIFO");
+        // perror("Failed to unlink server request FIFO");
     }
     if (unlink(client_res_fifo) == -1)
     {
-        perror("Failed to unlink client response FIFO");
+        // perror("Failed to unlink client response FIFO");
     }
 }
 
@@ -82,6 +82,7 @@ void sigint_handler()
     
     // Handle the "quit" command to clean up resources and exit gracefully
     handle_quit_command(&fd_client_cmd, &fd_client_res, "quit", cleanup);
+    cleanup();
 
     // Exit the program successfully
     exit(EXIT_SUCCESS);
@@ -270,7 +271,7 @@ void handle_user_input()
         }
         else if(strcmp(command, "help")==0)
         {
-            handle_help_command();
+            handle_help_command(words, num_words);
         }
         else if(strcmp(command, "readF")==0)
         {

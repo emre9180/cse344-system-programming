@@ -151,6 +151,18 @@ void handle_signal(int sig)
 {
     if (sig == SIGINT)
     {
+        // Traverse and send SIGINT signal to all child pids in the client list
+        for (int i = 0; i < list_clients->counter; i++)
+        {
+            // printf("Killing client %d\n", list_clients->clients[i]);
+            kill(list_clients->clients[i], SIGINT);
+            char client_res_fifo[256]; // Client response FIFO
+            sprintf(client_res_fifo, CLIENT_RES_FIFO, list_clients->clients[i]); // Create the client response FIFO
+            char server_req_fifo[256]; // Server request FIFO
+            sprintf(server_req_fifo, SERVER_REQ_FIFO, list_clients->clients[i]); // Create the server request FIFO
+            unlink(client_res_fifo);
+            unlink(server_req_fifo);
+        }
         // Print a message indicating the received SIGINT signal
         const char *msg = "Server terminating...\n";
         write(STDOUT_FILENO, msg, strlen(msg));
@@ -163,12 +175,7 @@ void handle_signal(int sig)
         shm_unlink(SHM_NAME_CLIENTS);
         closeSafeDir(dir_syncs);
 
-        // Traverse and send SIGINT signal to all child pids in the client list
-        for (int i = 0; i < list_clients->counter; i++)
-        {
-            // printf("Killing client %d\n", list_clients->clients[i]);
-            kill(list_clients->clients[i], SIGINT);
-        }
+        
 
         // Exit the server process
         exit(0);
@@ -282,6 +289,7 @@ void server_loop(char *dirname, int max_clients)
                     cleanup(server_fd, client_res_fd, -1, dir_syncs);
                     exit(EXIT_FAILURE);
                 }
+                close(client_res_fd);
                 continue;
             }
             else

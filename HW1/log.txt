@@ -1,0 +1,4 @@
+[2024-05-01 22:21:30]: Error: Invalid command or arguments
+[2024-05-01 22:21:36]: Error opening file: (null)
+[2024-05-01 22:21:42]: Successful command: Print all students
+[2024-05-01 22:21:50]: Error: Invalid command or arguments

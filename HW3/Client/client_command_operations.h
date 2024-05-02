@@ -64,7 +64,7 @@ void handle_killServer_command(int *fd_client_cmd, int *fd_client_res, char* com
  * This function handles the help command received from the client and displays the available
  * commands and their usage.
  */
-void handle_help_command();
+void handle_help_command(char** words, int num_words);
 
 /**
  * @brief Handles the readF command received from the client.

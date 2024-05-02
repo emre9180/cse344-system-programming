@@ -68,7 +68,7 @@ void handle_quit_command(int *fd_client_cmd, int *fd_client_res, char* command, 
     ssize_t bytes_read_res = read(*fd_client_res, &response, sizeof(int));
     if (bytes_read_res == -1)
     {
-        perror("Failed to read response from server");
+        // perror("Failed to read response from server");
         cleanup();
         exit(EXIT_FAILURE);
     }
@@ -83,7 +83,7 @@ void handle_quit_command(int *fd_client_cmd, int *fd_client_res, char* command, 
     {
         // Server did not acknowledge the quit command
         cleanup();
-        printf("You are disconnected. Bye!\n");
+        // printf("You are disconnected. Bye!\n");
     }
 }
 
@@ -122,12 +122,67 @@ void handle_killServer_command(int *fd_client_cmd, int *fd_client_res, char* com
 }
 
 // Handle the help command
-void handle_help_command() {
-    printf("Commands:\n");
-    printf("list: List the files in the server directory\n");
-    printf("quit: Disconnect from the server\n");
-    printf("killServer: Kill the server\n");
-    printf("help: Display this help message\n");
+void handle_help_command(char **words, int num_words) {
+    
+
+    if(num_words == 1)
+    {
+        printf("Available commands:\n");
+        printf("list\n");
+        printf("readF <file> [line_number]\n");
+        printf("writeF <file> <line_number> <string>\n");
+        printf("upload <file>\n");
+        printf("download <file>\n");
+        printf("archive <file>\n");
+        printf("quit\n");
+        printf("killServer\n");
+        printf("help\n");
+        printf("help <command>\n");
+    }
+    else if(num_words == 2)
+    {
+        if(strcmp(words[1], "list") == 0)
+        {
+            printf("list: List all files in the server directory\n");
+        }
+        else if(strcmp(words[1], "readF") == 0)
+        {
+            printf("readF <file> [line_number]: Read the file <file> from the server. If line_number is provided, read the line_number-th line of the file\n");
+        }
+        else if(strcmp(words[1], "writeF") == 0)
+        {
+            printf("writeF <file> <line_number> <string>: Write the string <string> to the file <file> on the server. If line_number is provided, write the string to the line_number-th line of the file\n");
+        }
+        else if(strcmp(words[1], "upload") == 0)
+        {
+            printf("upload <file>: Upload the file <file> to the server\n");
+        }
+        else if(strcmp(words[1], "download") == 0)
+        {
+            printf("download <file>: Download the file <file> from the server\n");
+        }
+        else if(strcmp(words[1], "archive") == 0)
+        {
+            printf("archive <file>: Archive the file <file> on the server\n");
+        }
+        else if(strcmp(words[1], "quit") == 0)
+        {
+            printf("quit: Disconnect from the server\n");
+        }
+        else if(strcmp(words[1], "killServer") == 0)
+        {
+            printf("killServer: Kill the server\n");
+        }
+        else if(strcmp(words[1], "help") == 0)
+        {
+            printf("help: Display available commands\n");
+        }
+        else
+        {
+            printf("Invalid command!\n");
+        }
+    }
+
 }
 
 // Handle the readF command
@@ -496,3 +551,4 @@ void handle_arch_command(int *fd_client_cmd, int *fd_client_res, char** words, i
     // Open the file words[1].tar in write mode
 
 }
+
