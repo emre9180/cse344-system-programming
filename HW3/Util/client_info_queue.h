@@ -2,7 +2,7 @@
 #define CLIENT_INFO_QUEUE_H
 
 #include "common.h"
-#define QUEUE_SIZE 10
+#define QUEUE_SIZE 30
 
 struct client_info
 {

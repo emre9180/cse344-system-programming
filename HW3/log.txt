@@ -581,3 +581,227 @@ in here include time: [2024-05-02 03:19:17] Client 11855 requested readF command
 in here include time: [2024-05-02 03:19:17] Client 11856 tries to enter critical section for the file emre.txt for reading
 in here include time: [2024-05-02 03:19:17] Client 11856 tries to exit critical section for the file emre.txt for reading
 in here include time: [2024-05-02 03:19:31] Client 11855 requested killServer command.
+in here include time: [2024-05-02 16:51:22] Server Started PID 3556...
+Waiting for clients...
+in here include time: [2024-05-02 16:51:29] Client 3559 is queued.
+in here include time: [2024-05-02 16:51:29] Client 3559 is dequeued and connected. It is ready for operations.
+in here include time: [2024-05-02 16:51:34] Client 3559 requested download command.
+in here include time: [2024-05-02 16:51:34] Client 3560 tries to enter critical section for the file emre.txt for reading
+in here include time: [2024-05-02 16:51:35] Client 3560 tries to exit critical section for the file emre.txt for reading
+in here include time: [2024-05-02 16:51:37] Client 3559 requested download command.
+in here include time: [2024-05-02 16:51:37] Client 3560 tries to enter critical section for the file emre.txt for reading
+in here include time: [2024-05-02 16:51:37] Client 3560 tries to exit critical section for the file emre.txt for reading
+in here include time: [2024-05-02 16:51:39] Client 3559 requested download command.
+in here include time: [2024-05-02 16:51:39] Client 3560 tries to enter critical section for the file emre.txt for reading
+in here include time: [2024-05-02 16:51:39] Client 3560 tries to exit critical section for the file emre.txt for reading
+in here include time: [2024-05-02 17:09:20] Client 3559 requested quit command.
+in here include time: [2024-05-02 17:09:20] Client 3559 is disconnected.
+in here include time: [2024-05-02 17:09:28] Server Started PID 3740...
+Waiting for clients...
+in here include time: [2024-05-02 17:09:34] Client 3742 is queued.
+in here include time: [2024-05-02 17:09:34] Client 3742 is dequeued and connected. It is ready for operations.
+in here include time: [2024-05-02 17:09:54] Client 3742 requested upload command.
+in here include time: [2024-05-02 17:09:54] Client 3743 tries to enter critical section for the file b.txt for writing
+in here include time: [2024-05-02 17:09:54] Client 3743 tries to enter critical section for the file 05319346629 for writing
+in here include time: [2024-05-02 17:09:55] Client 3743 tries to exit critical section for the file b.txt for writing
+in here include time: [2024-05-02 17:09:55] Client 3743 tries to exit critical section for the file 05319346629 for writing
+in here include time: [2024-05-02 17:09:55] File b.txt has been uploaded by the client with 13224212 bytes
+in here include time: [2024-05-02 17:09:57] Client 3742 requested upload command.
+in here include time: [2024-05-02 17:09:57] Client 3743 tries to enter critical section for the file b(1).txt for writing
+in here include time: [2024-05-02 17:09:57] Client 3743 tries to enter critical section for the file 05319346629 for writing
+in here include time: [2024-05-02 17:09:58] Client 3743 tries to exit critical section for the file b(1).txt for writing
+in here include time: [2024-05-02 17:09:58] Client 3743 tries to exit critical section for the file 05319346629 for writing
+in here include time: [2024-05-02 17:09:58] File b(1).txt has been uploaded by the client with 13224212 bytes
+in here include time: [2024-05-02 17:10:00] Client 3742 requested upload command.
+in here include time: [2024-05-02 17:10:00] Client 3743 tries to enter critical section for the file b(1).txt for writing
+in here include time: [2024-05-02 17:10:00] Client 3743 tries to enter critical section for the file 05319346629 for writing
+in here include time: [2024-05-02 17:10:00] Client 3743 tries to exit critical section for the file b(1).txt for writing
+in here include time: [2024-05-02 17:10:00] Client 3743 tries to exit critical section for the file 05319346629 for writing
+in here include time: [2024-05-02 17:10:00] File b(1).txt has been uploaded by the client with 13224212 bytes
+in here include time: [2024-05-02 17:10:04] Client 3742 requested quit command.
+in here include time: [2024-05-02 17:10:04] Client 3742 is disconnected.
+in here include time: [2024-05-02 17:11:46] Client 3773 is queued.
+in here include time: [2024-05-02 17:11:46] Client 3773 is dequeued and connected. It is ready for operations.
+in here include time: [2024-05-02 17:11:51] Client 3773 requested upload command.
+in here include time: [2024-05-02 17:11:51] Client 3774 tries to enter critical section for the file b(1).txt for writing
+in here include time: [2024-05-02 17:11:51] Client 3774 tries to enter critical section for the file 05319346629 for writing
+in here include time: [2024-05-02 17:11:51] Client 3774 tries to exit critical section for the file b(1).txt for writing
+in here include time: [2024-05-02 17:11:51] Client 3774 tries to exit critical section for the file 05319346629 for writing
+in here include time: [2024-05-02 17:11:51] File b(1).txt has been uploaded by the client with 13224212 bytes
+in here include time: [2024-05-02 17:12:21] Client 3773 requested quit command.
+in here include time: [2024-05-02 17:12:21] Client 3773 is disconnected.
+in here include time: [2024-05-02 17:12:28] Server Started PID 3830...
+Waiting for clients...
+in here include time: [2024-05-02 17:12:36] Client 3833 is queued.
+in here include time: [2024-05-02 17:12:36] Client 3833 is dequeued and connected. It is ready for operations.
+in here include time: [2024-05-02 17:12:39] Client 3833 requested upload command.
+in here include time: [2024-05-02 17:12:39] Client 3834 tries to enter critical section for the file b(1).txt for writing
+in here include time: [2024-05-02 17:12:39] Client 3834 tries to enter critical section for the file 05319346629 for writing
+in here include time: [2024-05-02 17:12:39] Client 3834 tries to exit critical section for the file b(1).txt for writing
+in here include time: [2024-05-02 17:12:39] Client 3834 tries to exit critical section for the file 05319346629 for writing
+in here include time: [2024-05-02 17:12:39] File b(1).txt has been uploaded by the client with 13224212 bytes
+in here include time: [2024-05-02 17:13:43] Server Started PID 4245...
+Waiting for clients...
+in here include time: [2024-05-02 17:13:49] Client 4246 is queued.
+in here include time: [2024-05-02 17:13:49] Client 4246 is dequeued and connected. It is ready for operations.
+in here include time: [2024-05-02 17:13:50] Client 4246 requested upload command.
+in here include time: [2024-05-02 17:13:50] Client 4247 tries to enter critical section for the file b(1).txt for writing
+in here include time: [2024-05-02 17:13:50] Client 4247 tries to enter critical section for the file 05319346629 for writing
+in here include time: [2024-05-02 17:13:50] Client 4247 tries to exit critical section for the file b(1).txt for writing
+in here include time: [2024-05-02 17:13:50] Client 4247 tries to exit critical section for the file 05319346629 for writing
+in here include time: [2024-05-02 17:13:50] File b(1).txt has been uploaded by the client with 13224212 bytes
+in here include time: [2024-05-02 17:15:25] Client 4246 requested upload command.
+in here include time: [2024-05-02 17:15:25] Client 4247 tries to enter critical section for the file b(1).txt for writing
+in here include time: [2024-05-02 17:15:25] Client 4247 tries to enter critical section for the file 05319346629 for writing
+in here include time: [2024-05-02 17:15:25] Client 4247 tries to exit critical section for the file b(1).txt for writing
+in here include time: [2024-05-02 17:15:25] Client 4247 tries to exit critical section for the file 05319346629 for writing
+in here include time: [2024-05-02 17:15:25] File b(1).txt has been uploaded by the client with 13224212 bytes
+in here include time: [2024-05-02 17:16:31] Server Started PID 4265...
+Waiting for clients...
+in here include time: [2024-05-02 17:16:38] Client 4266 is queued.
+in here include time: [2024-05-02 17:16:38] Client 4266 is dequeued and connected. It is ready for operations.
+in here include time: [2024-05-02 17:16:40] Client 4266 requested upload command.
+in here include time: [2024-05-02 17:16:40] Client 4267 tries to enter critical section for the file b.txt for writing
+in here include time: [2024-05-02 17:16:40] Client 4267 tries to enter critical section for the file 05319346629 for writing
+in here include time: [2024-05-02 17:16:40] Client 4267 tries to exit critical section for the file b.txt for writing
+in here include time: [2024-05-02 17:16:40] Client 4267 tries to exit critical section for the file 05319346629 for writing
+in here include time: [2024-05-02 17:16:40] File b.txt has been uploaded by the client with 13224212 bytes
+in here include time: [2024-05-02 17:16:42] Client 4266 requested upload command.
+in here include time: [2024-05-02 17:16:42] Client 4267 tries to enter critical section for the file b(1).txt for writing
+in here include time: [2024-05-02 17:16:42] Client 4267 tries to enter critical section for the file 05319346629 for writing
+in here include time: [2024-05-02 17:16:42] Client 4267 tries to exit critical section for the file b(1).txt for writing
+in here include time: [2024-05-02 17:16:42] Client 4267 tries to exit critical section for the file 05319346629 for writing
+in here include time: [2024-05-02 17:16:42] File b(1).txt has been uploaded by the client with 13224212 bytes
+in here include time: [2024-05-02 17:16:44] Client 4266 requested upload command.
+in here include time: [2024-05-02 17:16:44] Client 4267 tries to enter critical section for the file b(1).txt for writing
+in here include time: [2024-05-02 17:16:44] Client 4267 tries to enter critical section for the file 05319346629 for writing
+in here include time: [2024-05-02 17:16:44] Client 4267 tries to exit critical section for the file b(1).txt for writing
+in here include time: [2024-05-02 17:16:44] Client 4267 tries to exit critical section for the file 05319346629 for writing
+in here include time: [2024-05-02 17:16:44] File b(1).txt has been uploaded by the client with 13224212 bytes
+in here include time: [2024-05-02 17:20:01] Server Started PID 4301...
+Waiting for clients...
+in here include time: [2024-05-02 17:20:04] Client 4302 is queued.
+in here include time: [2024-05-02 17:20:04] Client 4302 is dequeued and connected. It is ready for operations.
+in here include time: [2024-05-02 17:20:07] Client 4302 requested upload command.
+in here include time: [2024-05-02 17:20:07] Client 4303 tries to enter critical section for the file b(1).txt for writing
+in here include time: [2024-05-02 17:20:07] Client 4303 tries to enter critical section for the file 05319346629 for writing
+in here include time: [2024-05-02 17:20:07] Client 4303 tries to exit critical section for the file b(1).txt for writing
+in here include time: [2024-05-02 17:20:07] Client 4303 tries to exit critical section for the file 05319346629 for writing
+in here include time: [2024-05-02 17:20:07] File b(1).txt has been uploaded by the client with 13224212 bytes
+in here include time: [2024-05-02 17:22:03] Server Started PID 4350...
+Waiting for clients...
+in here include time: [2024-05-02 17:22:06] Client 4351 is queued.
+in here include time: [2024-05-02 17:22:06] Client 4351 is dequeued and connected. It is ready for operations.
+in here include time: [2024-05-02 17:22:09] Client 4351 requested upload command.
+in here include time: [2024-05-02 17:22:09] Client 4352 tries to enter critical section for the file b(1).txt for writing
+in here include time: [2024-05-02 17:22:09] Client 4352 tries to enter critical section for the file 05319346629 for writing
+in here include time: [2024-05-02 17:22:09] Client 4352 tries to exit critical section for the file b(1).txt for writing
+in here include time: [2024-05-02 17:22:09] Client 4352 tries to exit critical section for the file 05319346629 for writing
+in here include time: [2024-05-02 17:22:09] File b(1).txt has been uploaded by the client with 13224212 bytes
+in here include time: [2024-05-02 17:22:12] Client 4351 requested upload command.
+in here include time: [2024-05-02 17:22:12] Client 4352 tries to enter critical section for the file b(1).txt for writing
+in here include time: [2024-05-02 17:22:12] Client 4352 tries to enter critical section for the file 05319346629 for writing
+in here include time: [2024-05-02 17:22:13] Client 4352 tries to exit critical section for the file b(1).txt for writing
+in here include time: [2024-05-02 17:22:13] Client 4352 tries to exit critical section for the file 05319346629 for writing
+in here include time: [2024-05-02 17:22:13] File b(1).txt has been uploaded by the client with 13224212 bytes
+in here include time: [2024-05-02 17:24:10] Server Started PID 4372...
+Waiting for clients...
+in here include time: [2024-05-02 17:24:13] Client 4374 is queued.
+in here include time: [2024-05-02 17:24:13] Client 4374 is dequeued and connected. It is ready for operations.
+in here include time: [2024-05-02 17:24:15] Client 4374 requested upload command.
+in here include time: [2024-05-02 17:24:15] Client 4375 tries to enter critical section for the file b(1).txt for writing
+in here include time: [2024-05-02 17:24:15] Client 4375 tries to enter critical section for the file 05319346629 for writing
+in here include time: [2024-05-02 17:24:15] Client 4375 tries to exit critical section for the file b(1).txt for writing
+in here include time: [2024-05-02 17:24:15] Client 4375 tries to exit critical section for the file 05319346629 for writing
+in here include time: [2024-05-02 17:24:15] File b(1).txt has been uploaded by the client with 13224212 bytes
+in here include time: [2024-05-02 17:25:32] Client 4374 requested list command.
+in here include time: [2024-05-02 17:25:32] Client 4375 tries to enter critical section for the file 05319346629 for reading
+in here include time: [2024-05-02 17:25:32] Client 4375 tries to exit critical section for the file 05319346629 for reading
+in here include time: [2024-05-02 17:25:32] Client requested to list the files in the server directory.
+in here include time: [2024-05-02 17:26:54] Server Started PID 4421...
+Waiting for clients...
+in here include time: [2024-05-02 17:26:56] Client 4422 is queued.
+in here include time: [2024-05-02 17:26:56] Client 4422 is dequeued and connected. It is ready for operations.
+in here include time: [2024-05-02 17:27:02] Client 4422 requested upload command.
+in here include time: [2024-05-02 17:27:02] Client 4423 tries to enter critical section for the file b(1).txt for writing
+in here include time: [2024-05-02 17:27:02] Client 4423 tries to enter critical section for the file 05319346629 for writing
+in here include time: [2024-05-02 17:27:02] Client 4423 tries to exit critical section for the file b(1).txt for writing
+in here include time: [2024-05-02 17:27:02] Client 4423 tries to exit critical section for the file 05319346629 for writing
+in here include time: [2024-05-02 17:27:02] File b(1).txt has been uploaded by the client with 13224212 bytes
+in here include time: [2024-05-02 17:27:39] Client 4422 requested upload command.
+in here include time: [2024-05-02 17:27:39] Client 4423 tries to enter critical section for the file b(1).txt for writing
+in here include time: [2024-05-02 17:27:39] Client 4423 tries to enter critical section for the file 05319346629 for writing
+in here include time: [2024-05-02 17:27:39] Client 4423 tries to exit critical section for the file b(1).txt for writing
+in here include time: [2024-05-02 17:27:39] Client 4423 tries to exit critical section for the file 05319346629 for writing
+in here include time: [2024-05-02 17:27:39] File b(1).txt has been uploaded by the client with 13224212 bytes
+in here include time: [2024-05-02 17:28:35] Server Started PID 4468...
+Waiting for clients...
+in here include time: [2024-05-02 17:28:39] Client 4469 is queued.
+in here include time: [2024-05-02 17:28:39] Client 4469 is dequeued and connected. It is ready for operations.
+in here include time: [2024-05-02 17:28:43] Client 4469 requested upload command.
+in here include time: [2024-05-02 17:28:43] Client 4470 tries to enter critical section for the file b(1).txt for writing
+in here include time: [2024-05-02 17:28:43] Client 4470 tries to enter critical section for the file 05319346629 for writing
+in here include time: [2024-05-02 17:28:43] Client 4470 tries to exit critical section for the file b(1).txt for writing
+in here include time: [2024-05-02 17:28:43] Client 4470 tries to exit critical section for the file 05319346629 for writing
+in here include time: [2024-05-02 17:28:43] File b(1).txt has been uploaded by the client with 13224212 bytes
+in here include time: [2024-05-02 17:30:48] Client 4469 requested upload command.
+in here include time: [2024-05-02 17:30:48] Client 4470 tries to enter critical section for the file b(1).txt for writing
+in here include time: [2024-05-02 17:30:48] Client 4470 tries to enter critical section for the file 05319346629 for writing
+in here include time: [2024-05-02 17:30:48] Client 4470 tries to exit critical section for the file b(1).txt for writing
+in here include time: [2024-05-02 17:30:48] Client 4470 tries to exit critical section for the file 05319346629 for writing
+in here include time: [2024-05-02 17:30:48] File b(1).txt has been uploaded by the client with 13224212 bytes
+in here include time: [2024-05-02 17:52:24] Server Started PID 4750...
+Waiting for clients...
+in here include time: [2024-05-02 17:53:03] Client 4780 is queued.
+in here include time: [2024-05-02 17:53:03] Client 4780 is dequeued and connected. It is ready for operations.
+in here include time: [2024-05-02 17:53:10] Client 4782 is queued.
+in here include time: [2024-05-02 17:53:10] Connection request 4782 is refused. Queue is full.
+in here include time: [2024-05-02 17:53:13] Server Started PID 4784...
+Waiting for clients...
+in here include time: [2024-05-02 17:53:16] Client 4785 is queued.
+in here include time: [2024-05-02 17:53:16] Client 4785 is dequeued and connected. It is ready for operations.
+in here include time: [2024-05-02 17:53:18] Client 4787 is queued.
+in here include time: [2024-05-02 17:53:18] Client 4787 is dequeued and connected. It is ready for operations.
+in here include time: [2024-05-02 17:53:25] Client 4785 requested readF command.
+in here include time: [2024-05-02 17:53:25] Client 4786 tries to enter critical section for the file a.txt for reading
+in here include time: [2024-05-02 17:53:25] Client 4787 requested readF command.
+in here include time: [2024-05-02 17:53:25] Client 4788 tries to enter critical section for the file a.txt for reading
+in here include time: [2024-05-02 17:53:28] Client 4786 tries to exit critical section for the file a.txt for reading
+in here include time: [2024-05-02 17:53:29] Client 4788 tries to exit critical section for the file a.txt for reading
+in here include time: [2024-05-02 17:53:41] Client 4785 requested readF command.
+in here include time: [2024-05-02 17:53:41] Client 4786 tries to enter critical section for the file a.txt for reading
+in here include time: [2024-05-02 17:53:41] Client 4787 requested writeF command.
+in here include time: [2024-05-02 17:53:41] Client 4788 tries to enter critical section for the file a.txt for reading
+in here include time: [2024-05-02 17:53:43] Client 4788 tries to exit critical section for the file a.txt for writing
+in here include time: [2024-05-02 17:53:43] Client 4788 tries to exit critical section for the file temp.txt for writing
+in here include time: [2024-05-02 17:53:43] Line 2 of file a.txt has been written by the client.
+in here include time: [2024-05-02 17:53:43] Client 4786 tries to exit critical section for the file a.txt for reading
+in here include time: [2024-05-02 17:54:12] Client 4787 requested archServer command.
+in here include time: [2024-05-02 17:54:13] Client 4787 requested download_all command.
+in here include time: [2024-05-02 17:54:13] Client 4788 tries to enter critical section for the file selam.tar for reading
+in here include time: [2024-05-02 17:54:14] Client 4788 tries to exit critical section for the file selam.tar for reading
+in here include time: [2024-05-02 17:54:19] Client 4785 requested readF command.
+in here include time: [2024-05-02 17:54:19] Client 4786 tries to enter critical section for the file a.txt for reading
+in here include time: [2024-05-02 17:54:21] Client 4786 tries to exit critical section for the file a.txt for reading
+in here include time: [2024-05-02 17:54:28] Client 4785 requested upload command.
+in here include time: [2024-05-02 17:54:28] Client 4786 tries to enter critical section for the file b(1).txt for writing
+in here include time: [2024-05-02 17:54:28] Client 4786 tries to enter critical section for the file 05319346629 for writing
+in here include time: [2024-05-02 17:54:29] Client 4786 tries to exit critical section for the file b(1).txt for writing
+in here include time: [2024-05-02 17:54:29] Client 4786 tries to exit critical section for the file 05319346629 for writing
+in here include time: [2024-05-02 17:54:29] File b(1).txt has been uploaded by the client with 13224212 bytes
+in here include time: [2024-05-02 17:54:31] Client 4785 requested upload command.
+in here include time: [2024-05-02 17:54:31] Client 4786 tries to enter critical section for the file b(1).txt for writing
+in here include time: [2024-05-02 17:54:31] Client 4786 tries to enter critical section for the file 05319346629 for writing
+in here include time: [2024-05-02 17:54:31] Client 4786 tries to exit critical section for the file b(1).txt for writing
+in here include time: [2024-05-02 17:54:31] Client 4786 tries to exit critical section for the file 05319346629 for writing
+in here include time: [2024-05-02 17:54:31] File b(1).txt has been uploaded by the client with 13224212 bytes
+in here include time: [2024-05-02 17:54:36] Client 4785 requested upload command.
+in here include time: [2024-05-02 17:54:36] Client 4786 tries to enter critical section for the file b(1).txt for writing
+in here include time: [2024-05-02 17:54:36] Client 4786 tries to enter critical section for the file 05319346629 for writing
+in here include time: [2024-05-02 17:54:36] Client 4786 tries to exit critical section for the file b(1).txt for writing
+in here include time: [2024-05-02 17:54:36] Client 4786 tries to exit critical section for the file 05319346629 for writing
+in here include time: [2024-05-02 17:54:36] File b(1).txt has been uploaded by the client with 13224212 bytes
+in here include time: [2024-05-02 17:54:42] Client 4785 requested quit command.
+in here include time: [2024-05-02 17:54:42] Client 4785 is disconnected.
+in here include time: [2024-05-02 17:54:49] Client 4787 requested quit command.
+in here include time: [2024-05-02 17:54:49] Client 4787 is disconnected.

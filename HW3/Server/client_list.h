@@ -1,11 +1,11 @@
 #ifndef CLIENT_LIST_H
 #define CLIENT_LIST_H
-#define QUEUE_SIZE 10
+#define QUEUE_SIZE_ 60
 
 struct client_list_wrapper
 {
     int counter;
-    int clients[QUEUE_SIZE];
+    int clients[QUEUE_SIZE_];
 };
 
 /**

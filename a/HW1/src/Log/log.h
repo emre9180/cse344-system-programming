@@ -1,1 +1,0 @@
-void logToFile(const char *logString);

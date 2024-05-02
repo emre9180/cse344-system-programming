@@ -128,9 +128,9 @@ void handle_readF_command(char* command, const char* dirname, int *client_res_fd
     } else {
         readF.line_number = -1;
     }
-    // printf("File1: %s\n", readF.file);
-
-    // printf("readf command\n");
+    
+    if(getSafeFile(dir_syncs, readF.file) == NULL) 
+        addSafeFile(dir_syncs, readF.file);
 
     // File name is the directory of server + file name
     char file_path[512];
@@ -140,7 +140,7 @@ void handle_readF_command(char* command, const char* dirname, int *client_res_fd
     // printf("File2: %s\n", file_path);
     if (file == NULL) {
         // perror("Failed to open file");
-
+        removeSafeFile(dir_syncs, readF.file);
         // Write fifo error message
         const char *error_message = "NO_SUCH_FILE_05319346629";
         write(*client_res_fd, error_message, strlen(error_message));
@@ -412,6 +412,8 @@ void handle_specific_line_write(char *dirname, writeF_command writeF, int *clien
     if(getSafeFile(dir_syncs, writeF.file) == NULL) 
         addSafeFile(dir_syncs, writeF.file);
 
+    
+
     // Step 1: Open the Source File for Reading
     FILE *source_file = fopen(file_path, "r");
     if (source_file == NULL) {
@@ -420,10 +422,9 @@ void handle_specific_line_write(char *dirname, writeF_command writeF, int *clien
         int resp = -1;
         write(*client_res_fd, &resp, sizeof(int));
         removeSafeFile(dir_syncs, writeF.file);
-        region_writer_logger(dir_syncs, getpid(), file_path, 0);
-        exitRegionWriter(getSafeFile(dir_syncs, file_path));
     }
-    // printf("Line number: %d\n", writeF.line_number);
+    region_reader_logger(dir_syncs, getpid(), writeF.file, 1);
+    enterRegionReader(getSafeFile(dir_syncs, writeF.file));
 
     // Step 2: Create a Temporary File for Writing
     FILE *temp_file = fopen("temp.txt", "w");
@@ -432,9 +433,14 @@ void handle_specific_line_write(char *dirname, writeF_command writeF, int *clien
         fclose(source_file);
         cleanup(server_fd, *client_res_fd, server_req_fd, dir_syncs);
         region_writer_logger(dir_syncs, getpid(), file_path, 0);
-        exitRegionWriter(getSafeFile(dir_syncs, file_path));
+        exitRegionReader(getSafeFile(dir_syncs, writeF.file));
         exit(EXIT_FAILURE);
     }
+
+    if(getSafeFile(dir_syncs, "temp.txt") == NULL) 
+        addSafeFile(dir_syncs, "temp.txt");
+
+    enterRegionWriter(getSafeFile(dir_syncs, "temp.txt"));
     // printf("Line number: %d\n", writeF.line_number);
     int source_fd = fileno(source_file);
     int temp_fd = fileno(temp_file);
@@ -457,6 +463,10 @@ void handle_specific_line_write(char *dirname, writeF_command writeF, int *clien
                 // Write the new string before the original line if it's the target line
                 if (write(temp_fd, writeF.string, strlen(writeF.string)) == -1) {
                     perror("Failed to write new line to temp file");
+                    region_writer_logger(dir_syncs, getpid(), writeF.file, 0);
+                    exitRegionReader(getSafeFile(dir_syncs, writeF.file));
+                    region_writer_logger(dir_syncs, getpid(), "temp.txt", 0);
+                    exitRegionWriter(getSafeFile(dir_syncs, "temp.txt"));
                     cleanup(server_fd, *client_res_fd, server_req_fd, dir_syncs);
                 }
             }
@@ -464,6 +474,10 @@ void handle_specific_line_write(char *dirname, writeF_command writeF, int *clien
             // Write the current line
             if (write(temp_fd, line_start, strlen(line_start)) == -1 || write(temp_fd, "\n", 1) == -1) {
                 perror("Failed to write to temp file");
+                region_writer_logger(dir_syncs, getpid(), writeF.file, 0);
+                exitRegionReader(getSafeFile(dir_syncs, writeF.file));
+                region_writer_logger(dir_syncs, getpid(), "temp.txt", 0);
+                exitRegionWriter(getSafeFile(dir_syncs, "temp.txt"));
                 cleanup(server_fd, *client_res_fd, server_req_fd, dir_syncs);
             }
 
@@ -479,12 +493,20 @@ void handle_specific_line_write(char *dirname, writeF_command writeF, int *clien
             if (current_line == writeF.line_number) {
                 if (write(temp_fd, writeF.string, strlen(writeF.string)) == -1) {
                     perror("Failed to write new line to temp file");
+                    region_writer_logger(dir_syncs, getpid(), writeF.file, 0);
+                    exitRegionReader(getSafeFile(dir_syncs, writeF.file));
+                    region_writer_logger(dir_syncs, getpid(), "temp.txt", 0);
+                    exitRegionWriter(getSafeFile(dir_syncs, "temp.txt"));
                     cleanup(server_fd, *client_res_fd, server_req_fd, dir_syncs);
                 }
             }
 
             if (write(temp_fd, line_start, len) == -1) {
                 perror("Failed to write to temp file");
+                region_writer_logger(dir_syncs, getpid(), writeF.file, 0);
+                exitRegionReader(getSafeFile(dir_syncs, writeF.file));
+                region_writer_logger(dir_syncs, getpid(), "temp.txt", 0);
+                exitRegionWriter(getSafeFile(dir_syncs, "temp.txt"));
                 cleanup(server_fd, *client_res_fd, server_req_fd, dir_syncs);
             }
             lseek(source_fd, position + (line_start - buffer), SEEK_SET); // Adjust position to reflect current pointer location
@@ -507,8 +529,11 @@ void handle_specific_line_write(char *dirname, writeF_command writeF, int *clien
     remove(file_path);
     rename("temp.txt", file_path);
     // printf("Line number: %d\n", writeF.line_number);
+    exitRegionReader(getSafeFile(dir_syncs, writeF.file));
     region_writer_logger(dir_syncs, getpid(), writeF.file, 0);
-    exitRegionWriter(getSafeFile(dir_syncs, writeF.file));
+    exitRegionWriter(getSafeFile(dir_syncs, "temp.txt"));
+    region_writer_logger(dir_syncs, getpid(), "temp.txt", 0);
+    removeSafeFile(dir_syncs, "temp.txt");
 
     int asdf = write(*client_res_fd, &successful, sizeof(int)) ;
     if (asdf == -1) {
@@ -577,8 +602,6 @@ void handle_whole_file_write(const char *dirname, writeF_command writeF, int *cl
      if (write(*client_res_fd, &success, sizeof(int)) == -1) {
         perror("Failed to write to client response FIFO");
         cleanup(server_fd, *client_res_fd, server_req_fd, dir_syncs);
-        region_writer_logger(dir_syncs, getpid(), writeF.file, 0);
-        exitRegionWriter(getSafeFile(dir_syncs, writeF.file));
         exit(EXIT_FAILURE);
     }
 
@@ -737,29 +760,27 @@ void handle_upload_command(char* command, const char* dirname, int *client_res_f
     if (write(*client_res_fd, &success, sizeof(int)) == -1) {
         perror("Failed to write to client response FIFO");
         cleanup(server_fd, *client_res_fd, server_req_fd, dir_syncs);
-        region_writer_logger(dir_syncs, getpid(), UPLOAD_AND_LIST_SYNC_FILE, 0);
-        exitRegionWriter(getSafeFile(dir_syncs, upload.file));
         exit(EXIT_FAILURE);
     }
 
-    if(getSafeFile(dir_syncs, upload.file) == NULL) 
-        addSafeFile(dir_syncs, upload.file);
-    else // If there is such file, add (1) to the file name just before the '.' character
-    {
+
+    struct stat buffer;
+    while(stat(upload.file, &buffer) == 0) {
+        char newFilename[259];
+        // File exists
         char *dot = strrchr(upload.file, '.');
-        if (dot != NULL) {
-            char new_file[259];
-            strncpy(new_file, upload.file, dot - upload.file);
-            new_file[dot - upload.file] = '\0';
-            strcat(new_file, "(1)");
-            strcat(new_file, dot);
-            strcpy(upload.file, new_file);
+        if (dot) {
+            strncpy(newFilename, upload.file, dot - upload.file); // Copy filename up to the dot
+            sprintf(newFilename + (dot - upload.file), "(1)%s", dot); // Append (1) and extension
+        } else {
+            // No extension found
+            sprintf(newFilename, "%s(1)", upload.file);
         }
-        else {
-            strcat(upload.file, "(1)");
-        }
-        addSafeFile(dir_syncs, upload.file);       
+
+        strcpy(upload.file, newFilename);
     }
+    addSafeFile(dir_syncs, upload.file);       
+    
 
     
     // Enter the writer region of the synchronization file

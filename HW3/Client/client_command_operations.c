@@ -421,29 +421,27 @@ void handle_download_command(int *fd_client_cmd, int *fd_client_res, char** word
     // printf("fifo_written: %ld and %d\n", fifo_written, strlen(fifo_message));
 
     FILE *file;
-        struct stat buffer;
-        int exists = stat(download.file, &buffer);
+    struct stat buffer;
+    while(stat(download.file, &buffer) == 0) {
         char newFilename[259];
-
-        if (exists == 0) {
-            // File exists
-            char *dot = strrchr(download.file, '.');
-            if (dot) {
-                strncpy(newFilename, download.file, dot - download.file); // Copy filename up to the dot
-                sprintf(newFilename + (dot - download.file), "(1)%s", dot); // Append (1) and extension
-            } else {
-                // No extension found
-                sprintf(newFilename, "%s(1)", download.file);
-            }
-
-            strcpy(download.file, newFilename);
-        } 
-        file = fopen(download.file, "w");
-        if (file == NULL) {
-            perror("Failed to open file for writing");
-            cleanup();
-            exit(EXIT_FAILURE);
+        // File exists
+        char *dot = strrchr(download.file, '.');
+        if (dot) {
+            strncpy(newFilename, download.file, dot - download.file); // Copy filename up to the dot
+            sprintf(newFilename + (dot - download.file), "(1)%s", dot); // Append (1) and extension
+        } else {
+            // No extension found
+            sprintf(newFilename, "%s(1)", download.file);
         }
+
+        strcpy(download.file, newFilename);
+    }
+    file = fopen(download.file, "w");
+    if (file == NULL) {
+        perror("Failed to open file for writing");
+        cleanup();
+        exit(EXIT_FAILURE);
+    }
     
 
     char response[256]; // Buffer to store the response
