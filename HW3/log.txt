@@ -883,3 +883,206 @@ in here include time: [2024-05-02 18:39:32] Client 6133 requested download_all c
 in here include time: [2024-05-02 18:39:32] Client 6134 tries to enter critical section for the file indirdim.tar for reading
 in here include time: [2024-05-02 18:39:33] Client 6134 tries to exit critical section for the file indirdim.tar for reading
 in here include time: [2024-05-02 18:39:37] Client 6133 requested killServer command.
+in here include time: [2024-05-02 18:42:01] Server Started PID 6283...
+Waiting for clients...
+in here include time: [2024-05-02 18:42:33] Client 6297 is queued.
+in here include time: [2024-05-02 18:42:33] Client 6297 is dequeued and connected. It is ready for operations.
+in here include time: [2024-05-02 18:42:56] Client 6308 is queued.
+in here include time: [2024-05-02 18:42:56] Connection request 6308 is refused. Queue is full.
+in here include time: [2024-05-02 18:43:00] Client 6297 requested list command.
+in here include time: [2024-05-02 18:43:00] Client 6298 tries to enter critical section for the file 05319346629 for reading
+in here include time: [2024-05-02 18:43:00] Client 6298 tries to exit critical section for the file 05319346629 for reading
+in here include time: [2024-05-02 18:43:00] Client requested to list the files in the server directory.
+in here include time: [2024-05-02 18:43:03] Client 6297 requested readF command.
+in here include time: [2024-05-02 18:43:03] Client 6298 tries to enter critical section for the file emre.txt for reading
+in here include time: [2024-05-02 18:43:03] Client 6298 tries to exit critical section for the file emre.txt for reading
+in here include time: [2024-05-02 18:43:07] Client 6297 requested readF command.
+in here include time: [2024-05-02 18:43:07] Client 6298 tries to enter critical section for the file emre.txt for reading
+in here include time: [2024-05-02 18:43:07] Client 6298 tries to exit critical section for the file emre.txt for reading
+in here include time: [2024-05-02 18:43:19] Client 6297 requested writeF command.
+in here include time: [2024-05-02 18:43:19] Client 6298 tries to enter critical section for the file emre.txt for reading
+in here include time: [2024-05-02 18:43:19] Client 6298 tries to exit critical section for the file emre.txt for writing
+in here include time: [2024-05-02 18:43:19] Client 6298 tries to exit critical section for the file temp.txt for writing
+in here include time: [2024-05-02 18:43:19] Line 2 of file emre.txt has been written by the client.
+in here include time: [2024-05-02 18:43:23] Client 6297 requested writeF command.
+in here include time: [2024-05-02 18:43:23] Client 6298 tries to enter critical section for the file ekledim.txt for writing
+in here include time: [2024-05-02 18:43:23] Client 6298 tries to exit critical section for the file ekledim.txt for writing
+in here include time: [2024-05-02 18:43:23] File ekledim.txt has been written by the client.
+in here include time: [2024-05-02 18:43:34] Client 6297 requested download command.
+in here include time: [2024-05-02 18:43:34] Client 6298 tries to enter critical section for the file a.txt for reading
+in here include time: [2024-05-02 18:43:34] Client 6298 tries to exit critical section for the file a.txt for reading
+in here include time: [2024-05-02 18:43:37] Client 6297 requested upload command.
+in here include time: [2024-05-02 18:43:37] Client 6298 tries to enter critical section for the file b(1).txt for writing
+in here include time: [2024-05-02 18:43:37] Client 6298 tries to enter critical section for the file 05319346629 for writing
+in here include time: [2024-05-02 18:43:37] Client 6298 tries to exit critical section for the file b(1).txt for writing
+in here include time: [2024-05-02 18:43:37] Client 6298 tries to exit critical section for the file 05319346629 for writing
+in here include time: [2024-05-02 18:43:37] File b(1).txt has been uploaded by the client with 13224212 bytes
+in here include time: [2024-05-02 18:43:41] Client 6297 requested archServer command.
+in here include time: [2024-05-02 18:43:41] Client 6297 requested download_all command.
+in here include time: [2024-05-02 18:43:41] Client 6298 tries to enter critical section for the file selam.tar for reading
+in here include time: [2024-05-02 18:43:42] Client 6298 tries to exit critical section for the file selam.tar for reading
+in here include time: [2024-05-02 18:44:07] Client 6297 requested quit command.
+in here include time: [2024-05-02 18:44:07] Client 6308 is dequeued and connected. It is ready for operations.
+in here include time: [2024-05-02 18:44:07] Client 6297 is disconnected.
+in here include time: [2024-05-02 18:44:10] Client 6308 requested list command.
+in here include time: [2024-05-02 18:44:10] Client 6314 tries to enter critical section for the file 05319346629 for reading
+in here include time: [2024-05-02 18:44:10] Client 6314 tries to exit critical section for the file 05319346629 for reading
+in here include time: [2024-05-02 18:44:10] Client requested to list the files in the server directory.
+in here include time: [2024-05-02 18:44:11] Client 6308 requested readF command.
+in here include time: [2024-05-02 18:44:11] Client 6314 tries to enter critical section for the file emre.txt for reading
+in here include time: [2024-05-02 18:44:11] Client 6314 tries to exit critical section for the file emre.txt for reading
+in here include time: [2024-05-02 18:44:14] Client 6308 requested download command.
+in here include time: [2024-05-02 18:44:14] Client 6314 tries to enter critical section for the file emre.txt for reading
+in here include time: [2024-05-02 18:44:14] Client 6314 tries to exit critical section for the file emre.txt for reading
+in here include time: [2024-05-02 18:44:16] Client 6308 requested upload command.
+in here include time: [2024-05-02 18:44:16] Client 6314 tries to enter critical section for the file b(1).txt for writing
+in here include time: [2024-05-02 18:44:16] Client 6314 tries to enter critical section for the file 05319346629 for writing
+in here include time: [2024-05-02 18:44:16] Client 6314 tries to exit critical section for the file b(1).txt for writing
+in here include time: [2024-05-02 18:44:16] Client 6314 tries to exit critical section for the file 05319346629 for writing
+in here include time: [2024-05-02 18:44:16] File b(1).txt has been uploaded by the client with 13224212 bytes
+in here include time: [2024-05-02 18:44:22] Client 6308 requested writeF command.
+in here include time: [2024-05-02 18:44:22] Client 6314 tries to enter critical section for the file eklesene.txt for writing
+in here include time: [2024-05-02 18:44:22] Client 6314 tries to exit critical section for the file eklesene.txt for writing
+in here include time: [2024-05-02 18:44:22] File eklesene.txt has been written by the client.
+in here include time: [2024-05-02 18:44:26] Client 6308 requested writeF command.
+in here include time: [2024-05-02 18:44:26] Client 6314 tries to enter critical section for the file emre.txt for reading
+in here include time: [2024-05-02 18:44:26] Client 6314 tries to exit critical section for the file emre.txt for writing
+in here include time: [2024-05-02 18:44:26] Client 6314 tries to exit critical section for the file temp.txt for writing
+in here include time: [2024-05-02 18:44:26] Line 5 of file emre.txt has been written by the client.
+in here include time: [2024-05-02 18:44:29] Client 6308 requested readF command.
+in here include time: [2024-05-02 18:44:31] Client 6308 requested readF command.
+in here include time: [2024-05-02 18:44:31] Client 6314 tries to enter critical section for the file emre.txt for reading
+in here include time: [2024-05-02 18:44:31] Client 6314 tries to exit critical section for the file emre.txt for reading
+in here include time: [2024-05-02 18:44:44] Client 6308 requested download command.
+in here include time: [2024-05-02 18:44:44] Client 6314 tries to enter critical section for the file asdfdas.txt for reading
+in here include time: [2024-05-02 18:44:44] Client requested file asdfdas.txt, but it does not exist.
+in here include time: [2024-05-02 18:44:44] Client 6314 tries to exit critical section for the file asdfdas.txt for reading
+in here include time: [2024-05-02 18:44:59] Client 6308 requested killServer command.
+in here include time: [2024-05-02 18:51:18] Server Started PID 6750...
+Waiting for clients...
+in here include time: [2024-05-02 18:51:25] Client 6766 is queued.
+in here include time: [2024-05-02 18:51:25] Client 6766 is dequeued and connected. It is ready for operations.
+in here include time: [2024-05-02 18:51:29] Client 6770 is queued.
+in here include time: [2024-05-02 18:51:29] Connection request 6770 is refused. Queue is full.
+in here include time: [2024-05-02 18:51:32] Client 6766 requested list command.
+in here include time: [2024-05-02 18:51:32] Client 6767 tries to enter critical section for the file 05319346629 for reading
+in here include time: [2024-05-02 18:51:32] Client 6767 tries to exit critical section for the file 05319346629 for reading
+in here include time: [2024-05-02 18:51:32] Client requested to list the files in the server directory.
+in here include time: [2024-05-02 18:51:33] Client 6766 requested readF command.
+in here include time: [2024-05-02 18:51:33] Client 6767 tries to enter critical section for the file emre.txt for reading
+in here include time: [2024-05-02 18:51:33] Client 6767 tries to exit critical section for the file emre.txt for reading
+in here include time: [2024-05-02 18:51:36] Client 6766 requested readF command.
+in here include time: [2024-05-02 18:51:36] Client 6767 tries to enter critical section for the file emre.txt for reading
+in here include time: [2024-05-02 18:51:36] Client 6767 tries to exit critical section for the file emre.txt for reading
+in here include time: [2024-05-02 18:51:42] Client 6766 requested writeF command.
+in here include time: [2024-05-02 18:51:42] Client 6767 tries to enter critical section for the file emre.txt for reading
+in here include time: [2024-05-02 18:51:42] Client 6767 tries to exit critical section for the file emre.txt for writing
+in here include time: [2024-05-02 18:51:42] Client 6767 tries to exit critical section for the file temp.txt for writing
+in here include time: [2024-05-02 18:51:42] Line 2 of file emre.txt has been written by the client.
+in here include time: [2024-05-02 18:51:46] Client 6766 requested writeF command.
+in here include time: [2024-05-02 18:51:46] Client 6767 tries to enter critical section for the file yeni.txt for writing
+in here include time: [2024-05-02 18:51:46] Client 6767 tries to exit critical section for the file yeni.txt for writing
+in here include time: [2024-05-02 18:51:46] File yeni.txt has been written by the client.
+in here include time: [2024-05-02 18:51:51] Client 6766 requested writeF command.
+in here include time: [2024-05-02 18:51:51] Client 6767 tries to enter critical section for the file emre.txt for writing
+in here include time: [2024-05-02 18:51:51] Client 6767 tries to exit critical section for the file emre.txt for writing
+in here include time: [2024-05-02 18:51:51] File emre.txt has been written by the client.
+in here include time: [2024-05-02 18:51:54] Client 6766 requested download command.
+in here include time: [2024-05-02 18:51:54] Client 6767 tries to enter critical section for the file emre.txt for reading
+in here include time: [2024-05-02 18:51:54] Client 6767 tries to exit critical section for the file emre.txt for reading
+in here include time: [2024-05-02 18:51:57] Client 6766 requested download command.
+in here include time: [2024-05-02 18:51:57] Client 6767 tries to enter critical section for the file emre.txt for reading
+in here include time: [2024-05-02 18:51:57] Client 6767 tries to exit critical section for the file emre.txt for reading
+in here include time: [2024-05-02 18:51:59] Client 6766 requested download command.
+in here include time: [2024-05-02 18:51:59] Client 6767 tries to enter critical section for the file a.txt for reading
+in here include time: [2024-05-02 18:52:00] Client 6767 tries to exit critical section for the file a.txt for reading
+in here include time: [2024-05-02 18:52:02] Client 6766 requested download command.
+in here include time: [2024-05-02 18:52:02] Client 6767 tries to enter critical section for the file a.txt for reading
+in here include time: [2024-05-02 18:52:03] Client 6767 tries to exit critical section for the file a.txt for reading
+in here include time: [2024-05-02 18:52:04] Client 6766 requested upload command.
+in here include time: [2024-05-02 18:52:04] Client 6767 tries to enter critical section for the file b(1).txt for writing
+in here include time: [2024-05-02 18:52:04] Client 6767 tries to enter critical section for the file 05319346629 for writing
+in here include time: [2024-05-02 18:52:05] Client 6767 tries to exit critical section for the file b(1).txt for writing
+in here include time: [2024-05-02 18:52:05] Client 6767 tries to exit critical section for the file 05319346629 for writing
+in here include time: [2024-05-02 18:52:05] File b(1).txt has been uploaded by the client with 13224212 bytes
+in here include time: [2024-05-02 18:52:07] Client 6766 requested upload command.
+in here include time: [2024-05-02 18:52:07] Client 6767 tries to enter critical section for the file b(1).txt for writing
+in here include time: [2024-05-02 18:52:07] Client 6767 tries to enter critical section for the file 05319346629 for writing
+in here include time: [2024-05-02 18:52:08] Client 6767 tries to exit critical section for the file b(1).txt for writing
+in here include time: [2024-05-02 18:52:08] Client 6767 tries to exit critical section for the file 05319346629 for writing
+in here include time: [2024-05-02 18:52:08] File b(1).txt has been uploaded by the client with 13224212 bytes
+in here include time: [2024-05-02 18:52:11] Client 6766 requested archServer command.
+in here include time: [2024-05-02 18:52:11] Client 6766 requested download_all command.
+in here include time: [2024-05-02 18:52:11] Client 6767 tries to enter critical section for the file selam.tar for reading
+in here include time: [2024-05-02 18:52:14] Client 6767 tries to exit critical section for the file selam.tar for reading
+in here include time: [2024-05-02 18:52:27] Client 6766 requested download command.
+in here include time: [2024-05-02 18:52:27] Client 6767 tries to enter critical section for the file asdfsd.txt for reading
+in here include time: [2024-05-02 18:52:27] Client requested file asdfsd.txt, but it does not exist.
+in here include time: [2024-05-02 18:52:27] Client 6767 tries to exit critical section for the file asdfsd.txt for reading
+in here include time: [2024-05-02 18:53:36] Client 6766 requested download command.
+in here include time: [2024-05-02 18:53:36] Client 6767 tries to enter critical section for the file sdfdsa.txt for reading
+in here include time: [2024-05-02 18:53:36] Client requested file sdfdsa.txt, but it does not exist.
+in here include time: [2024-05-02 18:53:36] Client 6767 tries to exit critical section for the file sdfdsa.txt for reading
+in here include time: [2024-05-02 18:53:41] Client 6766 requested download command.
+in here include time: [2024-05-02 18:53:41] Client 6767 tries to enter critical section for the file selam.txt for reading
+in here include time: [2024-05-02 18:53:41] Client requested file selam.txt, but it does not exist.
+in here include time: [2024-05-02 18:53:41] Client 6767 tries to exit critical section for the file selam.txt for reading
+in here include time: [2024-05-02 18:53:48] Client 6766 requested writeF command.
+in here include time: [2024-05-02 18:53:48] Client 6767 tries to enter critical section for the file selam.txt for writing
+in here include time: [2024-05-02 18:53:48] Client 6767 tries to exit critical section for the file selam.txt for writing
+in here include time: [2024-05-02 18:53:48] File selam.txt has been written by the client.
+in here include time: [2024-05-02 18:53:51] Client 6766 requested quit command.
+in here include time: [2024-05-02 18:53:51] Client 6770 is dequeued and connected. It is ready for operations.
+in here include time: [2024-05-02 18:53:51] Client 6766 is disconnected.
+in here include time: [2024-05-02 18:53:55] Client 6770 requested list command.
+in here include time: [2024-05-02 18:53:55] Client 6783 tries to enter critical section for the file 05319346629 for reading
+in here include time: [2024-05-02 18:53:55] Client 6783 tries to exit critical section for the file 05319346629 for reading
+in here include time: [2024-05-02 18:53:55] Client requested to list the files in the server directory.
+in here include time: [2024-05-02 18:53:57] Client 6770 requested download command.
+in here include time: [2024-05-02 18:53:57] Client 6783 tries to enter critical section for the file selam.txt for reading
+in here include time: [2024-05-02 18:53:57] Client 6783 tries to exit critical section for the file selam.txt for reading
+in here include time: [2024-05-02 18:54:03] Client 6770 requested writeF command.
+in here include time: [2024-05-02 18:54:03] Client 6783 tries to enter critical section for the file selam.txt for reading
+in here include time: [2024-05-02 18:54:03] Client 6783 tries to exit critical section for the file selam.txt for writing
+in here include time: [2024-05-02 18:54:03] Client 6783 tries to exit critical section for the file temp.txt for writing
+in here include time: [2024-05-02 18:54:03] Line 2 of file selam.txt has been written by the client.
+in here include time: [2024-05-02 18:54:16] Client 6770 requested writeF command.
+in here include time: [2024-05-02 18:54:16] Client 6783 tries to enter critical section for the file selam.txt for reading
+in here include time: [2024-05-02 18:54:16] Client 6783 tries to exit critical section for the file selam.txt for writing
+in here include time: [2024-05-02 18:54:16] Client 6783 tries to exit critical section for the file temp.txt for writing
+in here include time: [2024-05-02 18:54:16] Line 66 of file selam.txt has been written by the client.
+in here include time: [2024-05-02 18:54:50] Client 6770 requested writeF command.
+in here include time: [2024-05-02 18:54:50] Client 6783 tries to enter critical section for the file selam.txt for reading
+in here include time: [2024-05-02 18:54:50] Client 6783 tries to exit critical section for the file selam.txt for writing
+in here include time: [2024-05-02 18:54:50] Client 6783 tries to exit critical section for the file temp.txt for writing
+in here include time: [2024-05-02 18:54:50] Line 1 of file selam.txt has been written by the client.
+in here include time: [2024-05-02 18:55:21] Client 6770 requested writeF command.
+in here include time: [2024-05-02 18:55:21] Client 6783 tries to enter critical section for the file selam.txt for reading
+in here include time: [2024-05-02 18:55:21] Client 6783 tries to exit critical section for the file selam.txt for writing
+in here include time: [2024-05-02 18:55:21] Client 6783 tries to exit critical section for the file temp.txt for writing
+in here include time: [2024-05-02 18:55:21] Line 2 of file selam.txt has been written by the client.
+in here include time: [2024-05-02 18:55:24] Client 6770 requested writeF command.
+in here include time: [2024-05-02 18:55:24] Client 6783 tries to enter critical section for the file selam.txt for writing
+in here include time: [2024-05-02 18:55:24] Client 6783 tries to exit critical section for the file selam.txt for writing
+in here include time: [2024-05-02 18:55:24] File selam.txt has been written by the client.
+in here include time: [2024-05-02 18:55:36] Client 6770 requested readF command.
+in here include time: [2024-05-02 18:55:39] Client 6770 requested readF command.
+in here include time: [2024-05-02 18:55:39] Client 6783 tries to enter critical section for the file selam.txt for reading
+in here include time: [2024-05-02 18:55:39] Client 6783 tries to exit critical section for the file selam.txt for reading
+in here include time: [2024-05-02 18:55:43] Client 6770 requested readF command.
+in here include time: [2024-05-02 18:55:43] Client 6783 tries to enter critical section for the file selam.txt for reading
+in here include time: [2024-05-02 18:55:43] Client 6783 tries to exit critical section for the file selam.txt for reading
+in here include time: [2024-05-02 18:57:48] Client 6770 requested killServer command.
+in here include time: [2024-05-02 18:58:39] Server Started PID 6869...
+Waiting for clients...
+in here include time: [2024-05-02 18:58:57] Client 6872 is queued.
+in here include time: [2024-05-02 18:58:57] Client 6872 is dequeued and connected. It is ready for operations.
+in here include time: [2024-05-02 18:59:05] Client 6872 requested writeF command.
+in here include time: [2024-05-02 18:59:05] Client 6873 tries to enter critical section for the file emre.txt for reading
+in here include time: [2024-05-02 18:59:05] Client 6873 tries to exit critical section for the file emre.txt for writing
+in here include time: [2024-05-02 18:59:05] Client 6873 tries to exit critical section for the file temp.txt for writing
+in here include time: [2024-05-02 18:59:05] Line 67 of file emre.txt has been written by the client.
+in here include time: [2024-05-02 19:03:08] Client 6872 requested readF command.
+in here include time: [2024-05-02 19:03:08] Client 6873 tries to enter critical section for the file emre.txt for reading
+in here include time: [2024-05-02 19:03:08] Client 6873 tries to exit critical section for the file emre.txt for reading
+in here include time: [2024-05-02 19:04:30] Client 6872 requested readF command.

@@ -489,7 +489,6 @@ void handle_specific_line_write(char *dirname, writeF_command writeF, int *clien
         // Handle any remaining part of the buffer if it doesn't end with a newline
         if (*line_start) {
             ssize_t len = strlen(line_start);
-            successful = 1; // Set the success flag to true
             if (current_line == writeF.line_number) {
                 if (write(temp_fd, writeF.string, strlen(writeF.string)) == -1) {
                     perror("Failed to write new line to temp file");
@@ -499,6 +498,7 @@ void handle_specific_line_write(char *dirname, writeF_command writeF, int *clien
                     exitRegionWriter(getSafeFile(dir_syncs, "temp.txt"));
                     cleanup(server_fd, *client_res_fd, server_req_fd, dir_syncs);
                 }
+                successful = 1; // Set the success flag to true
             }
 
             if (write(temp_fd, line_start, len) == -1) {
@@ -658,6 +658,10 @@ void handle_download_command(char* command, const char* dirname, int *client_res
         region_reader_logger(dir_syncs, getpid(), download.file, 0);
         exitRegionReader(getSafeFile(dir_syncs, download.file));
         removeSafeFile(dir_syncs, download.file);
+
+        for(int i = 0; i < num_words; i++) {
+            free(words[i]);
+        }
 
         int garbage;
         ssize_t num_read = read(server_req_fd, &garbage, sizeof(int));

@@ -444,7 +444,7 @@ void handle_download_command(int *fd_client_cmd, int *fd_client_res, char** word
     }
     
 
-    char response[256]; // Buffer to store the response
+    char response[256] = {0}; // Buffer to store the response
     ssize_t total_bytes = 0; // Number of bytes read from the server
     while (1) {
         // Read the response from the server
