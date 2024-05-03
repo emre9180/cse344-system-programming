@@ -43,7 +43,7 @@ int main(int argc, char *argv[])
     // create_shared_memory(SHM_NAME, (void **)&dir_syncs, sizeof(struct file_sync) * NUM_OF_DIR_FILE + sizeof(Semaphores) + sizeof(int) * 2);
 
     int shm_fd;
-    int shm_size = sizeof(struct file_sync) * NUM_OF_DIR_FILE + sizeof(Semaphores) + sizeof(int) * 2;
+    int shm_size = sizeof(struct file_sync) * FILE_LIMIT + sizeof(Semaphores) + sizeof(int) * 2;
     /* Create a shared memory segment */
     if ((shm_fd = shm_open(SHM_NAME, O_CREAT | O_RDWR, 0666)) == -1)
     {

@@ -17,8 +17,8 @@
 #include <dirent.h>
 #include <semaphore.h>
 
-#define FNAME_LEN 128
-#define NUM_OF_DIR_FILE 128
+#define FILE_NAME_LENGTH 256
+#define FILE_LIMIT 256
 
 #define UPLOAD_AND_LIST_SYNC_FILE "05319346629"
 
@@ -48,7 +48,7 @@ struct file_sync {
     sem_t rMutex;           /**< Semaphore for readers mutual exclusion */
     sem_t wMutex;           /**< Semaphore for writers mutual exclusion */
     sem_t lock;              /**< Semaphore for readers synchronization */
-    char fname[FNAME_LEN];  /**< File name */
+    char fname[FILE_NAME_LENGTH];  /**< File name */
     int readerCount;        /**< Number of readers */
     int writerCount;        /**< Number of writers */
 };
@@ -61,7 +61,7 @@ struct file_sync {
  * It includes an array of safe files, semaphores for synchronization, and other metadata.
  */
 struct dir_sync {
-    struct file_sync files[NUM_OF_DIR_FILE];   /**< Array of safe files in the directory */
+    struct file_sync files[FILE_LIMIT];   /**< Array of safe files in the directory */
     Semaphores sems;                           /**< Semaphores for synchronization */
     int size;                                  /**< Current number of files in the directory */
     int capacity;                              /**< Maximum capacity of the directory */

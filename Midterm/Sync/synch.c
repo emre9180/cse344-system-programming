@@ -103,7 +103,7 @@ int exitRegionWriter(struct file_sync *sfile) {
 
 // Initialize a safe file
 int initSafeFile(struct file_sync *sfile, const char *fname) {
-    strncpy(sfile->fname, fname, FNAME_LEN);
+    strncpy(sfile->fname, fname, FILE_NAME_LENGTH);
     sfile->readerCount = 0;
     sfile->writerCount = 0;
     sem_init(&sfile->readTry, 1, 1);
@@ -143,7 +143,7 @@ int initSafeDir(const char *server_dir, struct dir_sync *sdir, int max_clients) 
 
     struct dirent *entry;
     sdir->size = 0;
-    sdir->capacity = NUM_OF_DIR_FILE;
+    sdir->capacity = FILE_LIMIT;
     while ((entry = readdir(dir)) != NULL && sdir->size < sdir->capacity) {
         addSafeFile(sdir, entry->d_name);
     }
