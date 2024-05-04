@@ -1,0 +1,152 @@
+in here include time: [2024-05-04 20:15:43] Server Started PID 10776...
+Waiting for clients...
+in here include time: [2024-05-04 20:16:06] Client 10777 is queued.
+in here include time: [2024-05-04 20:16:06] Client 10777 is dequeued and connected. It is ready for operations.
+in here include time: [2024-05-04 20:16:29] Client 10782 is queued.
+in here include time: [2024-05-04 20:16:29] Client 10782 is dequeued and connected. It is ready for operations.
+in here include time: [2024-05-04 20:16:45] Client 10784 is queued.
+in here include time: [2024-05-04 20:16:45] Connection request 10784 is refused. Queue is full.
+in here include time: [2024-05-04 20:16:45] Client 10784 is refused. Its mode is tryConnect and queue is full.
+in here include time: [2024-05-04 20:16:53] Client 10789 is queued.
+in here include time: [2024-05-04 20:16:53] Connection request 10789 is refused. Queue is full.
+in here include time: [2024-05-04 20:16:56] Client 10777 requested list command.
+in here include time: [2024-05-04 20:16:56] Tries to enter critical section for the file 05319346629 for reading in server child process id 10778.
+in here include time: [2024-05-04 20:16:56] Tries to exit critical section for the file 05319346629 for reading in server child process id 10778.
+in here include time: [2024-05-04 20:16:56] Client requested to list the files in the server directory.
+in here include time: [2024-05-04 20:16:59] Client 10782 requested list command.
+in here include time: [2024-05-04 20:16:59] Tries to enter critical section for the file 05319346629 for reading in server child process id 10783.
+in here include time: [2024-05-04 20:16:59] Tries to exit critical section for the file 05319346629 for reading in server child process id 10783.
+in here include time: [2024-05-04 20:16:59] Client requested to list the files in the server directory.
+in here include time: [2024-05-04 20:17:01] Client 10782 requested readF command.
+in here include time: [2024-05-04 20:17:05] Client 10782 requested readF command.
+in here include time: [2024-05-04 20:17:05] Tries to enter critical section for the file emre.txt for reading in server child process id 10783.
+in here include time: [2024-05-04 20:17:05] Tries to exit critical section for the file emre.txt for reading in server child process id 10783.
+in here include time: [2024-05-04 20:17:08] Client 10777 requested readF command.
+in here include time: [2024-05-04 20:17:08] Tries to enter critical section for the file emre.txt for reading in server child process id 10778.
+in here include time: [2024-05-04 20:17:08] Tries to exit critical section for the file emre.txt for reading in server child process id 10778.
+in here include time: [2024-05-04 20:17:16] Client 10777 requested readF command.
+in here include time: [2024-05-04 20:17:16] Tries to enter critical section for the file emre.txt for reading in server child process id 10778.
+in here include time: [2024-05-04 20:17:16] Tries to exit critical section for the file emre.txt for reading in server child process id 10778.
+in here include time: [2024-05-04 20:17:21] Client 10777 requested writeF command.
+in here include time: [2024-05-04 20:17:21] Tries to enter critical section for the file emre.txt for reading in server child process id 10778.
+in here include time: [2024-05-04 20:17:21] Tries to enter critical section for the file temp.txt for writing in server child process id 10778.
+in here include time: [2024-05-04 20:17:21] Tries to exit critical section for the file emre.txt for reading in server child process id 10778.
+in here include time: [2024-05-04 20:17:21] Tries to exit critical section for the file temp.txt for writing in server child process id 10778.
+in here include time: [2024-05-04 20:17:21] Line 5 of file emre.txt has been written by the client.
+in here include time: [2024-05-04 20:17:24] Client 10782 requested readF command.
+in here include time: [2024-05-04 20:17:24] Tries to enter critical section for the file emre.txt for reading in server child process id 10783.
+in here include time: [2024-05-04 20:17:24] Tries to exit critical section for the file emre.txt for reading in server child process id 10783.
+in here include time: [2024-05-04 20:17:29] Client 10777 requested readF command.
+in here include time: [2024-05-04 20:17:29] Tries to enter critical section for the file emre.txt for reading in server child process id 10778.
+in here include time: [2024-05-04 20:17:29] Tries to exit critical section for the file emre.txt for reading in server child process id 10778.
+in here include time: [2024-05-04 20:17:32] Client 10777 requested readF command.
+in here include time: [2024-05-04 20:17:32] Tries to enter critical section for the file emre.txt for reading in server child process id 10778.
+in here include time: [2024-05-04 20:17:32] Tries to exit critical section for the file emre.txt for reading in server child process id 10778.
+in here include time: [2024-05-04 20:17:37] Client 10782 requested writeF command.
+in here include time: [2024-05-04 20:17:37] Tries to enter critical section for the file emre.txt for writing in server child process id 10783.
+in here include time: [2024-05-04 20:17:37] Tries to exit critical section for the file emre.txt for writing in server child process id 10783.
+in here include time: [2024-05-04 20:17:37] File emre.txt has been written by the client.
+in here include time: [2024-05-04 20:17:41] Client 10777 requested readF command.
+in here include time: [2024-05-04 20:17:41] Tries to enter critical section for the file emre.txt for reading in server child process id 10778.
+in here include time: [2024-05-04 20:17:41] Tries to exit critical section for the file emre.txt for reading in server child process id 10778.
+in here include time: [2024-05-04 20:17:44] Client 10777 requested readF command.
+in here include time: [2024-05-04 20:17:44] Tries to enter critical section for the file emre.txt for reading in server child process id 10778.
+in here include time: [2024-05-04 20:17:44] Tries to exit critical section for the file emre.txt for reading in server child process id 10778.
+in here include time: [2024-05-04 20:17:51] Client 10782 requested writeF command.
+in here include time: [2024-05-04 20:17:51] Tries to enter critical section for the file haha.txt for writing in server child process id 10783.
+in here include time: [2024-05-04 20:17:51] Tries to exit critical section for the file haha.txt for writing in server child process id 10783.
+in here include time: [2024-05-04 20:17:51] File haha.txt has been written by the client.
+in here include time: [2024-05-04 20:17:54] Client 10777 requested readF command.
+in here include time: [2024-05-04 20:17:54] Tries to enter critical section for the file haha.txt for reading in server child process id 10778.
+in here include time: [2024-05-04 20:17:54] Tries to exit critical section for the file haha.txt for reading in server child process id 10778.
+in here include time: [2024-05-04 20:18:29] Client 10777 requested download command.
+in here include time: [2024-05-04 20:18:29] Tries to enter critical section for the file a.txt for reading in server child process id 10778.
+in here include time: [2024-05-04 20:18:31] Tries to exit critical section for the file a.txt for reading in server child process id 10778.
+in here include time: [2024-05-04 20:19:02] Client 10777 requested download command.
+in here include time: [2024-05-04 20:19:02] Tries to enter critical section for the file a.txt for reading in server child process id 10778.
+in here include time: [2024-05-04 20:19:02] Client 10782 requested writeF command.
+in here include time: [2024-05-04 20:19:02] Tries to enter critical section for the file a.txt for reading in server child process id 10783.
+in here include time: [2024-05-04 20:19:02] Tries to enter critical section for the file temp.txt for writing in server child process id 10783.
+in here include time: [2024-05-04 20:19:04] Tries to exit critical section for the file a.txt for reading in server child process id 10778.
+in here include time: [2024-05-04 20:19:07] Tries to exit critical section for the file a.txt for reading in server child process id 10783.
+in here include time: [2024-05-04 20:19:07] Tries to exit critical section for the file temp.txt for writing in server child process id 10783.
+in here include time: [2024-05-04 20:19:07] Line 45 of file a.txt has been written by the client.
+in here include time: [2024-05-04 20:19:17] Client 10782 requested readF command.
+in here include time: [2024-05-04 20:19:17] Tries to enter critical section for the file a.txt for reading in server child process id 10783.
+in here include time: [2024-05-04 20:19:26] Tries to exit critical section for the file a.txt for reading in server child process id 10783.
+in here include time: [2024-05-04 20:19:26] Client 10777 requested upload command.
+in here include time: [2024-05-04 20:19:26] Tries to enter critical section for the file b.txt for writing in server child process id 10778.
+in here include time: [2024-05-04 20:19:26] Tries to enter critical section for the file 05319346629 for writing in server child process id 10778.
+in here include time: [2024-05-04 20:19:28] Tries to exit critical section for the file b.txt for writing in server child process id 10778.
+in here include time: [2024-05-04 20:19:28] Tries to exit critical section for the file 05319346629 for writing in server child process id 10778.
+in here include time: [2024-05-04 20:19:28] File b.txt has been uploaded by the client with 13224212 bytes
+in here include time: [2024-05-04 20:19:32] Client 10777 requested upload command.
+in here include time: [2024-05-04 20:19:32] Tries to enter critical section for the file b(1).txt for writing in server child process id 10778.
+in here include time: [2024-05-04 20:19:32] Tries to enter critical section for the file 05319346629 for writing in server child process id 10778.
+in here include time: [2024-05-04 20:19:33] Tries to exit critical section for the file b(1).txt for writing in server child process id 10778.
+in here include time: [2024-05-04 20:19:33] Tries to exit critical section for the file 05319346629 for writing in server child process id 10778.
+in here include time: [2024-05-04 20:19:33] File b(1).txt has been uploaded by the client with 13224212 bytes
+in here include time: [2024-05-04 20:19:37] Client 10777 requested download command.
+in here include time: [2024-05-04 20:19:37] Tries to enter critical section for the file asdfsad.txt for reading in server child process id 10778.
+in here include time: [2024-05-04 20:19:37] Client requested file asdfsad.txt, but it does not exist.
+in here include time: [2024-05-04 20:19:37] Tries to exit critical section for the file asdfsad.txt for reading in server child process id 10778.
+in here include time: [2024-05-04 20:19:41] Client 10782 requested readF command.
+in here include time: [2024-05-04 20:19:41] Tries to enter critical section for the file emre.txt for reading in server child process id 10783.
+in here include time: [2024-05-04 20:19:41] Tries to exit critical section for the file emre.txt for reading in server child process id 10783.
+in here include time: [2024-05-04 20:19:42] Client 10782 requested readF command.
+in here include time: [2024-05-04 20:19:42] Tries to enter critical section for the file a.txt for reading in server child process id 10783.
+in here include time: [2024-05-04 20:19:45] Client 10777 requested writeF command.
+in here include time: [2024-05-04 20:19:45] Tries to enter critical section for the file emre.txt for writing in server child process id 10778.
+in here include time: [2024-05-04 20:19:45] Tries to exit critical section for the file emre.txt for writing in server child process id 10778.
+in here include time: [2024-05-04 20:19:45] File emre.txt has been written by the client.
+in here include time: [2024-05-04 20:19:52] Tries to exit critical section for the file a.txt for reading in server child process id 10783.
+in here include time: [2024-05-04 20:19:58] Client 10782 requested readF command.
+in here include time: [2024-05-04 20:19:58] Tries to enter critical section for the file a.txt for reading in server child process id 10783.
+in here include time: [2024-05-04 20:19:59] Client 10777 requested writeF command.
+in here include time: [2024-05-04 20:19:59] Tries to enter critical section for the file a.txt for writing in server child process id 10778.
+in here include time: [2024-05-04 20:20:08] Tries to exit critical section for the file a.txt for reading in server child process id 10783.
+in here include time: [2024-05-04 20:20:08] Tries to exit critical section for the file a.txt for writing in server child process id 10778.
+in here include time: [2024-05-04 20:20:08] File a.txt has been written by the client.
+in here include time: [2024-05-04 20:20:21] Client 10777 requested archServer command.
+in here include time: [2024-05-04 20:20:22] Client 10777 requested download_all command.
+in here include time: [2024-05-04 20:20:22] Tries to enter critical section for the file selam.tar for reading in server child process id 10778.
+in here include time: [2024-05-04 20:20:28] Tries to exit critical section for the file selam.tar for reading in server child process id 10778.
+in here include time: [2024-05-04 20:20:46] Client 10777 requested archServer command.
+in here include time: [2024-05-04 20:20:46] Client 10777 requested download_all command.
+in here include time: [2024-05-04 20:20:46] Tries to enter critical section for the file selam.tar for reading in server child process id 10778.
+in here include time: [2024-05-04 20:20:53] Tries to exit critical section for the file selam.tar for reading in server child process id 10778.
+in here include time: [2024-05-04 20:20:55] Client 10777 requested quit command.
+in here include time: [2024-05-04 20:20:55] Client 10777 is disconnected.
+in here include time: [2024-05-04 20:20:55] Client 10789 is dequeued and connected. It is ready for operations.
+in here include time: [2024-05-04 20:21:02] Client 10789 requested list command.
+in here include time: [2024-05-04 20:21:02] Tries to enter critical section for the file 05319346629 for reading in server child process id 10845.
+in here include time: [2024-05-04 20:21:02] Tries to exit critical section for the file 05319346629 for reading in server child process id 10845.
+in here include time: [2024-05-04 20:21:02] Client requested to list the files in the server directory.
+in here include time: [2024-05-04 20:21:08] Client 10789 requested upload command.
+in here include time: [2024-05-04 20:21:08] Tries to enter critical section for the file b(1)(1).txt for writing in server child process id 10845.
+in here include time: [2024-05-04 20:21:08] Tries to enter critical section for the file 05319346629 for writing in server child process id 10845.
+in here include time: [2024-05-04 20:21:08] Tries to exit critical section for the file b(1)(1).txt for writing in server child process id 10845.
+in here include time: [2024-05-04 20:21:08] Tries to exit critical section for the file 05319346629 for writing in server child process id 10845.
+in here include time: [2024-05-04 20:21:08] File b(1)(1).txt has been uploaded by the client with 13224212 bytes
+in here include time: [2024-05-04 20:21:09] Client 10789 requested list command.
+in here include time: [2024-05-04 20:21:09] Tries to enter critical section for the file 05319346629 for reading in server child process id 10845.
+in here include time: [2024-05-04 20:21:09] Tries to exit critical section for the file 05319346629 for reading in server child process id 10845.
+in here include time: [2024-05-04 20:21:09] Client requested to list the files in the server directory.
+in here include time: [2024-05-04 20:21:15] Client 10789 requested download command.
+in here include time: [2024-05-04 20:21:15] Tries to enter critical section for the file haha.txt for reading in server child process id 10845.
+in here include time: [2024-05-04 20:21:15] Tries to exit critical section for the file haha.txt for reading in server child process id 10845.
+in here include time: [2024-05-04 20:21:20] Client 10789 requested killServer command.
+in here include time: [2024-05-04 20:25:05] Server Started PID 11135...
+Waiting for clients...
+in here include time: [2024-05-04 20:25:13] Client 11137 is queued.
+in here include time: [2024-05-04 20:25:13] Client 11137 is dequeued and connected. It is ready for operations.
+in here include time: [2024-05-04 20:25:19] Client 11139 is queued.
+in here include time: [2024-05-04 20:25:19] Client 11139 is dequeued and connected. It is ready for operations.
+in here include time: [2024-05-04 20:25:24] Client 11137 requested killServer command.
+in here include time: [2024-05-04 20:26:28] Server Started PID 11240...
+Waiting for clients...
+in here include time: [2024-05-04 20:26:34] Client 11242 is queued.
+in here include time: [2024-05-04 20:26:34] Client 11242 is dequeued and connected. It is ready for operations.
+in here include time: [2024-05-04 20:26:39] Client 11245 is queued.
+in here include time: [2024-05-04 20:26:39] Client 11245 is dequeued and connected. It is ready for operations.
+in here include time: [2024-05-04 20:26:44] Client 11242 requested killServer command.

@@ -64,7 +64,7 @@ void handle_quit_command(int *fd_client_cmd, int *fd_client_res, char* command, 
     }
 
     // Read the response from the server
-    int response;
+    int response = 1;
     ssize_t bytes_read_res = read(*fd_client_res, &response, sizeof(int));
     if (bytes_read_res == -1)
     {
