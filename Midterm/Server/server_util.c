@@ -112,9 +112,9 @@ void region_reader_logger(struct dir_sync *sync_dir, int pid, char *filename, in
 {
     char log_message[256];
     if(enter)
-        sprintf(log_message, "Client %d tries to enter critical section for the file %s for reading\n", pid, filename);
+        sprintf(log_message, "Tries to enter critical section for the file %s for reading in server child process id %d.\n", filename, pid);
     else
-        sprintf(log_message, "Client %d tries to exit critical section for the file %s for reading\n", pid, filename);
+        sprintf(log_message, "Tries to exit critical section for the file %s for reading in server child process id %d.\n", filename, pid);
     write_log_file(log_message, sync_dir);
 }
 
@@ -122,8 +122,8 @@ void region_writer_logger(struct dir_sync *sync_dir, int pid, char *filename, in
 {
     char log_message[256];
     if(enter)
-        sprintf(log_message, "Client %d tries to enter critical section for the file %s for writing\n", pid, filename);
+        sprintf(log_message, "Tries to enter critical section for the file %s for writing in server child process id %d.\n", filename, pid);
     else
-        sprintf(log_message, "Client %d tries to exit critical section for the file %s for writing\n", pid, filename);
+        sprintf(log_message, "Tries to exit critical section for the file %s for writing in server child process id %d.\n", filename, pid);
     write_log_file(log_message, sync_dir);
 }

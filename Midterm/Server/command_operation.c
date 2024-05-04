@@ -281,6 +281,8 @@ void handle_whole_file(FILE *file, readF_command readF, int *client_res_fd, int 
     close(*client_res_fd);
     *client_res_fd = -1;
     region_reader_logger(dir_syncs, getpid(), readF.file, 0);
+    // printf("wait for the file: %s\n", readF.file);
+    // sleep(10); // Open it for testing
     exitRegionReader(getSafeFile(dir_syncs, readF.file));
 
     // Read from the server request FIFO to synchronize with the client
@@ -440,6 +442,7 @@ void handle_specific_line_write(char *dirname, writeF_command writeF, int *clien
     if(getSafeFile(dir_syncs, "temp.txt") == NULL) 
         addSafeFile(dir_syncs, "temp.txt");
 
+    region_writer_logger(dir_syncs, getpid(), "temp.txt", 1);
     enterRegionWriter(getSafeFile(dir_syncs, "temp.txt"));
     // printf("Line number: %d\n", writeF.line_number);
     int source_fd = fileno(source_file);
@@ -530,7 +533,7 @@ void handle_specific_line_write(char *dirname, writeF_command writeF, int *clien
     rename("temp.txt", file_path);
     // printf("Line number: %d\n", writeF.line_number);
     exitRegionReader(getSafeFile(dir_syncs, writeF.file));
-    region_writer_logger(dir_syncs, getpid(), writeF.file, 0);
+    region_reader_logger(dir_syncs, getpid(), writeF.file, 0);
     exitRegionWriter(getSafeFile(dir_syncs, "temp.txt"));
     region_writer_logger(dir_syncs, getpid(), "temp.txt", 0);
     removeSafeFile(dir_syncs, "temp.txt");
