@@ -419,11 +419,12 @@ void handle_specific_line_write(char *dirname, writeF_command writeF, int *clien
     // Step 1: Open the Source File for Reading
     FILE *source_file = fopen(file_path, "r");
     if (source_file == NULL) {
-        perror("Failed to open source file");
-        fflush(stdout);
+        // perror("Failed to open source file");
+        // fflush(stdout);
         int resp = -1;
         write(*client_res_fd, &resp, sizeof(int));
         removeSafeFile(dir_syncs, writeF.file);
+        return ;
     }
     region_reader_logger(dir_syncs, getpid(), writeF.file, 1);
     enterRegionReader(getSafeFile(dir_syncs, writeF.file));
