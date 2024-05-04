@@ -8,7 +8,6 @@ struct client_info
 {
     pid_t pid;
     int mode;
-    char cwd[CWD_SIZE];
 };
 
 struct queue

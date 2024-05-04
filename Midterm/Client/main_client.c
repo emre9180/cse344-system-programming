@@ -114,7 +114,6 @@ void write_to_server_fifo(int server_pid, int child_pid, int mode)
     
     cli_info.pid = child_pid;
     cli_info.mode = mode;
-    getcwd(cli_info.cwd, CWD_SIZE);
 
     // Write the client information to the server FIFO
     ssize_t bytes_written = write(fd_server_reg, &cli_info, sizeof(struct client_info));

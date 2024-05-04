@@ -59,8 +59,7 @@ void print_queue(struct queue *q) {
     for (int j = 0; j < q->count; j++) {
         // Print client PID, CWD, and wait time
         printf("Client PID: %d\n", q->data[i].pid);
-        printf("Client CWD: %s\n", q->data[i].cwd);
-        printf("Client wait: %d\n", q->data[i].mode);
+        printf("Client mode: %d\n", q->data[i].mode);
         i = (i + 1) % QUEUE_SIZE;
     }
 }
