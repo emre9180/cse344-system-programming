@@ -771,9 +771,10 @@ void handle_upload_command(char* command, const char* dirname, int *client_res_f
         exit(EXIT_FAILURE);
     }
 
-
+    char whole_path[512] = {0};
+    sprintf(whole_path, "%s/%s", dirname, upload.file);
     struct stat buffer;
-    while(stat(upload.file, &buffer) == 0) {
+    while(stat(whole_path, &buffer) == 0) {
         char newFilename[259];
         // File exists
         char *dot = strrchr(upload.file, '.');
@@ -786,6 +787,7 @@ void handle_upload_command(char* command, const char* dirname, int *client_res_f
         }
 
         strcpy(upload.file, newFilename);
+        sprintf(whole_path, "%s/%s", dirname, upload.file);
     }
     addSafeFile(dir_syncs, upload.file);       
     
