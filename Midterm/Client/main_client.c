@@ -15,6 +15,7 @@ char server_req_fifo[256];
 char client_res_fifo[256];
 int fd_client_cmd = -1;
 int fd_client_res = -1;
+int server_fd = -1;
 struct dir_sync *dir_syncs;
 
 /**
@@ -31,6 +32,12 @@ void cleanup()
     if (fd_client_res != -1)
     {
         close(fd_client_res); // Close the client response FIFO file descriptor
+    }
+
+    if (server_fd != -1)
+    {
+        printf("asdasd");
+        close(server_fd); // Close the server FIFO file descriptor
     }
 
     // Unlink named pipes
@@ -100,8 +107,8 @@ void write_to_server_fifo(int server_pid, int child_pid, int mode)
     sprintf(server_fifo, SERVER_FIFO, server_pid);
 
     // Open the server FIFO in write-only mode
-    int fd_server_reg = open(server_fifo, O_WRONLY);
-    if (fd_server_reg == -1)
+    server_fd= open(server_fifo, O_WRONLY);
+    if (server_fd == -1)
     {
         perror("Failed to open SERVER_FIFO");
         cleanup();
@@ -116,16 +123,17 @@ void write_to_server_fifo(int server_pid, int child_pid, int mode)
     cli_info.mode = mode;
 
     // Write the client information to the server FIFO
-    ssize_t bytes_written = write(fd_server_reg, &cli_info, sizeof(struct client_info));
+    ssize_t bytes_written = write(server_fd, &cli_info, sizeof(struct client_info));
     if (bytes_written == -1)
     {
-        perror("Failed to write to fd_server_reg");
+        perror("Failed to write to server_fd");
         cleanup();
         exit(EXIT_FAILURE);
     }
 
+    printf("%d", server_fd);
     // Close the server FIFO
-    close(fd_server_reg);
+    // close(server_fd);
 }
 
 /**

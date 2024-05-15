@@ -227,8 +227,8 @@ void server_loop(char *dirname, int max_clients)
         // Read client info from the server FIFO
         struct client_info cli_info; // Client info structure
         cli_info.pid = -1; // Initialize the PID to -1
-
-        ssize_t num_read = read(server_fd, &cli_info, sizeof(cli_info));
+        ssize_t num_read = 0;
+        if(is_queue_empty(&client_queue)) num_read = read(server_fd, &cli_info, sizeof(cli_info));
         if (num_read == -1)
         {
             perror("Failed to read from server FIFO");
