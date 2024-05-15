@@ -18,7 +18,7 @@
 #define MAX_AUTOMOBILE_SPOTS_TEMP 1 // Maximum number of slots for automobiles in autopark's TEMPORARY parking lot.
 #define MAX_PICKUP_SPOTS_TEMP 1 // Maximum number of slots for pickups in autopark's TEMPORARY parking lot.
 
-#define TOTAL_CAR_OWNER 20 // Total number of car owners.
+#define TOTAL_CAR_OWNER 17 // Total number of car owners.
 #define TOTAL_CAR_ATTENDANT 2 // Total number of car attendants.
 
 /**
@@ -146,14 +146,15 @@ int main() {
     printf("Pickup slots in autopark: %d\n", MAX_PICKUP_SPOTS);
     printf("Automobile slots in temporary parking lot: %d\n", MAX_AUTOMOBILE_SPOTS_TEMP);
     printf("Pickup slots in temporary parking lot: %d\n", MAX_PICKUP_SPOTS_TEMP);
+    printf("Total car owners: %d\n", TOTAL_CAR_OWNER);
     printf("\n");
 
-    pthread_t ownerThreads[20], attendantThreads[2]; // Threads for car owners and car attendants
-    int vehicleType[20]; // Vehicle types (0 for Automobile, 1 for Pickup)
+    pthread_t ownerThreads[TOTAL_CAR_OWNER], attendantThreads[2]; // Threads for car owners and car attendants
+    int vehicleType[TOTAL_CAR_OWNER]; // Vehicle types (0 for Automobile, 1 for Pickup)
 
     // Initialize vehicle types by generating random numbers, use TIME library
     srand(time(NULL));
-    for (int i = 0; i < 20; i++) {
+    for (int i = 0; i < TOTAL_CAR_OWNER; i++) {
         vehicleType[i] = rand() % 2;
     }
     
@@ -175,14 +176,14 @@ int main() {
     pthread_create(&attendantThreads[1], NULL, carAttendant, &pickupType);
 
     // Create car owner threads
-    for (int i = 0; i < 12; i++) {
+    for (int i = 0; i < TOTAL_CAR_OWNER; i++) {
         int* vehicle = malloc(sizeof(int));
         *vehicle = vehicleType[i];
         pthread_create(&ownerThreads[i], NULL, carOwner, vehicle);
     }
 
     // Join threads (optional, depending on your design)
-    for (int i = 0; i < 12; i++) {
+    for (int i = 0; i < TOTAL_CAR_OWNER; i++) {
         pthread_join(ownerThreads[i], NULL);
     }
 
