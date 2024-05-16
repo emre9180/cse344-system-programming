@@ -7,6 +7,7 @@
 #include <stdlib.h>
 #include <pthread.h>
 #include <semaphore.h>
+#include <unistd.h>
 
 /**
  * Macros
@@ -18,7 +19,7 @@
 #define MAX_AUTOMOBILE_SPOTS_TEMP 1 // Maximum number of slots for automobiles in autopark's TEMPORARY parking lot.
 #define MAX_PICKUP_SPOTS_TEMP 1 // Maximum number of slots for pickups in autopark's TEMPORARY parking lot.
 
-#define TOTAL_CAR_OWNER 42 // Total number of car owners.
+#define TOTAL_CAR_OWNER 55 // Total number of car owners.
 #define TOTAL_CAR_ATTENDANT 2 // Total number of car attendants.
 
 /**
@@ -39,7 +40,7 @@ sem_t waiting; // Semaphore for the critical section.
 
 sem_t newPickUpBusy; // Semaphore for the number of BUSY slots for PICKUPS in autopark.
 sem_t newAutomobileBusy; // Semaphore for the number of BUSY slots for AUTOMOBILES in autopark.
-pthread_mutex_t mutex; // Mutex for the critical section for removing vehicles from autopark.
+sem_t mutex; // Mutex for the critical section for removing vehicles from autopark.
 
 int mFree_automobile_in_temp = MAX_AUTOMOBILE_SPOTS_TEMP; // Number of free slots in temporary parking lot for automobiles.
 int mFree_pickup_in_temp = MAX_PICKUP_SPOTS_TEMP; // Number of free slots in temporary parking lot for pickups.
@@ -65,17 +66,7 @@ void* carOwner(void* arg)
     if (vehicleType == 0) // Automobile
     {
         sem_wait(&waiting); // Enter critical section, wait if another car owner tries to park.
-
-        printf(">> A car has arrived to autopark. Vehicle type: ");
-        if (*(int *)arg == 0)
-        {
-            printf("Automobile\n");
-        }
-        else
-        {
-            printf("Pickup\n");
-        }
-
+        printf(">> A car has arrived to autopark. Vehicle type: Automobile\n");
         if (mFree_automobile_in_temp == 0)
         { // Check if the temporary parking lot is full for automobiles.
             printf(">> The temporary parking lot's capacity is %d and it is currently full! The current slots in temporary lot is: %d/%d\n", MAX_AUTOMOBILE_SPOTS_TEMP, MAX_AUTOMOBILE_SPOTS_TEMP - mFree_automobile_in_temp, MAX_AUTOMOBILE_SPOTS_TEMP);
@@ -95,6 +86,7 @@ void* carOwner(void* arg)
     else // Pickup
     {
         sem_wait(&waiting); // Enter critical section, wait if another car owner tries to park.
+        printf(">> A car has arrived to autopark. Vehicle type: Pickup\n");
         if (mFree_pickup_in_temp == 0)
         { // Check if the temporary parking lot is full for pickups.
             printf(">> The temporary parking lot's capacity for pickups is %d and it is currently full! The current slots in temporary lot for pickups is: %d/%d\n", MAX_PICKUP_SPOTS_TEMP, MAX_PICKUP_SPOTS_TEMP - mFree_pickup_in_temp, MAX_PICKUP_SPOTS_TEMP);
@@ -139,7 +131,7 @@ void *carAttendant(void *arg)
                 printf(">> There is no permanent slot for automobile in autopark. Waiting for a slot...\n");
                 sem_wait(&newAutomobile); // Try to decrement the semaphore. Wait if autopark is full for automobiles.
             }
-            pthread_mutex_lock(&mutex);   // Lock the mutex
+            sem_wait(&mutex);   // Lock the mutex
             sem_post(&newAutomobileBusy); // Increment the semaphore for the number of BUSY slots for AUTOMOBILES in autopark.
             mFree_automobile_in_temp++;   // Increment the number of free slots in temporary parking lot for automobiles.
             mAutomobile_in_system++;      // Increment the number of automobiles in the autopark for automobiles.
@@ -159,14 +151,14 @@ void *carAttendant(void *arg)
                 printf(">> There is no slot for pickup in autopark. Waiting for a slot...\n");
                 sem_wait(&newPickup); // Try to decrement the semaphore. Wait if autopark is full for pickups.
             }
-            pthread_mutex_lock(&mutex); // Lock the mutex
+            sem_wait(&mutex); // Lock the mutex
             sem_post(&newPickUpBusy);   // Increment the semaphore for the number of BUSY slots for PICKUPS in autopark.
             mFree_pickup_in_temp++;     // Increment the number of free slots in temporary parking lot for pickups.
             mPickup_in_system++;        // Increment the number of pickups in the autopark for pickups.
             printf(">> Pickup is parked in autopark. Current pickup slots in autopark is: %d/%d\n", mPickup_in_system, MAX_PICKUP_SPOTS);
             printf(">> Temporary parking lot for pickups is now available. The current slots in temporary lot for pickups is: %d/%d\n", MAX_PICKUP_SPOTS_TEMP - mFree_pickup_in_temp, MAX_PICKUP_SPOTS_TEMP);
         }
-        pthread_mutex_unlock(&mutex); // Unlock the mutex
+        sem_post(&mutex); // Unlock the mutex
     }
     return NULL;
 }
@@ -197,17 +189,17 @@ void *carRemover(void *arg)
            int vehicleType = *(int*)arg;
             
             if (vehicleType == 0) {  // Automobile
-                pthread_mutex_lock(&mutex); // Lock the mutex
+                sem_wait(&mutex); // Lock the mutex
                 int result = sem_trywait(&newAutomobileBusy); // Try to decrement the semaphore. Wait if autopark is full for automobiles.
                 if (result == 0) {
                     // If the decrement is successful
                 } else {
-                    pthread_mutex_unlock(&mutex); // Unlock the mutex to synchronize the carAttendand thread. If a car is removing, the carAttendant thread should not be able to park a car.
+                    sem_post(&mutex); // Unlock the mutex to synchronize the carAttendand thread. If a car is removing, the carAttendant thread should not be able to park a car.
                     sem_wait(&newAutomobileBusy); // Try to decrement the semaphore. Wait if there is no automobile in the autopark. 
                 }
 
                 if(result!=0)
-                    pthread_mutex_lock(&mutex); // Lock the mutex. If the decrement is not successful, lock the mutex to synchronize the carAttendant thread. If a car is removing, the carAttendant thread should not be able to park a car.
+                    sem_wait(&mutex); // Lock the mutex. If the decrement is not successful, lock the mutex to synchronize the carAttendant thread. If a car is removing, the carAttendant thread should not be able to park a car.
                    
 
                 mAutomobile_in_system--; // Decrement the number of automobiles in the autopark for automobiles.
@@ -215,24 +207,24 @@ void *carRemover(void *arg)
                 printf(">> REMOVING Automobile is removed from autopark. Current automobile slots in autopark is: %d/%d\n", mAutomobile_in_system, MAX_AUTOMOBILE_SPOTS);
             
             } else {  // Pickup
-                pthread_mutex_lock(&mutex); // Lock the mutex
+                sem_wait(&mutex); // Lock the mutex
                 int result = sem_trywait(&newPickUpBusy); // Try to decrement the semaphore. Wait if there is no pickup in the autopark.
                 if (result == 0) {
                     // If the decrement is successful
                 } else {
-                    pthread_mutex_unlock(&mutex); // Unlock the mutex to synchronize the carAttendand thread. If a car is removing, the carAttendant thread should not be able to park a car.
+                    sem_post(&mutex); // Unlock the mutex to synchronize the carAttendand thread. If a car is removing, the carAttendant thread should not be able to park a car.
                     sem_wait(&newPickUpBusy); // Try to decrement the semaphore. Wait if autopark is full for pickups.
                 }
 
                 if(result!=0)
-                    pthread_mutex_lock(&mutex); // Lock the mutex. If the decrement is not successful, lock the mutex to synchronize the carAttendant thread. If a car is removing, the carAttendant thread should not be able to park a car.
+                    sem_wait(&mutex); // Lock the mutex. If the decrement is not successful, lock the mutex to synchronize the carAttendant thread. If a car is removing, the carAttendant thread should not be able to park a car.
 
                 mPickup_in_system--; // Decrement the number of pickups in the autopark for pickups.
                 sem_post(&newPickup); // Increment the semaphore for the number of AVALIABLE slots for PICKUPS in autopark.
                 printf(">> REMOVING Pickup is removed from autopark. Current pickup slots in autopark is: %d/%d\n", mPickup_in_system, MAX_PICKUP_SPOTS);
                 
             }
-            pthread_mutex_unlock(&mutex); // Unlock the mutex
+            sem_post(&mutex); // Unlock the mutex
         }
 
         
@@ -275,7 +267,7 @@ int main()
     sem_init(&newPickUpBusy, 0, 0);
     sem_init(&newAutomobileBusy, 0, 0);
     sem_init(&waiting, 0, 1);
-    pthread_mutex_init(&mutex, NULL);
+    sem_init(&mutex, 0, 1);
 
     // Create attendant threads
     int automobileType = 0;
@@ -319,7 +311,7 @@ int main()
     sem_destroy(&waiting);
     sem_destroy(&newPickUpBusy);
     sem_destroy(&newAutomobileBusy);
-    pthread_mutex_destroy(&mutex);
+    sem_destroy(&mutex);
 
     printf(">> System is shutting down...\n");
     free(finished);
