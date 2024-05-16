@@ -1,0 +1,151 @@
+Car Parking System
+Automobile slots in autopark: 8
+Pickup slots in autopark: 4
+Automobile slots in temporary parking lot: 1
+Pickup slots in temporary parking lot: 1
+Total car owners: 42
+
+>> Pickup is parked in the temporary parking lot. The current status of temporary lot for pickups is: 1/1
+>> Pickup is parked in autopark. Current pickup slots in autopark is: 1/4
+>> Temporary parking lot for pickups is now available. The current slots in temporary lot for pickups is: 0/1
+>> A car has arrived to autopark. Vehicle type: Automobile
+>> Automobile is parked in the temporary parking lot. The current status of temporary lot is: 1/1
+>> A car has arrived to autopark. Vehicle type: Automobile
+>> The temporary parking lot's capacity is 1 and it is currently full! The current slots in temporary lot is: 1/1
+>> The automobile is leaving since there is no slot in the temporary parking lot for automobiles.
+>> Automobile is parked in autopark. Current automobile slots in autopark is: 1/8
+>> Temporary parking lot for automobiles is now available. The current slots in temporary lot is: 0/1
+>> A car has arrived to autopark. Vehicle type: Automobile
+>> Automobile is parked in the temporary parking lot. The current status of temporary lot is: 1/1
+>> Automobile is parked in autopark. Current automobile slots in autopark is: 2/8
+>> Temporary parking lot for automobiles is now available. The current slots in temporary lot is: 0/1
+>> A car has arrived to autopark. Vehicle type: Automobile
+>> Automobile is parked in the temporary parking lot. The current status of temporary lot is: 1/1
+>> Automobile is parked in autopark. Current automobile slots in autopark is: 3/8
+>> Temporary parking lot for automobiles is now available. The current slots in temporary lot is: 0/1
+>> Pickup is parked in the temporary parking lot. The current status of temporary lot for pickups is: 1/1
+>> Pickup is parked in autopark. Current pickup slots in autopark is: 2/4
+>> Temporary parking lot for pickups is now available. The current slots in temporary lot for pickups is: 0/1
+>> Pickup is parked in the temporary parking lot. The current status of temporary lot for pickups is: 1/1
+>> Pickup is parked in autopark. Current pickup slots in autopark is: 3/4
+>> Temporary parking lot for pickups is now available. The current slots in temporary lot for pickups is: 0/1
+>> Pickup is parked in the temporary parking lot. The current status of temporary lot for pickups is: 1/1
+>> Pickup is parked in autopark. Current pickup slots in autopark is: 4/4
+>> Temporary parking lot for pickups is now available. The current slots in temporary lot for pickups is: 0/1
+>> Pickup is parked in the temporary parking lot. The current status of temporary lot for pickups is: 1/1
+>> There is no slot for pickup in autopark. Waiting for a slot...
+>> REMOVING Pickup is removed from autopark. Current pickup slots in autopark is: 3/4
+>> Pickup is parked in autopark. Current pickup slots in autopark is: 4/4
+>> Temporary parking lot for pickups is now available. The current slots in temporary lot for pickups is: 0/1
+>> A car has arrived to autopark. Vehicle type: >> REMOVING Pickup is removed from autopark. Current pickup slots in autopark is: 3/4
+Automobile
+>> Automobile is parked in the temporary parking lot. The current status of temporary lot is: 1/1
+>> A car has arrived to autopark. Vehicle type: Automobile
+>> The temporary parking lot's capacity is 1 and it is currently full! The current slots in temporary lot is: 1/1
+>> The automobile is leaving since there is no slot in the temporary parking lot for automobiles.
+>> Pickup is parked in the temporary parking lot. The current status of temporary lot for pickups is: 1/1
+>> A car has arrived to autopark. Vehicle type: Automobile
+>> The temporary parking lot's capacity is 1 and it is currently full! The current slots in temporary lot is: 1/1
+>> The automobile is leaving since there is no slot in the temporary parking lot for automobiles.
+>> Pickup is parked in autopark. Current pickup slots in autopark is: 4/4
+>> Temporary parking lot for pickups is now available. The current slots in temporary lot for pickups is: 0/1
+>> REMOVING Pickup is removed from autopark. Current pickup slots in autopark is: 3/4
+>> Automobile is parked in autopark. Current automobile slots in autopark is: 4/8
+>> Temporary parking lot for automobiles is now available. The current slots in temporary lot is: 0/1
+>> A car has arrived to autopark. Vehicle type: Automobile
+>> Automobile is parked in the temporary parking lot. The current status of temporary lot is: 1/1
+>> Pickup is parked in the temporary parking lot. The current status of temporary lot for pickups is: 1/1
+>> A car has arrived to autopark. Vehicle type: Automobile
+>> The temporary parking lot's capacity is 1 and it is currently full! The current slots in temporary lot is: 1/1
+>> The automobile is leaving since there is no slot in the temporary parking lot for automobiles.
+>> A car has arrived to autopark. Vehicle type: Automobile
+>> The temporary parking lot's capacity is 1 and it is currently full! The current slots in temporary lot is: 1/1
+>> The automobile is leaving since there is no slot in the temporary parking lot for automobiles.
+>> The temporary parking lot's capacity for pickups is 1 and it is currently full! The current slots in temporary lot for pickups is: 1/1
+>> The pickup is leaving since there is no slot in the temporary parking lot for pickups.
+>> The temporary parking lot's capacity for pickups is 1 and it is currently full! The current slots in temporary lot for pickups is: 1/1
+>> The pickup is leaving since there is no slot in the temporary parking lot for pickups.
+>> A car has arrived to autopark. Vehicle type: Automobile
+>> The temporary parking lot's capacity is 1 and it is currently full! The current slots in temporary lot is: 1/1
+>> The automobile is leaving since there is no slot in the temporary parking lot for automobiles.
+>> Pickup is parked in autopark. Current pickup slots in autopark is: 4/4
+>> Temporary parking lot for pickups is now available. The current slots in temporary lot for pickups is: 0/1
+>> A car has arrived to autopark. Vehicle type: Automobile
+>> The temporary parking lot's capacity is 1 and it is currently full! The current slots in temporary lot is: 1/1
+>> The automobile is leaving since there is no slot in the temporary parking lot for automobiles.
+>> REMOVING Pickup is removed from autopark. Current pickup slots in autopark is: 3/4
+>> Pickup is parked in the temporary parking lot. The current status of temporary lot for pickups is: 1/1
+>> The temporary parking lot's capacity for pickups is 1 and it is currently full! The current slots in temporary lot for pickups is: 1/1
+>> The pickup is leaving since there is no slot in the temporary parking lot for pickups.
+>> A car has arrived to autopark. Vehicle type: Automobile
+>> The temporary parking lot's capacity is 1 and it is currently full! The current slots in temporary lot is: 1/1
+>> The automobile is leaving since there is no slot in the temporary parking lot for automobiles.
+>> Pickup is parked in autopark. Current pickup slots in autopark is: 4/4
+>> Temporary parking lot for pickups is now available. The current slots in temporary lot for pickups is: 0/1
+>> Pickup is parked in the temporary parking lot. The current status of temporary lot for pickups is: 1/1
+>> REMOVING Pickup is removed from autopark. Current pickup slots in autopark is: 3/4
+>> The temporary parking lot's capacity for pickups is 1 and it is currently full! The current slots in temporary lot for pickups is: 1/1
+>> The pickup is leaving since there is no slot in the temporary parking lot for pickups.
+>> A car has arrived to autopark. Vehicle type: Automobile
+>> The temporary parking lot's capacity is 1 and it is currently full! The current slots in temporary lot is: 1/1
+>> The automobile is leaving since there is no slot in the temporary parking lot for automobiles.
+>> A car has arrived to autopark. Vehicle type: Automobile
+>> The temporary parking lot's capacity is 1 and it is currently full! The current slots in temporary lot is: 1/1
+>> The automobile is leaving since there is no slot in the temporary parking lot for automobiles.
+>> A car has arrived to autopark. Vehicle type: Automobile
+>> The temporary parking lot's capacity is 1 and it is currently full! The current slots in temporary lot is: 1/1
+>> The automobile is leaving since there is no slot in the temporary parking lot for automobiles.
+>> The temporary parking lot's capacity for pickups is 1 and it is currently full! The current slots in temporary lot for pickups is: 1/1
+>> The pickup is leaving since there is no slot in the temporary parking lot for pickups.
+>> Pickup is parked in autopark. Current pickup slots in autopark is: 4/4
+>> Temporary parking lot for pickups is now available. The current slots in temporary lot for pickups is: 0/1
+>> A car has arrived to autopark. Vehicle type: Automobile
+>> The temporary parking lot's capacity is 1 and it is currently full! The current slots in temporary lot is: 1/1
+>> The automobile is leaving since there is no slot in the temporary parking lot for automobiles.
+>> REMOVING Pickup is removed from autopark. Current pickup slots in autopark is: 3/4
+>> Pickup is parked in the temporary parking lot. The current status of temporary lot for pickups is: 1/1
+>> Pickup is parked in autopark. Current pickup slots in autopark is: 4/4
+>> Temporary parking lot for pickups is now available. The current slots in temporary lot for pickups is: 0/1
+>> REMOVING Pickup is removed from autopark. Current pickup slots in autopark is: 3/4
+>> Pickup is parked in the temporary parking lot. The current status of temporary lot for pickups is: 1/1
+>> Pickup is parked in autopark. Current pickup slots in autopark is: 4/4
+>> Temporary parking lot for pickups is now available. The current slots in temporary lot for pickups is: 0/1
+>> Automobile is parked in autopark. Current automobile slots in autopark is: 5/8
+>> Temporary parking lot for automobiles is now available. The current slots in temporary lot is: 0/1
+>> REMOVING Pickup is removed from autopark. Current pickup slots in autopark is: 3/4
+>> A car has arrived to autopark. Vehicle type: Automobile
+>> Automobile is parked in the temporary parking lot. The current status of temporary lot is: 1/1
+>> A car has arrived to autopark. Vehicle type: Automobile
+>> The temporary parking lot's capacity is 1 and it is currently full! The current slots in temporary lot is: 1/1
+>> The automobile is leaving since there is no slot in the temporary parking lot for automobiles.
+>> Automobile is parked in autopark. Current automobile slots in autopark is: 6/8
+>> Temporary parking lot for automobiles is now available. The current slots in temporary lot is: 0/1
+>> Pickup is parked in the temporary parking lot. The current status of temporary lot for pickups is: 1/1
+>> A car has arrived to autopark. Vehicle type: Automobile
+>> Automobile is parked in the temporary parking lot. The current status of temporary lot is: 1/1
+>> The temporary parking lot's capacity for pickups is 1 and it is currently full! The current slots in temporary lot for pickups is: 1/1
+>> The pickup is leaving since there is no slot in the temporary parking lot for pickups.
+>> Automobile is parked in autopark. Current automobile slots in autopark is: 7/8
+>> Temporary parking lot for automobiles is now available. The current slots in temporary lot is: 0/1
+>> Pickup is parked in autopark. Current pickup slots in autopark is: 4/4
+>> Temporary parking lot for pickups is now available. The current slots in temporary lot for pickups is: 0/1
+>> A car has arrived to autopark. Vehicle type: Automobile
+>> Automobile is parked in the temporary parking lot. The current status of temporary lot is: 1/1
+>> Automobile is parked in autopark. Current automobile slots in autopark is: 8/8
+>> Temporary parking lot for automobiles is now available. The current slots in temporary lot is: 0/1
+>> REMOVING Automobile is removed from autopark. Current automobile slots in autopark is: 7/8
+>> REMOVING Pickup is removed from autopark. Current pickup slots in autopark is: 3/4
+>> Pickup is parked in the temporary parking lot. The current status of temporary lot for pickups is: 1/1
+>> Pickup is parked in autopark. Current pickup slots in autopark is: 4/4
+>> Temporary parking lot for pickups is now available. The current slots in temporary lot for pickups is: 0/1
+>> REMOVING Pickup is removed from autopark. Current pickup slots in autopark is: 3/4
+>> A car has arrived to autopark. Vehicle type: Automobile
+>> Automobile is parked in the temporary parking lot. The current status of temporary lot is: 1/1
+>> Pickup is parked in the temporary parking lot. The current status of temporary lot for pickups is: 1/1
+>> Pickup is parked in autopark. Current pickup slots in autopark is: 4/4
+>> Temporary parking lot for pickups is now available. The current slots in temporary lot for pickups is: 0/1
+>> Automobile is parked in autopark. Current automobile slots in autopark is: 8/8
+>> Temporary parking lot for automobiles is now available. The current slots in temporary lot is: 0/1
+>> REMOVING Pickup is removed from autopark. Current pickup slots in autopark is: 3/4
+>> REMOVING Automobile is removed from autopark. Current automobile slots in autopark is: 7/8
+>> System is shutting down...
