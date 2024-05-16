@@ -19,7 +19,7 @@
 #define MAX_AUTOMOBILE_SPOTS_TEMP 1 // Maximum number of slots for automobiles in autopark's TEMPORARY parking lot.
 #define MAX_PICKUP_SPOTS_TEMP 1 // Maximum number of slots for pickups in autopark's TEMPORARY parking lot.
 
-#define TOTAL_CAR_OWNER 55 // Total number of car owners.
+#define TOTAL_CAR_OWNER 35 // Total number of car owners.
 #define TOTAL_CAR_ATTENDANT 2 // Total number of car attendants.
 
 /**
