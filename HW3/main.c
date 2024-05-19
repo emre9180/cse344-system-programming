@@ -19,7 +19,7 @@
 #define MAX_AUTOMOBILE_SPOTS_TEMP 1 // Maximum number of slots for automobiles in autopark's TEMPORARY parking lot.
 #define MAX_PICKUP_SPOTS_TEMP 1 // Maximum number of slots for pickups in autopark's TEMPORARY parking lot.
 
-#define TOTAL_CAR_OWNER 35 // Total number of car owners.
+#define TOTAL_CAR_OWNER 45 // Total number of car owners.
 #define TOTAL_CAR_ATTENDANT 2 // Total number of car attendants.
 
 /**
@@ -121,6 +121,7 @@ void *carAttendant(void *arg)
         if (vehicleType == 0)
         {                                             // Automobile
             sem_wait(&inChargeforAutomobile);         // Wait for a signal from car owner
+            sem_wait(&waiting);
             int result = sem_trywait(&newAutomobile); // Try to decrement the semaphore. Wait if autopark is full for automobiles.
             if (result == 0)
             {
@@ -129,7 +130,9 @@ void *carAttendant(void *arg)
             else
             {
                 printf(">> There is no permanent slot for automobile in autopark. Waiting for a slot...\n");
+                sem_post(&waiting); // Exit critical section. Allow other car owners to park.
                 sem_wait(&newAutomobile); // Try to decrement the semaphore. Wait if autopark is full for automobiles.
+                sem_wait(&waiting); // Enter critical section, wait if another car owner tries to park.
             }
             sem_wait(&mutex);   // Lock the mutex
             sem_post(&newAutomobileBusy); // Increment the semaphore for the number of BUSY slots for AUTOMOBILES in autopark.
@@ -141,6 +144,7 @@ void *carAttendant(void *arg)
         else
         {                                         // Pickup
             sem_wait(&inChargeforPickup);         // Wait for a signal from car owner
+            sem_wait(&waiting);                   // Enter critical section, wait if another car owner tries to park.
             int result = sem_trywait(&newPickup); // Try to decrement the semaphore. Wait if autopark is full for pickups.
             if (result == 0)
             {
@@ -149,7 +153,9 @@ void *carAttendant(void *arg)
             else
             {
                 printf(">> There is no slot for pickup in autopark. Waiting for a slot...\n");
+                sem_post(&waiting); // Exit critical section. Allow other car owners to park.
                 sem_wait(&newPickup); // Try to decrement the semaphore. Wait if autopark is full for pickups.
+                sem_wait(&waiting); // Enter critical section, wait if another car owner tries to park.
             }
             sem_wait(&mutex); // Lock the mutex
             sem_post(&newPickUpBusy);   // Increment the semaphore for the number of BUSY slots for PICKUPS in autopark.
@@ -159,6 +165,7 @@ void *carAttendant(void *arg)
             printf(">> Temporary parking lot for pickups is now available. The current slots in temporary lot for pickups is: %d/%d\n", MAX_PICKUP_SPOTS_TEMP - mFree_pickup_in_temp, MAX_PICKUP_SPOTS_TEMP);
         }
         sem_post(&mutex); // Unlock the mutex
+        sem_post(&waiting); // Exit critical section. Allow other car owners to park.
     }
     return NULL;
 }
