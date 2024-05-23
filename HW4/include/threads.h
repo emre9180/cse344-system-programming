@@ -2,6 +2,7 @@
 #define THREADS_H
 
 #define MAX_BUFFER_SIZE 1024
+#define MAX_FD 100
 
 // Structure to hold file information
 typedef struct
@@ -20,13 +21,17 @@ extern int done;                        // Flag to indicate completion
 extern pthread_mutex_t buffer_mutex;    // Mutex for buffer access
 extern pthread_cond_t buffer_not_full;  // Condition variable for buffer not full
 extern pthread_cond_t buffer_not_empty; // Condition variable for buffer not empty
+extern pthread_barrier_t barrier;       // Barrier
 extern int files_copied;                // Number of files copied
 extern int total_bytes_copied;          // Total bytes copied
 extern int active_threads;              // Number of active threads
+extern int current_fd;                  // current opened file descriptor
+extern int closed_fd;                   // closed file descriptor
 
 // Function prototypes
 void *manager_thread(void *arg);        // Manager thread function
-void *worker_thread(void *arg);         // Worker thread function
+void *worker_thread();         // Worker thread function
 void copy_file(file_info_t *file_info); // Function to copy a file
+void process_directory(const char *source_dir, const char *destination_dir, int num_workers); 
 
 #endif // THREADS_H

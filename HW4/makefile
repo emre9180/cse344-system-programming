@@ -1,5 +1,5 @@
-CC = gcc-13
-CFLAGS = -Wall -Wextra
+CC = gcc
+CFLAGS = -Wall -Wextra -pthread -lrt
 
 TARGET = main
 SRCS = main.c threads.c

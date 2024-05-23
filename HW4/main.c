@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <sys/time.h>
 #include <pthread.h>
+#include <signal.h>
 #include "include/threads.h"
 
 #define MAX_BUFFER_SIZE 1024 // Maximum buffer size
@@ -18,9 +19,14 @@ pthread_mutex_t buffer_mutex;    // Mutex for buffer access
 pthread_cond_t buffer_not_full;  // Condition variable for buffer not full
 pthread_cond_t buffer_not_empty; // Condition variable for buffer not empty
 
+// Barrier
+pthread_barrier_t barrier;
+
 // Statistics
 int files_copied = 0;       // Number of files copied
 int total_bytes_copied = 0; // Total bytes copied
+int current_fd = 0;
+int closed_fd = 0;
 
 // Function prototypes
 void print_usage(const char *program_name);
@@ -37,8 +43,8 @@ int main(int argc, char *argv[])
     // Parse command-line arguments
     buffer_size = atoi(argv[1]);
     int num_workers = atoi(argv[2]);
-    const char *source_dir = argv[3];
-    const char *destination_dir = argv[4];
+    // const char *source_dir = argv[3];
+    // const char *destination_dir = argv[4];
 
     // Allocate buffer
     buffer = (file_info_t *)malloc(buffer_size * sizeof(file_info_t));
@@ -62,6 +68,10 @@ int main(int argc, char *argv[])
     if (pthread_cond_init(&buffer_not_empty, NULL) != 0)
     {
         perror("Failed to initialize condition variable buffer_not_empty");
+        exit(EXIT_FAILURE);
+    }
+    if (pthread_barrier_init(&barrier, NULL, 2) != 0) { // +1 for the manager thread
+        perror("Failed to initialize barrier");
         exit(EXIT_FAILURE);
     }
 
@@ -124,6 +134,7 @@ int main(int argc, char *argv[])
     pthread_mutex_destroy(&buffer_mutex);
     pthread_cond_destroy(&buffer_not_full);
     pthread_cond_destroy(&buffer_not_empty);
+    pthread_barrier_destroy(&barrier);
 
     return 0;
 }
