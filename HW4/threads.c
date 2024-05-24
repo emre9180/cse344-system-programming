@@ -17,6 +17,7 @@ void *manager_thread(void *arg)
     const char *source_dir = args[3];
     const char *destination_dir = args[4];
     const int num_workers = atoi(args[2]);
+    pthread_barrier_wait(&barrier); // Wait at the barrier for all worker threads to finish
     
     process_directory(source_dir, destination_dir, num_workers);
 
@@ -37,15 +38,17 @@ void *worker_thread()
     pthread_mutex_lock(&buffer_mutex);   // Lock the buffer mutex
     active_threads++;                    // Increment active threads count
     pthread_mutex_unlock(&buffer_mutex); // Unlock the buffer mutex
+    
+    pthread_barrier_wait(&barrier); // Wait at the barrier for all worker threads to finish
 
     while (1)
     {
-        if(closed_fd >= 500) {
-            printf("Total closed files and buffer index: %d - %d\n", closed_fd, buffer_index);
-            pthread_barrier_wait(&barrier);
-        }
-
         pthread_mutex_lock(&buffer_mutex); // Lock the buffer mutex
+
+        // if(closed_fd >= 500) {
+        //     // printf("Total closed files and buffer index: %d - %d\n", closed_fd, buffer_index);
+        //     pthread_barrier_wait(&barrier);
+        // }
 
         while (buffer_index == 0 && !done) // Wait for buffer to become not empty
         {
@@ -88,12 +91,12 @@ void *worker_thread()
 // Function to copy a file
 void copy_file(file_info_t *file_info)
 {
-    char buffer[BUFSIZ];
+    char buffer[4096];
     ssize_t bytes_read, bytes_written;
     ssize_t total_written = 0; // Track the total bytes written for this file
 
     // Read from source file and write to destination file
-    while ((bytes_read = read(file_info->src_fd, buffer, BUFSIZ)) > 0)
+    while ((bytes_read = read(file_info->src_fd, buffer, 4096)) > 0)
     {
         bytes_written = write(file_info->dst_fd, buffer, bytes_read);
         if (bytes_written == -1)
@@ -113,7 +116,7 @@ void copy_file(file_info_t *file_info)
     pthread_mutex_lock(&buffer_mutex);
     files_copied++;
     total_bytes_copied += total_written;
-    printf("Copied: %s -> %s\n", file_info->src_path, file_info->dst_path);
+    // printf("Copied: %s -> %s\n", file_info->src_path, file_info->dst_path);
     pthread_mutex_unlock(&buffer_mutex);
 }
 
@@ -132,6 +135,10 @@ void process_directory(const char *source_dir, const char *destination_dir, int 
         return;
     }
 
+    pthread_mutex_lock(&buffer_mutex);
+    directory_copied++;
+    pthread_mutex_unlock(&buffer_mutex);
+
     while ((entry = readdir(dp)) != NULL) {
         char src_path[MAX_BUFFER_SIZE];
         char dst_path[MAX_BUFFER_SIZE];
@@ -143,33 +150,37 @@ void process_directory(const char *source_dir, const char *destination_dir, int 
                 continue;
             }
             process_directory(src_path, dst_path, num_workers);
-        } else if (entry->d_type == DT_REG) {
+        } else if (entry->d_type == DT_REG || entry->d_type == DT_FIFO) {
             file_info_t file_info;
             strncpy(file_info.src_path, src_path, MAX_BUFFER_SIZE);
             strncpy(file_info.dst_path, dst_path, MAX_BUFFER_SIZE);
 
-            file_info.src_fd = open(file_info.src_path, O_RDONLY);
+            int openFlags = O_RDONLY;
+            if (entry->d_type == DT_FIFO) {
+                openFlags |= O_NONBLOCK; // Open FIFOs in non-blocking mode to avoid hanging
+            }
+
+             file_info.src_fd = open(file_info.src_path, openFlags);
             if (file_info.src_fd == -1) {
                 perror("open source file");
                 continue;
             }
 
-            // If the current fd is equal to the maximum fd, then we have reached the maximum number of file descriptors. Wait for barrier, after that reset the current fd to 0. Then, reinitiliaze the barrier
-            if(current_fd >= 500) {
-                printf("Total files: %d\n", current_fd);
-                pthread_barrier_wait(&barrier);
-                printf("Total files: %d\n", current_fd);
-                pthread_mutex_lock(&buffer_mutex);
-                current_fd = 0;
-                closed_fd = 0;
-                pthread_barrier_destroy(&barrier);
-                if (pthread_barrier_init(&barrier, NULL, 2) != 0) { // +1 for the manager thread
-                    perror("Failed to initialize barrier");
-                    exit(EXIT_FAILURE);
-                }
-                pthread_mutex_unlock(&buffer_mutex);
+            // // If the current fd is equal to the maximum fd, then we have reached the maximum number of file descriptors. Wait for barrier, after that reset the current fd to 0. Then, reinitiliaze the barrier
+            // if(current_fd >= 500) {
+            //     // printf("Total files: %d\n", current_fd);
+            //     pthread_barrier_wait(&barrier);
+            //     pthread_mutex_lock(&buffer_mutex);
+            //     current_fd = 0;
+            //     closed_fd = 0;
+            //     pthread_barrier_destroy(&barrier);
+            //     if (pthread_barrier_init(&barrier, NULL, 2) != 0) { // +1 for the manager thread
+            //         perror("Failed to initialize barrier");
+            //         exit(EXIT_FAILURE);
+            //     }
+            //     pthread_mutex_unlock(&buffer_mutex);
                 
-            }
+            // }
 
             file_info.dst_fd = open(file_info.dst_path, O_WRONLY | O_CREAT | O_TRUNC, 0644);
             if (file_info.dst_fd == -1) {
@@ -177,6 +188,22 @@ void process_directory(const char *source_dir, const char *destination_dir, int 
                 close(file_info.src_fd);
                 continue;
             }
+
+            // Check if the file is a FIFO file
+            struct stat st;
+            if (fstat(file_info.src_fd, &st) == 0 && S_ISFIFO(st.st_mode))
+            {
+                pthread_mutex_lock(&buffer_mutex);
+                fifo_files_copied++;
+                pthread_mutex_unlock(&buffer_mutex);
+            }
+            else
+            {
+                pthread_mutex_lock(&buffer_mutex);
+                regular_files_copied++;
+                pthread_mutex_unlock(&buffer_mutex);
+            }
+
             current_fd++;
 
             pthread_mutex_lock(&buffer_mutex);

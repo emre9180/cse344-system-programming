@@ -28,6 +28,10 @@ int total_bytes_copied = 0; // Total bytes copied
 int current_fd = 0;
 int closed_fd = 0;
 
+int regular_files_copied = 0;
+int fifo_files_copied = 0;
+int directory_copied = 0;
+
 // Function prototypes
 void print_usage(const char *program_name);
 void signal_handler(int sig);
@@ -70,7 +74,7 @@ int main(int argc, char *argv[])
         perror("Failed to initialize condition variable buffer_not_empty");
         exit(EXIT_FAILURE);
     }
-    if (pthread_barrier_init(&barrier, NULL, 2) != 0) { // +1 for the manager thread
+    if (pthread_barrier_init(&barrier, NULL, num_workers + 1) != 0) { // +1 for the manager thread
         perror("Failed to initialize barrier");
         exit(EXIT_FAILURE);
     }
@@ -120,13 +124,17 @@ int main(int argc, char *argv[])
         pthread_join(worker_tids[i], NULL);
     }
 
+
     // End measuring execution time
     gettimeofday(&end, NULL);
     double elapsed_time = (end.tv_sec - start.tv_sec) + (end.tv_usec - start.tv_usec) / 1000000.0;
 
     // Print statistics
-    printf("Files copied: %d\n", files_copied);
     printf("Total bytes copied: %d\n", total_bytes_copied);
+    printf("Total files copied: %d\n", files_copied);
+    printf("Total regular files copied: %d\n", regular_files_copied);
+    printf("Total FIFO files copied: %d\n", fifo_files_copied);
+    printf("Total directories copied: %d\n", directory_copied);
     printf("Execution time: %f seconds\n", elapsed_time);
 
     // Clean up
@@ -154,5 +162,6 @@ void signal_handler(int sig)
         done = 1;
         pthread_cond_broadcast(&buffer_not_empty);
         pthread_mutex_unlock(&buffer_mutex);
+        exit(EXIT_SUCCESS);
     }
 }

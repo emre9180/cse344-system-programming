@@ -27,6 +27,9 @@ extern int total_bytes_copied;          // Total bytes copied
 extern int active_threads;              // Number of active threads
 extern int current_fd;                  // current opened file descriptor
 extern int closed_fd;                   // closed file descriptor
+extern int regular_files_copied;        // Number of regular files copied
+extern int fifo_files_copied;           // Number of FIFO files copied
+extern int directory_copied;            // Number of directories copied
 
 // Function prototypes
 void *manager_thread(void *arg);        // Manager thread function
