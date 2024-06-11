@@ -1,0 +1,12 @@
+{
+    "files.associations": {
+        "server_connection.h": "c",
+        "pide_house.h": "c",
+        "client.h": "c",
+        "array": "c",
+        "deque": "c",
+        "list": "c",
+        "vector": "c",
+        "string_view": "c"
+    }
+}
