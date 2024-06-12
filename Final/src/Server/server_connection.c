@@ -109,6 +109,9 @@ void* handle_client(void *arg) {
     order.cooking_time = order.preparation_time / 2.0; // Example cooking time
     order.delivery_time = (abs(order.x) + abs(order.y)) * 2; // Simplified delivery time
     order.is_cancelled = 0;
+    order.delivery_person_id = -1;
+    order.cook_id = -1;
+    order.ready = 0;
     order.taken = 0;
     order.socket_fd = client_socket;
 

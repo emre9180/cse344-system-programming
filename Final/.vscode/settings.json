@@ -7,6 +7,9 @@
         "deque": "c",
         "list": "c",
         "vector": "c",
-        "string_view": "c"
+        "string_view": "c",
+        "pthread.h": "c",
+        "stdlib.h": "c",
+        "shared_mutex": "c"
     }
 }

@@ -31,6 +31,19 @@ typedef struct {
     int socket_fd;
 } Order;
 
+// Node structure for the queue
+typedef struct QueueNode {
+    Order order;
+    struct QueueNode* next;
+} QueueNode;
+
+// Queue structure
+typedef struct {
+    QueueNode* front;
+    QueueNode* rear;
+    pthread_mutex_t mutex;
+    pthread_cond_t cond;
+} OrderQueue;
 
 // Structure to represent a cook
 typedef struct {
@@ -39,6 +52,9 @@ typedef struct {
     double total_earnings;
     int order_id;
     int busy;
+    OrderQueue *order_queue;
+    pthread_mutex_t cookMutex;
+    pthread_cond_t cookCond;
 } Cook;
 
 // Structure to represent a delivery person
@@ -47,17 +63,13 @@ typedef struct {
     int total_deliveries;
     double total_earnings;
     int order_id;
+    OrderQueue *order_bag;
+    int busy;
 } DeliveryPerson;
 
 // Global variables
 extern Cook cooks[MAX_COOKS];
 extern DeliveryPerson delivery_persons[MAX_DELIVERY_PERSONS];
-extern sem_t cook_sem;
-extern sem_t delivery_sem;
-extern sem_t oven_apparatus_sem;
-extern sem_t oven_capacity_sem;
-extern sem_t oven_putting_opening_sem;
-extern sem_t oven_removing_opening_sem;
 extern pthread_mutex_t order_mutex;
 extern pthread_cond_t order_cond;
 extern pthread_cond_t cooked_cond;
@@ -79,5 +91,8 @@ void cancel_order(int order_id);
 void handle_order_completion(Order *order);
 void handle_delivery_completion(DeliveryPerson *delivery_person, Order *order);
 void evaluate_performance();
+void initialize_queue(OrderQueue* queue);
+void enqueue(OrderQueue* queue, Order order);
+Order* dequeue(OrderQueue* queue);
 
 #endif // PIDE_HOUSE_H
