@@ -78,7 +78,7 @@ int main(int argc, char *argv[]) {
             pthread_detach(client_thread);
         } else {
             send_response(client_connection->socket_fd, "Server is full. Try again later.\n");
-            close(client_connection->socket_fd);
+            // close(client_connection->socket_fd);
             free(client_connection);
         }
         pthread_mutex_unlock(&connection_mutex);

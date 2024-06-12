@@ -75,9 +75,30 @@ void* handle_client(void *arg) {
         close(client_socket);
         pthread_exit(NULL);
     }
-
+// Parse client data
+    int client_id, x, y;
+    char server_ip[INET_ADDRSTRLEN], client_ip[INET_ADDRSTRLEN];
+    int server_port, client_port;
     // Parse coordinates
-    sscanf(buffer, "%d %d", &client_connection->x, &client_connection->y);
+ if (sscanf(buffer, "%d %d %s %d %d %s %d",
+               &client_id,
+               &x,
+               server_ip,
+               &server_port,
+               &y,
+               client_ip,
+               &client_port) != 7) {
+        fprintf(stderr, "Error parsing client data: %s\n", buffer);
+        close(client_socket);
+        pthread_exit(NULL);
+    }
+
+    // Populate the client_connection struct
+    client_connection->x = x;
+    client_connection->y = y;
+    inet_pton(AF_INET, client_ip, &client_connection->client_addr.sin_addr);
+    client_connection->client_addr.sin_port = htons(client_port);
+
 
     // Create a new order
     Order order;
@@ -89,6 +110,7 @@ void* handle_client(void *arg) {
     order.delivery_time = (abs(order.x) + abs(order.y)) * 2; // Simplified delivery time
     order.is_cancelled = 0;
     order.taken = 0;
+    order.socket_fd = client_socket;
 
     // Place order
     place_order(&order);
@@ -97,13 +119,13 @@ void* handle_client(void *arg) {
     send_response(client_socket, "Order received and being processed.\n");
 
     // Close connection
-    close_connection(client_socket);
+    // close_connection(client_socket);
     pthread_exit(NULL);
 }
 
 // Send response to client
 void send_response(int client_socket, const char *response) {
-    write(client_socket, response, strlen(response));
+    send(client_socket, response, strlen(response), 0);
 }
 
 // Close client connection

@@ -38,7 +38,8 @@ extern volatile sig_atomic_t keep_running;
 void initialize_clients(int num_clients, const char *server_ip, int p, int q);
 void* client_function(void *arg);
 void send_order(Client *client);
-void handle_signal(int signal);
+void handle_signal(int sig);
+void setup_signal_handler();
 void cleanup();
 
 #endif // CLIENT_H

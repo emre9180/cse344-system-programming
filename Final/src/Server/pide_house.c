@@ -1,4 +1,5 @@
 #include "../../include/Server/pide_house.h"
+#include "../../include/Server/server_connection.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -74,10 +75,6 @@ void initialize_system(int n_cooks, int m_delivery_persons) {
         cooks[i].order_id = -1;
     }
 
-    
-
-
-
     // sem_init(&cook_sem, 0, n_cooks);
     // sem_init(&motor_number, 0, 3);
     // sem_init(&oven_apparatus_sem, 0, 3);
@@ -97,7 +94,7 @@ Cook* findAppropriateCook() {
     double min_earnings = INFINITY;
 
     for (int i = 0; i < num_cooks; i++) {
-        if (cooks[i].order_id == -1) {
+        if (cooks[i].busy == 0) {
             cook = &cooks[i];
         }
     }
@@ -145,6 +142,8 @@ void* manager_function(void *arg) {
                     available_cooks--;
                     pthread_create(&cook_thread, NULL, cook_function, (void *)cook);
                     pthread_detach(cook_thread);
+                    send_response(order->socket_fd, "Order is sent to cook.\n");
+
                 } else {
                     // Release semaphore if no appropriate cook found
                     printf("No appropriate cook found\n");
@@ -170,6 +169,7 @@ void* manager_function(void *arg) {
                         pthread_t delivery_thread;
                         pthread_create(&delivery_thread, NULL, delivery_function, (void *)delivery_person);
                         pthread_detach(delivery_thread);
+
                     } else {
                         // Release semaphore if no appropriate delivery person found
                         // printf("No appropriate delivery person found\n");

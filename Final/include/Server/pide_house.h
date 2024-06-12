@@ -28,7 +28,9 @@ typedef struct {
     int y; // y-coordinate of the customer
     int taken; // 1 if the order is taken by a cook, 0 otherwise
     int ready; // 1 if the order is ready for delivery, 0 otherwise
+    int socket_fd;
 } Order;
+
 
 // Structure to represent a cook
 typedef struct {
@@ -36,6 +38,7 @@ typedef struct {
     int total_deliveries;
     double total_earnings;
     int order_id;
+    int busy;
 } Cook;
 
 // Structure to represent a delivery person
