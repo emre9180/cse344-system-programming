@@ -13,6 +13,9 @@ ClientConnection* client_connections[MAX_CONNECTIONS];
 int num_connections = 0;
 pthread_mutex_t connection_mutex = PTHREAD_MUTEX_INITIALIZER;
 
+pthread_t *client_threads[MAX_CONNECTIONS];
+int client_thread_count = 0;
+
 int initialize_server(int port, const char *ip_address) {
     struct sockaddr_in server_addr;
 

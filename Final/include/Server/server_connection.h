@@ -21,6 +21,8 @@ extern int server_socket_fd;
 extern ClientConnection* client_connections[MAX_CONNECTIONS];
 extern int num_connections;
 extern pthread_mutex_t connection_mutex;
+extern pthread_t* client_threads[MAX_CONNECTIONS];
+extern int client_thread_count;
 
 // Function prototypes
 int initialize_server(int port, const char *ip_address);

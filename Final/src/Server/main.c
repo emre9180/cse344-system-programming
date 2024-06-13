@@ -123,6 +123,14 @@ void handle_sigint(int sig) {
         free(client_connections[i]);
     }
 
+    for (int i = 0; i < client_thread_count; i++) {
+        pthread_join(*client_threads[i], NULL);
+    }
+
+    for (int i = 0; i < client_thread_count; i++) {
+        free(client_threads[i]);
+    }
+
     // Close the server socket to stop accepting new connections
     close(server_socket);
     exit(EXIT_SUCCESS);
@@ -187,9 +195,10 @@ int main(int argc, char *argv[]) {
         pthread_mutex_lock(&connection_mutex);
         if (num_connections < MAX_CONNECTIONS) {
             client_connections[num_connections++] = client_connection;
-            pthread_t client_thread;
-            pthread_create(&client_thread, NULL, handle_client, client_connection);
-            pthread_detach(client_thread);
+            client_threads[client_thread_count++] = (pthread_t *)malloc(sizeof(pthread_t));
+            pthread_create(client_threads[client_thread_count-1], NULL, handle_client, client_connection);
+            // pthread_join(*client_threads[client_thread_count-1], NULL);
+            // free(client_threads[client_thread_count-1]);
         } else {
             send_response(client_connection->socket_fd, "Server is full. Try again later.\n");
             // close(client_connection->socket_fd);
