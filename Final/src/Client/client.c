@@ -5,6 +5,44 @@
 #include <unistd.h>
 #include <arpa/inet.h>
 
+void create_sigint_client(const char *server_ip)
+{
+    Client client;
+    client.client_id = -1;
+    client.x = -1;
+    client.y = -1;
+    client.socket_fd = socket(AF_INET, SOCK_STREAM, 0);
+    if (client.socket_fd < 0)
+    {
+        perror("Error creating socket");
+        exit(EXIT_FAILURE);
+    }
+
+    client.server_addr.sin_family = AF_INET;
+    client.server_addr.sin_port = htons(8080);
+    if (inet_pton(AF_INET, server_ip, &client.server_addr.sin_addr) <= 0)
+    {
+        perror("Invalid address/Address not supported");
+        exit(EXIT_FAILURE);
+    }
+
+    printf("Client %d trying to connect to the server at %s:%d\n", client.client_id,
+           inet_ntoa(client.server_addr.sin_addr), ntohs(client.server_addr.sin_port));
+
+    if (connect(client.socket_fd, (struct sockaddr *)&client.server_addr, sizeof(client.server_addr)) < 0)
+    {
+        perror("Connection Failed");
+        close(client.socket_fd);
+        pthread_exit(NULL);
+    }
+
+    printf("Client %d connected to the server at %s:%d\n", client.client_id,
+           inet_ntoa(client.server_addr.sin_addr), ntohs(client.server_addr.sin_port));
+
+    send_order(&client);
+    return;
+}
+
 void initialize_clients(int num_clients, const char *server_ip, int p, int q)
 {
     clients = (Client *)malloc(num_clients * sizeof(Client));
@@ -43,14 +81,6 @@ void initialize_clients(int num_clients, const char *server_ip, int p, int q)
 void *client_function(void *arg)
 {
     Client *client = (Client *)arg;
-
-    // Create a socket for this client thread
-    client->socket_fd = socket(AF_INET, SOCK_STREAM, 0);
-    if (client->socket_fd < 0)
-    {
-        perror("Error creating socket");
-        pthread_exit(NULL);
-    }
 
     printf("Client %d trying to connect to the server at %s:%d\n", client->client_id,
            inet_ntoa(client->server_addr.sin_addr), ntohs(client->server_addr.sin_port));

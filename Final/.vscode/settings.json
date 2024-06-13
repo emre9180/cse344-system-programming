@@ -10,6 +10,7 @@
         "string_view": "c",
         "pthread.h": "c",
         "stdlib.h": "c",
-        "shared_mutex": "c"
+        "shared_mutex": "c",
+        "in.h": "c"
     }
 }

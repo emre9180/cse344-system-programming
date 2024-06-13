@@ -93,6 +93,41 @@ void* handle_client(void *arg) {
         pthread_exit(NULL);
     }
 
+    if(client_id == -1)
+    {
+        cancel_order_flag = 1;
+
+        pthread_join(manager_thread, NULL);
+
+        for (int i = 0; i < num_cooks; i++) {
+            pthread_join(cook_threads[i], NULL);
+        }
+
+        for (int i = 0; i < num_delivery_persons; i++) {
+            pthread_join(delivery_threads[i], NULL);
+        }
+
+        // printStatistics();
+
+        // Clean cooks' all orders
+        for (int i = 0; i < num_cooks; i++) {
+            while (dequeue(cooks[i].order_queue) != NULL);
+        }
+
+        // Clean delivery persons' all orders
+        for (int i = 0; i < num_delivery_persons; i++) {
+            while (dequeue(delivery_persons[i].order_bag) != NULL);
+        }
+
+        // Reset the order array
+        
+
+
+
+        close(client_socket);
+        pthread_exit(NULL);
+    }
+
     // Populate the client_connection struct
     client_connection->x = x;
     client_connection->y = y;

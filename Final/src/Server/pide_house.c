@@ -37,6 +37,7 @@ pthread_cond_t oven_putting_opening_cond = PTHREAD_COND_INITIALIZER;
 pthread_cond_t oven_removing_opening_cond = PTHREAD_COND_INITIALIZER;
 
 volatile sig_atomic_t shutdown_flag = 0;
+volatile sig_atomic_t cancel_order_flag = 0;
 
 // Mutex for protecting the shutdown flag
 pthread_mutex_t shutdown_mutex = PTHREAD_MUTEX_INITIALIZER;
@@ -463,13 +464,6 @@ void *cook_function(void *arg)
         pthread_mutex_lock(&oven_removing_opening_mutex);
         while (take_cook_opening <= 0)
         {
-            if (shutdown_flag)
-            {
-                wakeup();
-                pthread_mutex_unlock(&oven_removing_opening_mutex);
-                printf("Cook %d exiting...\n", cook->cook_id);
-                pthread_exit(NULL);
-            }
             printf("Cook %d is waiting for the oven opening for removing\n", cook->cook_id);
             pthread_cond_wait(&oven_removing_opening_cond, &oven_removing_opening_mutex);
             if (shutdown_flag)

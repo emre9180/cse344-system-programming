@@ -5,7 +5,7 @@
 
 // Define constants
 #define SERVER_PORT 8080  // Fixed port for server
-#define MAX_CONNECTIONS 100
+#define MAX_CONNECTIONS 1000
 #define BUFFER_SIZE 1024
 
 // Structure to represent a client connection

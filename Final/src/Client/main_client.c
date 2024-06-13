@@ -7,6 +7,7 @@
 // Global variables
 Client *clients = NULL;
 int num_clients = 0;
+const char *server_ip;
 volatile sig_atomic_t keep_running = 1;
 
 int main(int argc, char *argv[]) {
@@ -15,7 +16,7 @@ int main(int argc, char *argv[]) {
         exit(EXIT_FAILURE);
     }
 
-    const char *server_ip = argv[1];
+    server_ip = argv[1];
     num_clients = atoi(argv[2]);
     int p = atoi(argv[3]);
     int q = atoi(argv[4]);
@@ -45,12 +46,7 @@ int main(int argc, char *argv[]) {
 void handle_signal(int sig) {
     printf("\nCaught signal %d (SIGINT), cleaning up...\n", sig);
     keep_running = 0;
-    for (int i = 0; i < num_clients; i++) {
-        // Send -1 -1 to indicate disconnection
-        char buffer[BUFFER_SIZE];
-        snprintf(buffer, sizeof(buffer), "-1 -1");
-        send(clients[i].socket_fd, buffer, strlen(buffer), 0);
-    }
+    create_sigint_client(server_ip);
     cleanup();
     exit(EXIT_SUCCESS);
 }

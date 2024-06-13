@@ -82,9 +82,10 @@ extern pthread_t *delivery_threads;
 extern pthread_t manager_thread;
 
 extern volatile sig_atomic_t shutdown_flag;
+extern volatile sig_atomic_t cancel_order_flag;
 
 // Mutex for protecting the shutdown flag
-extern pthread_mutex_t shutdown_mutex ;
+extern pthread_mutex_t shutdown_mutex;
 
 
 extern pthread_mutex_t order_mutex;

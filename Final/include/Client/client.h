@@ -41,5 +41,6 @@ void send_order(Client *client);
 void handle_signal(int sig);
 void setup_signal_handler();
 void cleanup();
+void create_sigint_client(const char *server_ip);
 
 #endif // CLIENT_H
