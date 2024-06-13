@@ -17,23 +17,24 @@ void handle_sigint(int sig) {
 
     
 
-    // Notify all condition variables
+    // Notify all condition variables to wake up waiting threads
     pthread_cond_broadcast(&order_cond);
-                pthread_cond_broadcast(&cooked_cond);
-                pthread_cond_broadcast(&oven_cond);
-                pthread_cond_broadcast(&delivery_cond);
-                pthread_cond_broadcast(&delivery_bag_cond);
-                pthread_cond_broadcast(&motor_cond);
-                pthread_cond_broadcast(&apparatus_cond);
-                pthread_cond_broadcast(&oven_putting_opening_cond);
-                pthread_cond_broadcast(&oven_removing_opening_cond);
+    pthread_cond_broadcast(&cooked_cond);
+    pthread_cond_broadcast(&oven_cond);
+    pthread_cond_broadcast(&delivery_cond);
+    pthread_cond_broadcast(&delivery_bag_cond);
+    pthread_cond_broadcast(&motor_cond);
+    pthread_cond_broadcast(&apparatus_cond);
+    pthread_cond_broadcast(&oven_putting_opening_cond);
+    pthread_cond_broadcast(&oven_removing_opening_cond);
                 
     for (int i = 0; i < num_cooks; i++) {
-        pthread_cond_signal(&cooks[i].cookCond);
+        pthread_cond_broadcast(&cooks[i].cookCond);
     }
     for (int i = 0; i < num_delivery_persons; i++) {
-        pthread_cond_signal(&delivery_persons[i].order_bag->cond);
+        pthread_cond_broadcast(&delivery_persons[i].order_bag->cond);
     }
+
     printf("Waiting for all threads to finish...\n");
 
     for (int i = 0; i < num_cooks; i++) {
@@ -115,7 +116,11 @@ void handle_sigint(int sig) {
     pthread_cond_destroy(&oven_removing_opening_cond);
 
     for (int i = 0; i < num_connections; i++) {
-        close(client_connections[i].socket_fd);
+        close(client_connections[i]->socket_fd);
+    }
+
+    for(int i = 0; i < num_connections; i++) {
+        free(client_connections[i]);
     }
 
     // Close the server socket to stop accepting new connections
@@ -181,7 +186,7 @@ int main(int argc, char *argv[]) {
 
         pthread_mutex_lock(&connection_mutex);
         if (num_connections < MAX_CONNECTIONS) {
-            client_connections[num_connections++] = *client_connection;
+            client_connections[num_connections++] = client_connection;
             pthread_t client_thread;
             pthread_create(&client_thread, NULL, handle_client, client_connection);
             pthread_detach(client_thread);

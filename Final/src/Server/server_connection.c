@@ -9,7 +9,7 @@
 
 // Global variables
 int server_socket_fd;
-ClientConnection client_connections[MAX_CONNECTIONS];
+ClientConnection* client_connections[MAX_CONNECTIONS];
 int num_connections = 0;
 pthread_mutex_t connection_mutex = PTHREAD_MUTEX_INITIALIZER;
 
@@ -63,7 +63,7 @@ int initialize_server(int port, const char *ip_address) {
 void* handle_client(void *arg) {
     ClientConnection *client_connection = (ClientConnection *)arg;
     int client_socket = client_connection->socket_fd;
-    char buffer[BUFFER_SIZE];
+    char buffer[BUFFER_SIZE] = {0};
     int bytes_read;
 
     // printf("Accepted connection");
@@ -135,8 +135,8 @@ void send_response(int client_socket, const char *response) {
 void close_connection(int client_socket) {
     pthread_mutex_lock(&connection_mutex);
     for (int i = 0; i < num_connections; i++) {
-        if (client_connections[i].socket_fd == client_socket) {
-            close(client_connections[i].socket_fd);
+        if (client_connections[i]->socket_fd == client_socket) {
+            close(client_connections[i]->socket_fd);
             client_connections[i] = client_connections[num_connections - 1];
             num_connections--;
             break;
@@ -149,6 +149,6 @@ void close_connection(int client_socket) {
 void shutdown_server() {
     close(server_socket_fd);
     for (int i = 0; i < num_connections; i++) {
-        close(client_connections[i].socket_fd);
+        close(client_connections[i]->socket_fd);
     }
 }

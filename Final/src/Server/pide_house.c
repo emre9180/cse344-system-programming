@@ -62,6 +62,10 @@ pthread_t *cook_threads;
 pthread_t *delivery_threads;
 pthread_t manager_thread;
 
+void wakeup()
+{
+}
+
 void initialize_queue(OrderQueue *queue)
 {
     queue->front = NULL;
@@ -116,14 +120,16 @@ void initialize_system(int n_cooks, int m_delivery_persons)
     }
 
     // Initialize delivery persons and start delivery threads
-    for (int i = 0; i < m_delivery_persons; i++) {
+    for (int i = 0; i < m_delivery_persons; i++)
+    {
         delivery_persons[i].delivery_person_id = i;
         delivery_persons[i].total_deliveries = 0;
         delivery_persons[i].total_earnings = 0.0;
         delivery_persons[i].order_id = -1;
         delivery_persons[i].busy = 0;
         delivery_persons[i].order_bag = (OrderQueue *)malloc(sizeof(OrderQueue));
-        if (delivery_persons[i].order_bag == NULL) {
+        if (delivery_persons[i].order_bag == NULL)
+        {
             perror("Failed to allocate memory for order bag");
             exit(EXIT_FAILURE);
         }
@@ -167,7 +173,7 @@ Order *findAppropriateOrder()
     return order;
 }
 
-DeliveryPerson* findAppropriateDeliveryPerson()
+DeliveryPerson *findAppropriateDeliveryPerson()
 {
     DeliveryPerson *delivery_person = NULL;
 
@@ -183,48 +189,28 @@ DeliveryPerson* findAppropriateDeliveryPerson()
     return delivery_person;
 }
 
-void* manager_function(void *arg)
+void *manager_function(void *arg)
 {
     while (1)
     {
-         pthread_mutex_lock(&shutdown_mutex);
-        if (shutdown_flag) {
-             pthread_cond_broadcast(&order_cond);
-                pthread_cond_broadcast(&cooked_cond);
-                pthread_cond_broadcast(&oven_cond);
-                pthread_cond_broadcast(&delivery_cond);
-                pthread_cond_broadcast(&delivery_bag_cond);
-                pthread_cond_broadcast(&motor_cond);
-                pthread_cond_broadcast(&apparatus_cond);
-                pthread_cond_broadcast(&oven_putting_opening_cond);
-                pthread_cond_broadcast(&oven_removing_opening_cond);
-            pthread_mutex_unlock(&shutdown_mutex);
+        if (shutdown_flag)
+        {
+            wakeup();
             break; // Exit the loop
         }
-        pthread_mutex_unlock(&shutdown_mutex);
-        
+
         pthread_mutex_lock(&order_mutex);
 
         // Wait if there are no new orders
         if (order_count == 0)
         {
             pthread_cond_wait(&order_cond, &order_mutex);
-             pthread_mutex_lock(&shutdown_mutex);
-        if (shutdown_flag) {
-            pthread_cond_broadcast(&order_cond);
-                pthread_cond_broadcast(&cooked_cond);
-                pthread_cond_broadcast(&oven_cond);
-                pthread_cond_broadcast(&delivery_cond);
-                pthread_cond_broadcast(&delivery_bag_cond);
-                pthread_cond_broadcast(&motor_cond);
-                pthread_cond_broadcast(&apparatus_cond);
-                pthread_cond_broadcast(&oven_putting_opening_cond);
-                pthread_cond_broadcast(&oven_removing_opening_cond);
-            pthread_mutex_unlock(&shutdown_mutex);
-            pthread_mutex_unlock(&order_mutex);
-            break; // Exit the loop
-        }
-        pthread_mutex_unlock(&shutdown_mutex);
+            if (shutdown_flag)
+            {
+                wakeup();
+                pthread_mutex_unlock(&order_mutex);
+                break; // Exit the loop
+            }
         }
 
         Order *order = findAppropriateOrder();
@@ -245,21 +231,27 @@ void* manager_function(void *arg)
         }
         pthread_mutex_unlock(&order_mutex);
 
-         // Check for completed orders and assign to delivery personnel
-        for (int i = 0; i < order_count; i++) {
+        // Check for completed orders and assign to delivery personnel
+        for (int i = 0; i < order_count; i++)
+        {
             order = &orders[i];
-            if (order->ready == 1 && order->taken == 1 && order->delivery_person_id == -1) {
+            if (order->ready == 1 && order->taken == 1 && order->delivery_person_id == -1)
+            {
                 DeliveryPerson *delivery_person = findAppropriateDeliveryPerson();
-                if (delivery_person != NULL) {
+                if (delivery_person != NULL)
+                {
                     order->delivery_person_id = delivery_person->delivery_person_id;
                     enqueue(delivery_person->order_bag, order);
                     delivery_person->current_delivery_count++;
-                    if (delivery_person->current_delivery_count == DELIVERY_CAPACITY) {
+                    if (delivery_person->current_delivery_count == DELIVERY_CAPACITY)
+                    {
                         delivery_person->busy = 1;
                         pthread_cond_signal(&delivery_person->order_bag->cond);
                         send_response(order->socket_fd, "Order is sent to delivery man.\n");
                         printf("Delivery person %d is ready to deliver orders.\n", delivery_person->delivery_person_id);
-                    } else {
+                    }
+                    else
+                    {
                         printf("Order %d added to delivery person %d's bag.\n", order->order_id, delivery_person->delivery_person_id);
                     }
                 }
@@ -269,54 +261,48 @@ void* manager_function(void *arg)
     pthread_exit(NULL);
 }
 
-void* cook_function(void *arg)
+void *cook_function(void *arg)
 {
     Cook *cook = (Cook *)arg;
 
     while (1)
     {
+        if (shutdown_flag)
+        {
+            wakeup();
+            pthread_mutex_unlock(&cook->cookMutex);
+            printf("Cook %d exiting...\n", cook->cook_id);
+            pthread_exit(NULL);
+        }
+
         pthread_mutex_lock(&cook->cookMutex);
         // Wait for an order to be enqueued
         while (cook->order_queue->front == NULL)
         {
-            pthread_cond_wait(&cook->cookCond, &cook->cookMutex);
-            pthread_mutex_lock(&shutdown_mutex);
-            if (shutdown_flag) {
-                pthread_cond_broadcast(&order_cond);
-                pthread_cond_broadcast(&cooked_cond);
-                pthread_cond_broadcast(&oven_cond);
-                pthread_cond_broadcast(&delivery_cond);
-                pthread_cond_broadcast(&delivery_bag_cond);
-                pthread_cond_broadcast(&motor_cond);
-                pthread_cond_broadcast(&apparatus_cond);
-                pthread_cond_broadcast(&oven_putting_opening_cond);
-                pthread_cond_broadcast(&oven_removing_opening_cond);
-                pthread_mutex_unlock(&shutdown_mutex);
+            if (shutdown_flag)
+            {
+                wakeup();
                 pthread_mutex_unlock(&cook->cookMutex);
                 printf("Cook %d exiting...\n", cook->cook_id);
                 pthread_exit(NULL);
             }
-            pthread_mutex_unlock(&shutdown_mutex);
-
+            pthread_cond_wait(&cook->cookCond, &cook->cookMutex);
+            if (shutdown_flag)
+            {
+                wakeup();
+                pthread_mutex_unlock(&cook->cookMutex);
+                printf("Cook %d exiting...\n", cook->cook_id);
+                pthread_exit(NULL);
+            }
         }
 
-        pthread_mutex_lock(&shutdown_mutex);
-            if (shutdown_flag) {
-                 pthread_cond_broadcast(&order_cond);
-                pthread_cond_broadcast(&cooked_cond);
-                pthread_cond_broadcast(&oven_cond);
-                pthread_cond_broadcast(&delivery_cond);
-                pthread_cond_broadcast(&delivery_bag_cond);
-                pthread_cond_broadcast(&motor_cond);
-                pthread_cond_broadcast(&apparatus_cond);
-                pthread_cond_broadcast(&oven_putting_opening_cond);
-                pthread_cond_broadcast(&oven_removing_opening_cond);
-                pthread_mutex_unlock(&shutdown_mutex);
-                pthread_mutex_unlock(&cook->cookMutex);
-                printf("Cook %d exiting...\n", cook->cook_id);
-                pthread_exit(NULL);
-            }
-            pthread_mutex_unlock(&shutdown_mutex);
+        if (shutdown_flag)
+        {
+            wakeup();
+            pthread_mutex_unlock(&cook->cookMutex);
+            printf("Cook %d exiting...\n", cook->cook_id);
+            pthread_exit(NULL);
+        }
 
         Order *order = dequeue(cook->order_queue);
         pthread_mutex_unlock(&cook->cookMutex);
@@ -336,24 +322,12 @@ void* cook_function(void *arg)
         {
             printf("Cook %d is waiting for an apparatus\n", cook->cook_id);
             pthread_cond_wait(&apparatus_cond, &apparatus_mutex);
-            pthread_mutex_lock(&shutdown_mutex);
-            if (shutdown_flag) {
-                pthread_cond_broadcast(&order_cond);
-                pthread_cond_broadcast(&cooked_cond);
-                pthread_cond_broadcast(&oven_cond);
-                pthread_cond_broadcast(&delivery_cond);
-                pthread_cond_broadcast(&delivery_bag_cond);
-                pthread_cond_broadcast(&motor_cond);
-                pthread_cond_broadcast(&apparatus_cond);
-                pthread_cond_broadcast(&oven_putting_opening_cond);
-                pthread_cond_broadcast(&oven_removing_opening_cond);
-                pthread_mutex_unlock(&shutdown_mutex);
+            if (shutdown_flag)
+            {
                 pthread_mutex_unlock(&apparatus_mutex);
                 printf("Cook %d exiting...\n", cook->cook_id);
                 pthread_exit(NULL);
             }
-            pthread_mutex_unlock(&shutdown_mutex);
-
         }
         avaliable_apparatus--;
         pthread_mutex_unlock(&apparatus_mutex);
@@ -362,26 +336,29 @@ void* cook_function(void *arg)
         pthread_mutex_lock(&oven_putting_opening_mutex);
         while (put_cook_opening <= 0)
         {
-            printf("Cook %d is waiting for the oven opening\n", cook->cook_id);
-            pthread_cond_wait(&oven_putting_opening_cond, &oven_putting_opening_mutex);
-            pthread_mutex_lock(&shutdown_mutex);
-            if (shutdown_flag) {
-                pthread_cond_broadcast(&order_cond);
-                pthread_cond_broadcast(&cooked_cond);
-                pthread_cond_broadcast(&oven_cond);
-                pthread_cond_broadcast(&delivery_cond);
-                pthread_cond_broadcast(&delivery_bag_cond);
-                pthread_cond_broadcast(&motor_cond);
-                pthread_cond_broadcast(&apparatus_cond);
-                pthread_cond_broadcast(&oven_putting_opening_cond);
-                pthread_cond_broadcast(&oven_removing_opening_cond);
-                pthread_mutex_unlock(&shutdown_mutex);
+            if (shutdown_flag)
+            {
+                wakeup();
                 pthread_mutex_unlock(&oven_putting_opening_mutex);
                 printf("Cook %d exiting...\n", cook->cook_id);
                 pthread_exit(NULL);
             }
-            pthread_mutex_unlock(&shutdown_mutex);
-
+            printf("Cook %d is waiting for the oven opening\n", cook->cook_id);
+            pthread_cond_wait(&oven_putting_opening_cond, &oven_putting_opening_mutex);
+            if (shutdown_flag)
+            {
+                wakeup();
+                pthread_mutex_unlock(&oven_putting_opening_mutex);
+                printf("Cook %d exiting...\n", cook->cook_id);
+                pthread_exit(NULL);
+            }
+        }
+        if (shutdown_flag)
+        {
+            wakeup();
+            pthread_mutex_unlock(&oven_putting_opening_mutex);
+            printf("Cook %d exiting...\n", cook->cook_id);
+            pthread_exit(NULL);
         }
         printf("Cook %d is taking the oven opening\n", cook->cook_id);
         put_cook_opening--;
@@ -391,6 +368,14 @@ void* cook_function(void *arg)
         pthread_mutex_lock(&oven_mutex);
         while (avaliable_oven <= 0)
         {
+            if (shutdown_flag)
+            {
+                wakeup();
+                pthread_mutex_unlock(&oven_mutex);
+                printf("Cook %d exiting...\n", cook->cook_id);
+                pthread_exit(NULL);
+            }
+
             printf("Cook %d is waiting for oven space\n", cook->cook_id);
             pthread_mutex_lock(&apparatus_mutex);
             avaliable_apparatus++; // Release the apparatus
@@ -404,41 +389,34 @@ void* cook_function(void *arg)
             pthread_cond_signal(&oven_putting_opening_cond); // Notify that the take opening is available
             pthread_mutex_unlock(&oven_putting_opening_mutex);
 
+            if (shutdown_flag)
+            {
+                wakeup();
+                pthread_mutex_unlock(&oven_mutex);
+                printf("Cook %d exiting...\n", cook->cook_id);
+                pthread_exit(NULL);
+            }
+
             pthread_cond_wait(&oven_cond, &oven_mutex); // Wait for space in the oven
-            if (shutdown_flag) {
-                pthread_cond_broadcast(&order_cond);
-                pthread_cond_broadcast(&cooked_cond);
-                pthread_cond_broadcast(&oven_cond);
-                pthread_cond_broadcast(&delivery_cond);
-                pthread_cond_broadcast(&delivery_bag_cond);
-                pthread_cond_broadcast(&motor_cond);
-                pthread_cond_broadcast(&apparatus_cond);
-                pthread_cond_broadcast(&oven_putting_opening_cond);
-                pthread_cond_broadcast(&oven_removing_opening_cond);
-                pthread_mutex_unlock(&shutdown_mutex);
+            if (shutdown_flag)
+            {
+                wakeup();
                 pthread_mutex_unlock(&oven_mutex);
                 printf("Cook %d exiting...\n", cook->cook_id);
                 pthread_exit(NULL);
             }
         }
 
-        pthread_mutex_lock(&shutdown_mutex);
-            if (shutdown_flag) {
-                pthread_mutex_unlock(&shutdown_mutex);
-                pthread_mutex_unlock(&cook->cookMutex);
-                pthread_cond_broadcast(&order_cond);
-                pthread_cond_broadcast(&cooked_cond);
-                pthread_cond_broadcast(&oven_cond);
-                pthread_cond_broadcast(&delivery_cond);
-                pthread_cond_broadcast(&delivery_bag_cond);
-                pthread_cond_broadcast(&motor_cond);
-                pthread_cond_broadcast(&apparatus_cond);
-                pthread_cond_broadcast(&oven_putting_opening_cond);
-                pthread_cond_broadcast(&oven_removing_opening_cond);
-                printf("Cook %d exiting...\n", cook->cook_id);
-                pthread_exit(NULL);
-            }
-            pthread_mutex_unlock(&shutdown_mutex);
+        if (shutdown_flag)
+        {
+            wakeup();
+            pthread_mutex_unlock(&oven_mutex);
+            printf("Cook %d exiting...\n", cook->cook_id);
+            pthread_exit(NULL);
+        }
+
+        pthread_mutex_unlock(&oven_mutex);
+
         pthread_mutex_lock(&apparatus_mutex);
         printf("Cook %d is putting an apparatus back\n", cook->cook_id);
         avaliable_apparatus++;           // Re-acquire the apparatus
@@ -451,6 +429,7 @@ void* cook_function(void *arg)
         pthread_cond_signal(&oven_putting_opening_cond); // Notify that the take opening is available
         pthread_mutex_unlock(&oven_putting_opening_mutex);
 
+        pthread_mutex_lock(&oven_mutex);
         avaliable_oven--;
         pthread_mutex_unlock(&oven_mutex);
 
@@ -462,21 +441,17 @@ void* cook_function(void *arg)
         while (avaliable_apparatus <= 0)
         {
             printf("Cook %d is waiting for an apparatus\n", cook->cook_id);
-            pthread_cond_wait(&apparatus_cond, &apparatus_mutex);
-            if (shutdown_flag) {
-                pthread_mutex_unlock(&shutdown_mutex);
+            if (shutdown_flag)
+            {
+                wakeup();
                 pthread_mutex_unlock(&apparatus_mutex);
-
-                pthread_cond_broadcast(&order_cond);
-                pthread_cond_broadcast(&cooked_cond);
-                pthread_cond_broadcast(&oven_cond);
-                pthread_cond_broadcast(&delivery_cond);
-                pthread_cond_broadcast(&delivery_bag_cond);
-                pthread_cond_broadcast(&motor_cond);
-                pthread_cond_broadcast(&apparatus_cond);
-                pthread_cond_broadcast(&oven_putting_opening_cond);
-                pthread_cond_broadcast(&oven_removing_opening_cond);
-
+                printf("Cook %d exiting...\n", cook->cook_id);
+                pthread_exit(NULL);
+            }
+            pthread_cond_wait(&apparatus_cond, &apparatus_mutex);
+            if (shutdown_flag)
+            {
+                pthread_mutex_unlock(&apparatus_mutex);
                 printf("Cook %d exiting...\n", cook->cook_id);
                 pthread_exit(NULL);
             }
@@ -488,22 +463,19 @@ void* cook_function(void *arg)
         pthread_mutex_lock(&oven_removing_opening_mutex);
         while (take_cook_opening <= 0)
         {
+            if (shutdown_flag)
+            {
+                wakeup();
+                pthread_mutex_unlock(&oven_removing_opening_mutex);
+                printf("Cook %d exiting...\n", cook->cook_id);
+                pthread_exit(NULL);
+            }
             printf("Cook %d is waiting for the oven opening for removing\n", cook->cook_id);
             pthread_cond_wait(&oven_removing_opening_cond, &oven_removing_opening_mutex);
-            if (shutdown_flag) {
-                pthread_mutex_unlock(&shutdown_mutex);
+            if (shutdown_flag)
+            {
+                wakeup();
                 pthread_mutex_unlock(&oven_removing_opening_mutex);
-
-                pthread_cond_broadcast(&order_cond);
-                pthread_cond_broadcast(&cooked_cond);
-                pthread_cond_broadcast(&oven_cond);
-                pthread_cond_broadcast(&delivery_cond);
-                pthread_cond_broadcast(&delivery_bag_cond);
-                pthread_cond_broadcast(&motor_cond);
-                pthread_cond_broadcast(&apparatus_cond);
-                pthread_cond_broadcast(&oven_putting_opening_cond);
-                pthread_cond_broadcast(&oven_removing_opening_cond);
-
                 printf("Cook %d exiting...\n", cook->cook_id);
                 pthread_exit(NULL);
             }
@@ -546,80 +518,63 @@ void* cook_function(void *arg)
     }
 }
 
-void* delivery_function(void *arg) {
+void *delivery_function(void *arg)
+{
     DeliveryPerson *delivery_person = (DeliveryPerson *)arg;
-    
-    while (1) {
-         pthread_mutex_lock(&shutdown_mutex);
-            if (shutdown_flag) {
-                pthread_mutex_unlock(&shutdown_mutex);
-                pthread_mutex_unlock(&delivery_person->order_bag->mutex);
-                 pthread_cond_broadcast(&order_cond);
-                pthread_cond_broadcast(&cooked_cond);
-                pthread_cond_broadcast(&oven_cond);
-                pthread_cond_broadcast(&delivery_cond);
-                pthread_cond_broadcast(&delivery_bag_cond);
-                pthread_cond_broadcast(&motor_cond);
-                pthread_cond_broadcast(&apparatus_cond);
-                pthread_cond_broadcast(&oven_putting_opening_cond);
-                pthread_cond_broadcast(&oven_removing_opening_cond);
-                printf("Delivery person %d exiting...\n", delivery_person->delivery_person_id);
-                pthread_exit(NULL);
-            }
-            pthread_mutex_unlock(&shutdown_mutex);
+
+    while (1)
+    {
+        if (shutdown_flag)
+        {
+            wakeup();
+            pthread_mutex_unlock(&delivery_person->order_bag->mutex);
+            printf("Delivery person %d exiting...\n", delivery_person->delivery_person_id);
+            pthread_exit(NULL);
+        }
 
         pthread_mutex_lock(&delivery_person->order_bag->mutex);
         // Wait for orders in the bag
-        while (delivery_person->order_bag->front == NULL) {
+        while (delivery_person->order_bag->front == NULL)
+        {
             pthread_cond_wait(&delivery_person->order_bag->cond, &delivery_person->order_bag->mutex);
-             pthread_mutex_lock(&shutdown_mutex);
-            if (shutdown_flag) {
-                pthread_mutex_unlock(&shutdown_mutex);
+            if (shutdown_flag)
+            {
+                wakeup();
                 pthread_mutex_unlock(&delivery_person->order_bag->mutex);
-                pthread_cond_broadcast(&order_cond);
-                pthread_cond_broadcast(&cooked_cond);
-                pthread_cond_broadcast(&oven_cond);
-                pthread_cond_broadcast(&delivery_cond);
-                pthread_cond_broadcast(&delivery_bag_cond);
-                pthread_cond_broadcast(&motor_cond);
-                pthread_cond_broadcast(&apparatus_cond);
-                pthread_cond_broadcast(&oven_putting_opening_cond);
-                pthread_cond_broadcast(&oven_removing_opening_cond);
                 printf("Delivery person %d exiting...\n", delivery_person->delivery_person_id);
                 pthread_exit(NULL);
             }
-            pthread_mutex_unlock(&shutdown_mutex);
         }
         pthread_mutex_unlock(&delivery_person->order_bag->mutex);
         int delivery_count = 0;
         Order *orders_to_deliver[DELIVERY_CAPACITY];
-        
+
         // Collect orders from the bag
-        while (delivery_count < DELIVERY_CAPACITY && delivery_person->order_bag->front != NULL) {
+        while (delivery_count < DELIVERY_CAPACITY && delivery_person->order_bag->front != NULL)
+        {
             orders_to_deliver[delivery_count++] = dequeue(delivery_person->order_bag);
         }
         delivery_person->current_delivery_count = 0; // Reset count after collecting orders
-        pthread_mutex_unlock(&delivery_person->order_bag->mutex);
 
-        if (delivery_count > 0) {
+        if (delivery_count > 0)
+        {
             printf("Delivery person %d is delivering %d orders\n", delivery_person->delivery_person_id, delivery_count);
 
             // Simulate delivery time
             int total_delivery_time = 0;
-            for (int i = 0; i < delivery_count; i++) {
+            for (int i = 0; i < delivery_count; i++)
+            {
                 total_delivery_time += orders_to_deliver[i]->delivery_time;
             }
             usleep(total_delivery_time * 1000); // Convert to microseconds
 
-            // Mark orders as delivered
-            pthread_mutex_lock(&order_mutex);
-            for (int i = 0; i < delivery_count; i++) {
+            for (int i = 0; i < delivery_count; i++)
+            {
                 handle_delivery_completion(delivery_person, orders_to_deliver[i]);
                 delivery_person->total_deliveries++;
                 delivery_person->total_earnings += 10.0; // Example earning per delivery
                 printf("Order %d delivered by delivery person %d\n", orders_to_deliver[i]->order_id, delivery_person->delivery_person_id);
             }
-            pthread_mutex_unlock(&order_mutex);
 
             // Reset delivery person status
             pthread_mutex_lock(&delivery_mutex);
@@ -634,124 +589,110 @@ void* delivery_function(void *arg) {
     pthread_exit(NULL);
 }
 
+void place_order(Order *order)
+{
+    pthread_mutex_lock(&order_mutex);
+    order->order_id = order_count++;
+    order->cook_id = -1;
+    order->delivery_person_id = -1;
+    orders[order->order_id] = *order;
+    pthread_cond_signal(&order_cond);
+    pthread_mutex_unlock(&order_mutex);
+}
 
-    void place_order(Order * order)
+void cancel_order(int order_id)
+{
+    pthread_mutex_lock(&order_mutex);
+    if (order_id < order_count)
     {
-        pthread_mutex_lock(&order_mutex);
-        order->order_id = order_count++;
-        order->cook_id = -1;
-        order->delivery_person_id = -1;
-        orders[order->order_id] = *order;
-        pthread_cond_signal(&order_cond);
-        pthread_mutex_unlock(&order_mutex);
+        orders[order_id].is_cancelled = 1;
+    }
+    pthread_mutex_unlock(&order_mutex);
+}
+
+void handle_order_completion(Order *order)
+{
+    printf("Order %d is prepared by cook %d\n", order->order_id, order->cook_id);
+}
+
+void handle_delivery_completion(DeliveryPerson *delivery_person, Order *order)
+{
+    printf("Order %d is delivered by delivery person %d\n", order->order_id, delivery_person->delivery_person_id);
+    delivery_person->total_deliveries++;
+    delivery_person->total_earnings += 10.0; // Example earning per delivery
+}
+
+void evaluate_performance()
+{
+    pthread_mutex_lock(&order_mutex);
+    DeliveryPerson *best_delivery_person = NULL;
+    double max_deliveries = 0;
+
+    for (int i = 0; i < num_delivery_persons; i++)
+    {
+        if (delivery_persons[i].total_deliveries > max_deliveries)
+        {
+            best_delivery_person = &delivery_persons[i];
+            max_deliveries = delivery_persons[i].total_deliveries;
+        }
     }
 
-    void cancel_order(int order_id)
+    if (best_delivery_person)
     {
-        pthread_mutex_lock(&order_mutex);
-        if (order_id < order_count)
+        printf("Best delivery person: %d with %d deliveries\n", best_delivery_person->delivery_person_id, best_delivery_person->total_deliveries);
+    }
+    pthread_mutex_unlock(&order_mutex);
+}
+
+void enqueue(OrderQueue *queue, Order *order)
+{
+    QueueNode *new_node = (QueueNode *)malloc(sizeof(QueueNode));
+    if (!new_node)
+    {
+        perror("Failed to allocate memory for queue node");
+        exit(EXIT_FAILURE);
+    }
+    new_node->order = order;
+    new_node->next = NULL;
+    pthread_mutex_lock(&queue->mutex);
+    if (queue->rear)
+    {
+        queue->rear->next = new_node;
+    }
+    else
+    {
+        queue->front = new_node;
+    }
+    queue->rear = new_node;
+    pthread_cond_signal(&queue->cond);
+    pthread_mutex_unlock(&queue->mutex);
+}
+
+Order *dequeue(OrderQueue *queue)
+{
+    pthread_mutex_lock(&queue->mutex);
+    while (queue->front == NULL)
+    {
+        pthread_cond_wait(&queue->cond, &queue->mutex);
+        if (shutdown_flag)
         {
-            orders[order_id].is_cancelled = 1;
+            wakeup();
+            pthread_mutex_unlock(&queue->mutex);
+            pthread_exit(NULL);
         }
-        pthread_mutex_unlock(&order_mutex);
     }
 
-    void handle_order_completion(Order * order)
+    QueueNode *temp = queue->front;
+    Order *order;
+
+    order = temp->order;
+    queue->front = temp->next;
+    if (queue->front == NULL)
     {
-        printf("Order %d is prepared by cook %d\n", order->order_id, order->cook_id);
+        queue->rear = NULL;
     }
 
-    void handle_delivery_completion(DeliveryPerson * delivery_person, Order * order)
-    {
-        printf("Order %d is delivered by delivery person %d\n", order->order_id, delivery_person->delivery_person_id);
-        delivery_person->total_deliveries++;
-        delivery_person->total_earnings += 10.0; // Example earning per delivery
-    }
-
-    void evaluate_performance()
-    {
-        pthread_mutex_lock(&order_mutex);
-        DeliveryPerson *best_delivery_person = NULL;
-        double max_deliveries = 0;
-
-        for (int i = 0; i < num_delivery_persons; i++)
-        {
-            if (delivery_persons[i].total_deliveries > max_deliveries)
-            {
-                best_delivery_person = &delivery_persons[i];
-                max_deliveries = delivery_persons[i].total_deliveries;
-            }
-        }
-
-        if (best_delivery_person)
-        {
-            printf("Best delivery person: %d with %d deliveries\n", best_delivery_person->delivery_person_id, best_delivery_person->total_deliveries);
-        }
-        pthread_mutex_unlock(&order_mutex);
-    }
-
-    void enqueue(OrderQueue * queue, Order *order)
-    {
-        QueueNode *new_node = (QueueNode *)malloc(sizeof(QueueNode));
-        if (!new_node)
-        {
-            perror("Failed to allocate memory for queue node");
-            exit(EXIT_FAILURE);
-        }
-        new_node->order = order;
-        new_node->next = NULL;
-        pthread_mutex_lock(&queue->mutex);
-        if (queue->rear)
-        {
-            queue->rear->next = new_node;
-        }
-        else
-        {
-            queue->front = new_node;
-        }
-        queue->rear = new_node;
-        pthread_cond_signal(&queue->cond);
-        pthread_mutex_unlock(&queue->mutex);
-    }
-
-    Order *dequeue(OrderQueue * queue)
-    {
-        pthread_mutex_lock(&queue->mutex);
-        while (queue->front == NULL)
-        {
-            pthread_cond_wait(&queue->cond, &queue->mutex);
-             pthread_mutex_lock(&shutdown_mutex);
-            if (shutdown_flag) {
-                pthread_mutex_unlock(&shutdown_mutex);
-                pthread_mutex_unlock(&queue->mutex);
-                pthread_cond_broadcast(&order_cond);
-                pthread_cond_broadcast(&cooked_cond);
-                pthread_cond_broadcast(&oven_cond);
-                pthread_cond_broadcast(&delivery_cond);
-                pthread_cond_broadcast(&delivery_bag_cond);
-                pthread_cond_broadcast(&motor_cond);
-                pthread_cond_broadcast(&apparatus_cond);
-                pthread_cond_broadcast(&oven_putting_opening_cond);
-                pthread_cond_broadcast(&oven_removing_opening_cond);
-                pthread_mutex_unlock(&shutdown_mutex);
-                pthread_mutex_unlock(&queue->mutex);
-                pthread_exit(NULL);
-            }
-            pthread_mutex_unlock(&shutdown_mutex);
-        }
-
-        QueueNode *temp = queue->front;
-        Order *order;
-
-
-        order = temp->order;
-        queue->front = temp->next;
-        if (queue->front == NULL)
-        {
-            queue->rear = NULL;
-        }
-
-        free(temp);
-        pthread_mutex_unlock(&queue->mutex);
-        return order; // Successfully dequeued and return the order
-    }
+    free(temp);
+    pthread_mutex_unlock(&queue->mutex);
+    return order; // Successfully dequeued and return the order
+}

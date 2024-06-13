@@ -18,7 +18,7 @@ typedef struct {
 
 // Global variables
 extern int server_socket_fd;
-extern ClientConnection client_connections[MAX_CONNECTIONS];
+extern ClientConnection* client_connections[MAX_CONNECTIONS];
 extern int num_connections;
 extern pthread_mutex_t connection_mutex;
 
