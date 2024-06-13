@@ -3,6 +3,7 @@
 
 #include <pthread.h>
 #include <semaphore.h>
+#include <signal.h>
 
 // Define constants
 #define MAX_COOKS 10
@@ -33,7 +34,7 @@ typedef struct {
 
 // Node structure for the queue
 typedef struct QueueNode {
-    Order order;
+    Order* order;
     struct QueueNode* next;
 } QueueNode;
 
@@ -65,14 +66,13 @@ typedef struct {
     int order_id;
     OrderQueue *order_bag;
     int busy;
+    int current_delivery_count; // Add this to track the number of orders in the bag
 } DeliveryPerson;
+
 
 // Global variables
 extern Cook cooks[MAX_COOKS];
 extern DeliveryPerson delivery_persons[MAX_DELIVERY_PERSONS];
-extern pthread_mutex_t order_mutex;
-extern pthread_cond_t order_cond;
-extern pthread_cond_t cooked_cond;
 extern Order orders[MAX_ORDERS];
 extern int num_cooks;
 extern int num_delivery_persons;
@@ -80,6 +80,32 @@ extern int order_count;
 extern pthread_t *cook_threads;
 extern pthread_t *delivery_threads;
 extern pthread_t manager_thread;
+
+extern volatile sig_atomic_t shutdown_flag;
+
+// Mutex for protecting the shutdown flag
+extern pthread_mutex_t shutdown_mutex ;
+
+
+extern pthread_mutex_t order_mutex;
+extern pthread_mutex_t delivery_mutex;
+extern pthread_mutex_t cook_mutex;
+extern pthread_mutex_t oven_mutex;
+extern pthread_mutex_t delivery_bag_mutex;
+extern pthread_mutex_t motor_mutex;
+extern pthread_mutex_t apparatus_mutex;
+extern pthread_mutex_t oven_putting_opening_mutex;
+extern pthread_mutex_t oven_removing_opening_mutex;
+
+extern pthread_cond_t order_cond;
+extern pthread_cond_t cooked_cond;
+extern pthread_cond_t oven_cond;
+extern pthread_cond_t delivery_cond;
+extern pthread_cond_t delivery_bag_cond;
+extern pthread_cond_t motor_cond;
+extern pthread_cond_t apparatus_cond;
+extern pthread_cond_t oven_putting_opening_cond;
+extern pthread_cond_t oven_removing_opening_cond;
 
 // Function prototypes
 void initialize_system(int n_cooks, int m_delivery_persons);
@@ -92,7 +118,7 @@ void handle_order_completion(Order *order);
 void handle_delivery_completion(DeliveryPerson *delivery_person, Order *order);
 void evaluate_performance();
 void initialize_queue(OrderQueue* queue);
-void enqueue(OrderQueue* queue, Order order);
+void enqueue(OrderQueue* queue, Order *order);
 Order* dequeue(OrderQueue* queue);
 
 #endif // PIDE_HOUSE_H

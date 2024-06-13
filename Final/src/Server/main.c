@@ -7,13 +7,122 @@
 
 // Global variable to store the server socket
 int server_socket;
+// Global flag for shutdown
+
 
 // Signal handler function
 void handle_sigint(int sig) {
     printf("\nCaught signal %d (SIGINT), closing the server socket...\n", sig);
+    shutdown_flag = 1;
+
+    
+
+    // Notify all condition variables
+    pthread_cond_broadcast(&order_cond);
+                pthread_cond_broadcast(&cooked_cond);
+                pthread_cond_broadcast(&oven_cond);
+                pthread_cond_broadcast(&delivery_cond);
+                pthread_cond_broadcast(&delivery_bag_cond);
+                pthread_cond_broadcast(&motor_cond);
+                pthread_cond_broadcast(&apparatus_cond);
+                pthread_cond_broadcast(&oven_putting_opening_cond);
+                pthread_cond_broadcast(&oven_removing_opening_cond);
+                
+    for (int i = 0; i < num_cooks; i++) {
+        pthread_cond_signal(&cooks[i].cookCond);
+    }
+    for (int i = 0; i < num_delivery_persons; i++) {
+        pthread_cond_signal(&delivery_persons[i].order_bag->cond);
+    }
+    printf("Waiting for all threads to finish...\n");
+
+    for (int i = 0; i < num_cooks; i++) {
+        pthread_join(cook_threads[i], NULL);
+    }
+
+    for (int i = 0; i < num_delivery_persons; i++) {
+        pthread_join(delivery_threads[i], NULL);
+    }
+
+    pthread_join(manager_thread, NULL);
+    // Free delivery person's mutexes and cond vars
+    for (int i = 0; i < num_delivery_persons; i++) {
+        pthread_mutex_destroy(&delivery_persons[i].order_bag->mutex);
+        pthread_cond_destroy(&delivery_persons[i].order_bag->cond);
+    }
+
+    printf("All threads finished. Cleaning up...\n");
+    // Free delivery men
+    // Free nodes in delivery man's order bag
+    for (int i = 0; i < num_delivery_persons; i++) {
+        QueueNode *current = delivery_persons[i].order_bag->front;
+        while (current) {
+            QueueNode *temp = current;
+            current = current->next;
+            free(temp);
+        }
+    }
+
+    for (int i = 0; i < num_delivery_persons; i++) {
+        free(delivery_persons[i].order_bag);
+    }
+
+    // Free nodes in cook's order bag
+    for (int i = 0; i < num_cooks; i++) {
+        QueueNode *current = cooks[i].order_queue->front;
+        while (current) {
+            QueueNode *temp = current;
+            current = current->next;
+            free(temp);
+        }
+    }
+
+    // Free cooks
+    for (int i = 0; i < num_cooks; i++) {
+        free(cooks[i].order_queue);
+    }
+
+    free(cook_threads);
+    free(delivery_threads);
+
+    // Free cook's mutexes and cond vars
+    for (int i = 0; i < num_cooks; i++) {
+        pthread_mutex_destroy(&cooks[i].cookMutex);
+        pthread_cond_destroy(&cooks[i].cookCond);
+    }
+
+    
+
+    // Close mutexes and cond variablesr
+    pthread_mutex_destroy(&order_mutex);
+    pthread_mutex_destroy(&delivery_mutex);
+    pthread_mutex_destroy(&cook_mutex);
+    pthread_mutex_destroy(&oven_mutex);
+    pthread_mutex_destroy(&delivery_bag_mutex);
+    pthread_mutex_destroy(&motor_mutex);
+    pthread_mutex_destroy(&apparatus_mutex);
+    pthread_mutex_destroy(&oven_putting_opening_mutex);
+    pthread_mutex_destroy(&oven_removing_opening_mutex);
+
+    pthread_cond_destroy(&order_cond);
+    pthread_cond_destroy(&cooked_cond);
+    pthread_cond_destroy(&oven_cond);
+    pthread_cond_destroy(&delivery_cond);
+    pthread_cond_destroy(&delivery_bag_cond);
+    pthread_cond_destroy(&motor_cond);
+    pthread_cond_destroy(&apparatus_cond);
+    pthread_cond_destroy(&oven_putting_opening_cond);
+    pthread_cond_destroy(&oven_removing_opening_cond);
+
+    for (int i = 0; i < num_connections; i++) {
+        close(client_connections[i].socket_fd);
+    }
+
+    // Close the server socket to stop accepting new connections
     close(server_socket);
     exit(EXIT_SUCCESS);
 }
+
 
 // Setup signal handler
 void setup_signal_handler() {
