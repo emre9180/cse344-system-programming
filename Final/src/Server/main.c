@@ -15,8 +15,6 @@ void handle_sigint(int sig) {
     printf("\nCaught signal %d (SIGINT), closing the server socket...\n", sig);
     shutdown_flag = 1;
 
-    
-
     // Notify all condition variables to wake up waiting threads
     pthread_cond_broadcast(&order_cond);
     pthread_cond_broadcast(&cooked_cond);
@@ -34,7 +32,12 @@ void handle_sigint(int sig) {
     for (int i = 0; i < num_delivery_persons; i++) {
         pthread_cond_broadcast(&delivery_persons[i].order_bag->cond);
     }
-
+    
+        // send signal to ooks
+    for (int i = 0; i < num_cooks; i++)
+    {
+        pthread_cond_signal(&cooks[i].cookCond);
+    }
     printf("Waiting for all threads to finish...\n");
 
     for (int i = 0; i < num_cooks; i++) {
@@ -52,7 +55,12 @@ void handle_sigint(int sig) {
         pthread_cond_destroy(&delivery_persons[i].order_bag->cond);
     }
 
-    printf("All threads finished. Cleaning up...\n");
+    // Free cook's mutexes and cond vars
+    for (int i = 0; i < num_cooks; i++) {
+        pthread_mutex_destroy(&cooks[i].cookMutex);
+        pthread_cond_destroy(&cooks[i].cookCond);
+    }
+
     // Free delivery men
     // Free nodes in delivery man's order bag
     for (int i = 0; i < num_delivery_persons; i++) {
@@ -86,12 +94,9 @@ void handle_sigint(int sig) {
     free(cook_threads);
     free(delivery_threads);
 
-    // Free cook's mutexes and cond vars
-    for (int i = 0; i < num_cooks; i++) {
-        pthread_mutex_destroy(&cooks[i].cookMutex);
-        pthread_cond_destroy(&cooks[i].cookCond);
-    }
+    
 
+    
     
 
     // Close mutexes and cond variablesr
@@ -114,6 +119,9 @@ void handle_sigint(int sig) {
     pthread_cond_destroy(&apparatus_cond);
     pthread_cond_destroy(&oven_putting_opening_cond);
     pthread_cond_destroy(&oven_removing_opening_cond);
+
+    printf("All threads finished. Cleaning up...\n");
+    fflush(stdout);
 
     for (int i = 0; i < num_connections; i++) {
         close(client_connections[i]->socket_fd);
@@ -190,7 +198,7 @@ int main(int argc, char *argv[]) {
             continue;
         }
 
-        // printf("Accepted connection from %s:%d\n", inet_ntoa(client_connection->client_addr.sin_addr), ntohs(client_connection->client_addr.sin_port));
+        // printf("Accepted connection from %d:%d\n", inet_ntoa(client_connection->client_addr.sin_addr), ntohs(client_connection->client_addr.sin_port));
 
         pthread_mutex_lock(&connection_mutex);
         if (num_connections < MAX_CONNECTIONS) {

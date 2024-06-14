@@ -13,6 +13,7 @@
         "shared_mutex": "c",
         "in.h": "c",
         "initializer_list": "c",
-        "utility": "c"
+        "utility": "c",
+        "linked_list.h": "c"
     }
 }

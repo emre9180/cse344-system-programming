@@ -3,11 +3,13 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <signal.h>
+#include <string.h>
 
 // Global variables
 Client *clients = NULL;
 int num_clients = 0;
 volatile sig_atomic_t keep_running = 1;
+char server_ip[32];
 
 int main(int argc, char *argv[]) {
     if (argc != 5) {
@@ -15,10 +17,11 @@ int main(int argc, char *argv[]) {
         exit(EXIT_FAILURE);
     }
 
-    const char *server_ip = argv[1];
     num_clients = atoi(argv[2]);
     int p = atoi(argv[3]);
     int q = atoi(argv[4]);
+    strcpy(server_ip, argv[1]);
+    printf("Server IP: %s\n", server_ip);
 
     // Setup signal handler
     setup_signal_handler();
@@ -45,12 +48,7 @@ int main(int argc, char *argv[]) {
 void handle_signal(int sig) {
     printf("\nCaught signal %d (SIGINT), cleaning up...\n", sig);
     keep_running = 0;
-    for (int i = 0; i < num_clients; i++) {
-        // Send -1 -1 to indicate disconnection
-        char buffer[BUFFER_SIZE];
-        snprintf(buffer, sizeof(buffer), "-1 -1");
-        send(clients[i].socket_fd, buffer, strlen(buffer), 0);
-    }
+    client_function2(server_ip);
     cleanup();
     exit(EXIT_SUCCESS);
 }

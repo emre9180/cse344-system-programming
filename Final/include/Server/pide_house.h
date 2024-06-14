@@ -5,7 +5,7 @@
 #include <semaphore.h>
 #include <signal.h>
 #include <math.h>
-
+#include "../../include/Server/linked_list.h"
 // Define constants
 #define MAX_COOKS 10
 #define MAX_DELIVERY_PERSONS 10
@@ -16,22 +16,6 @@
 #define BAG_NUMBER 3
 #define OVEN_APPARATUS_NUMBER 3
 
-// Structure to represent an order
-typedef struct {
-    int order_id;
-    int customer_id;
-    double preparation_time;
-    double cooking_time;
-    int delivery_time;
-    int is_cancelled;
-    int cook_id; // ID of the cook who prepared the order
-    int delivery_person_id; // ID of the delivery person who delivered the order
-    int x; // x-coordinate of the customer
-    int y; // y-coordinate of the customer
-    int taken; // 1 if the order is taken by a cook, 0 otherwise
-    int ready; // 1 if the order is ready for delivery, 0 otherwise
-    int socket_fd;
-} Order;
 
 // Node structure for the queue
 typedef struct QueueNode {
@@ -74,7 +58,7 @@ typedef struct {
 // Global variables
 extern Cook cooks[MAX_COOKS];
 extern DeliveryPerson delivery_persons[MAX_DELIVERY_PERSONS];
-extern Order orders[MAX_ORDERS];
+extern LinkedList orders;
 extern int num_cooks;
 extern int num_delivery_persons;
 extern int order_count;
