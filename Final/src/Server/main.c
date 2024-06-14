@@ -139,6 +139,15 @@ void handle_sigint(int sig) {
         free(client_threads[i]);
     }
 
+    // Traverse linked list orders and free each node
+    ListNode *current = orders.head;
+    while (current != NULL) {
+        ListNode *temp = current;
+        current = current->next;
+        free(temp);
+    }
+
+
     // Close the server socket to stop accepting new connections
     close(server_socket);
     exit(EXIT_SUCCESS);

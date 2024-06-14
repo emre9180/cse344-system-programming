@@ -13,7 +13,7 @@ void calculatePseudoInverse(double complex A[ROWS][COLS], double complex A_pseud
 
 double getTime() {
     // Initialize a 30x40 complex matrix
-    double complex A[ROWS][COLS];
+    double complex A[ROWS][COLS] = {0};
     srand(time(NULL));
     for (int i = 0; i < ROWS; i++) {
         for (int j = 0; j < COLS; j++) {
@@ -21,7 +21,7 @@ double getTime() {
         }
     }
 
-    double complex A_pseudo[COLS][ROWS];
+    double complex A_pseudo[COLS][ROWS] = {0};
     clock_t start, end;
     double cpu_time_used;
 
@@ -73,6 +73,14 @@ void multiply(double complex mat1[][COLS], double complex mat2[][ROWS], double c
 void invert(double complex mat[COLS][COLS], double complex inv[COLS][COLS], int n) {
     // Create an augmented matrix [mat|I]
     double complex augmented[COLS][2*COLS];
+
+    // Initialize the augmented matrix
+    for (int i = 0; i < COLS; i++) {
+        for (int j = 0; j < 2*COLS; j++) {
+            augmented[i][j] = 0.0 + 0.0 * I;
+        }
+    }
+
     for (int i = 0; i < n; i++) {
         for (int j = 0; j < n; j++) {
             augmented[i][j] = mat[i][j];
@@ -109,6 +117,21 @@ void calculatePseudoInverse(double complex A[ROWS][COLS], double complex A_pseud
     double complex A_H[COLS][ROWS];
     double complex A_H_A[COLS][COLS];
     double complex A_H_A_inv[COLS][COLS];
+
+    // Fill arrays initially with 0
+    for (int i = 0; i < COLS; i++) {
+        for (int j = 0; j < ROWS; j++) {
+            A_H[i][j] = 0.0 + 0.0 * I;
+        }
+    }
+
+    for (int i = 0; i < COLS; i++) {
+        for (int j = 0; j < COLS; j++) {
+            A_H_A[i][j] = 0.0 + 0.0 * I;
+            A_H_A_inv[i][j] = 0.0 + 0.0 * I;
+        }
+    }
+
 
     // Compute A^H (Hermitian transpose of A)
     transpose(A, A_H, ROWS, COLS);

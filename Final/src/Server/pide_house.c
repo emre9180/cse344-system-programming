@@ -685,6 +685,19 @@ void *delivery_function(void *arg)
         // Wait for orders in the bag
         while ((delivery_person->order_bag->front == NULL || (delivery_person->current_delivery_count < DELIVERY_CAPACITY && countRemainingOrders(&orders)>=3)) && shutdown_flag == 0 && cancel_order_flag == 0)
         {
+            if (shutdown_flag)
+            {
+                wakeup();
+                pthread_mutex_unlock(&delivery_person->order_bag->mutex);
+                printf("Delivery person %d exiting...\n", delivery_person->delivery_person_id);
+                pthread_exit(NULL);
+            }
+            if (cancel_order_flag)
+            {
+                wakeup();
+                pthread_mutex_unlock(&delivery_person->order_bag->mutex);
+                pthread_exit(NULL);
+            }
             //printf("Delivery person %d is waiting for orders\n\n\n\n\n", delivery_person->delivery_person_id);
             pthread_cond_wait(&delivery_person->order_bag->cond, &delivery_person->order_bag->mutex);
             if (shutdown_flag)
