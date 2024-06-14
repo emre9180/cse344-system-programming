@@ -111,9 +111,35 @@ void *handle_client(void *arg)
     }
     if (client_id == -1)
     {
+        if (total_delivered_orders == order_count && order_count > 0)
+        {
+            char buffer[256] = {0};
+            sprintf(buffer, "All orders are delivered.\n");
+            send_response(orders.head->order.socket_fd, buffer);
+            writeLog(buffer);
+            printf("\nAll orders are delivered sucessfuly!\n");
+            printStatistics();
+            sprintf(buffer, "Client disconnected\n");
+            printf("Active for new clients...\n\n");
+            writeLog(buffer);
+        }
+
+        else
+        {
+            char buffer[256] = {0};
+            sprintf(buffer, "\n\nAll orders are not delivered since order is cancelled.\n");
+            send_response(orders.head->order.socket_fd, buffer);
+            writeLog(buffer);
+            printf("\nAll orders are not delivered since order is cancelled.\n");
+            printStatistics();
+            sprintf(buffer, "Client disconnected\n");
+            printf("Active for new clients...\n\n");
+            writeLog(buffer);
+        }
+
         char buffer[256] = {0};
         sprintf(buffer, "Client disconnected\n");
-        printf("%s", buffer);
+        // printf("%s", buffer);
         writeLog(buffer);
         cancel_order_flag = 1;
 
@@ -137,7 +163,7 @@ void *handle_client(void *arg)
             pthread_cond_broadcast(&delivery_persons[i].order_bag->cond);
         }
 
-        pthread_join(manager_thread, NULL);
+        pthread_join(*manager_thread, NULL);
 
         for (int i = 0; i < num_cooks; i++)
         {
@@ -192,6 +218,12 @@ void *handle_client(void *arg)
 
         free(cook_threads);
         free(delivery_threads);
+        free(manager_thread);
+
+        cook_threads = NULL;
+        delivery_threads = NULL;
+        manager_thread = NULL;
+
         // Clean orders linked list
         ListNode *current = orders.head;
         while (current != NULL)
@@ -202,26 +234,12 @@ void *handle_client(void *arg)
         }
         orders.head = NULL;
         cancel_order_flag = 0;
-
-        initialize_system(num_cooks, num_delivery_persons, speed);
-        printf("Client connection is closed.\n");
-        fflush(stdout);
+        orders.size = 0;
         
-        // // Send all clients a message
-        // char response[256] = {0};
-        // sprintf(response, "Server is shutting down. Please reconnect later.\n");
-        // for (int i = 0; i < num_connections; i++)
-        // {   
-        //     if(client_connections[i] == -1) continue;
-        //     int bytes = send(client_connections[i]->socket_fd, response, strlen(response), 0);
-        //     if (bytes == -1) {
-        //         perror("Error sending message");
-        //         // Handle the error accordingly
-        //     }
-
-        //     // close(client_connections[i]->socket_fd);
-        // }
-        // // close(client_socket);
+        printf("gelio");
+        fflush(stdout);
+        initialize_system(num_cooks, num_delivery_persons, speed);
+        fflush(stdout);
 
         for(int i = 0; i < num_connections; i++) {
             shutdown(client_socket, SHUT_RDWR);
@@ -252,7 +270,7 @@ void *handle_client(void *arg)
     order.taken = 0;
     order.socket_fd = client_socket;
 
-    // Place order
+    // Place order to Order Linked List
     place_order(&order);
 
     // Send response to client

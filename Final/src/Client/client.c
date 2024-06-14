@@ -58,8 +58,8 @@ void *client_function(void *arg)
         pthread_exit(NULL);
     }
 
-    printf("Client %d trying to connect to the server at %s:%d\n", client->client_id,
-           inet_ntoa(client->server_addr.sin_addr), ntohs(client->server_addr.sin_port));
+    // printf("Client %d trying to connect to the server at %s:%d\n", client->client_id,
+    //        inet_ntoa(client->server_addr.sin_addr), ntohs(client->server_addr.sin_port));
 
     if (connect(client->socket_fd, (struct sockaddr *)&client->server_addr, sizeof(client->server_addr)) < 0)
     {
@@ -68,8 +68,8 @@ void *client_function(void *arg)
         pthread_exit(NULL);
     }
 
-    printf("Client %d connected to the server at %s:%d\n", client->client_id,
-           inet_ntoa(client->server_addr.sin_addr), ntohs(client->server_addr.sin_port));
+    // printf("Client %d connected to the server at %s:%d\n", client->client_id,
+    //        inet_ntoa(client->server_addr.sin_addr), ntohs(client->server_addr.sin_port));
 
     send_order(client);
 
@@ -78,8 +78,6 @@ void *client_function(void *arg)
     char buffer[BUFFER_SIZE] = {0};
     while (keep_running)
     {
-        printf("asdasd");
-
         int bytes_received = recv(client->socket_fd, buffer, BUFFER_SIZE, 0);
         if (bytes_received < 0)
         {
@@ -92,7 +90,7 @@ void *client_function(void *arg)
         }
         if (bytes_received == 0)
         {
-            printf("Server closed the connection\n");
+            // printf("Server closed the connection\n");
             break;
         }
 
@@ -109,7 +107,7 @@ void *client_function(void *arg)
             printf("Client %d received: %s\n", client->client_id, buffer);
         }
     }
-    printf("Client %d closing connection\n", client->client_id);
+    // printf("Client %d closing connection\n", client->client_id);
     pthread_exit(NULL);
 }
 
@@ -143,8 +141,8 @@ void client_function2(const char *server_ip)
         pthread_exit(NULL);
     }
 
-    printf("Client %d trying to connect to the server at %s:%d\n", client.client_id,
-           inet_ntoa(client.server_addr.sin_addr), ntohs(client.server_addr.sin_port));
+    // printf("Client %d trying to connect to the server at %s:%d\n", client.client_id,
+    //        inet_ntoa(client.server_addr.sin_addr), ntohs(client.server_addr.sin_port));
 
     if (connect(client.socket_fd, (struct sockaddr *)&client.server_addr, sizeof(client.server_addr)) < 0)
     {
@@ -153,8 +151,8 @@ void client_function2(const char *server_ip)
         pthread_exit(NULL);
     }
 
-    printf("Client %d connected to the server at %s:%d\n", client.client_id,
-           inet_ntoa(client.server_addr.sin_addr), ntohs(client.server_addr.sin_port));
+    // printf("Client %d connected to the server at %s:%d\n", client.client_id,
+    //        inet_ntoa(client.server_addr.sin_addr), ntohs(client.server_addr.sin_port));
 
     char buffer[BUFFER_SIZE] = {0};
     snprintf(buffer, sizeof(buffer), "-1 -1 -1 -1 -1 -1 -1 -1 -1");
@@ -164,8 +162,6 @@ void client_function2(const char *server_ip)
     }
     while (keep_running)
     {
-        printf("asdasd");
-        
         int bytes_received = recv(client.socket_fd, buffer, BUFFER_SIZE, 0);
         if (bytes_received < 0)
         {
@@ -178,7 +174,7 @@ void client_function2(const char *server_ip)
         }
         if (bytes_received == 0)
         {
-            printf("Server closed the connection\n");
+            // printf("Server closed the connection\n");
             break;
         }
 
@@ -187,12 +183,12 @@ void client_function2(const char *server_ip)
         // Check for the specific response indicating all customers are served
         if (strstr(buffer, "Your order is delivered.") != NULL)
         {
-            printf("Client %d received: %s\n", client.client_id, buffer);
+            // printf("Client %d received: %s\n", client.client_id, buffer);
             break; // Exit the loop
         }
         else
         {
-            printf("Client %d received: %s\n", client.client_id, buffer);
+            // printf("Client %d received: %s\n", client.client_id, buffer);
         }
     }
 }
@@ -233,6 +229,6 @@ void cleanup()
             close(clients[i].socket_fd);
         }
         free(clients);
-        printf("Cleaned up client connections\n");
+        // printf("Cleaned up client connections\n");
     }
 }

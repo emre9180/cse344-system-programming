@@ -44,7 +44,7 @@ int main(int argc, char *argv[])
 
     free(threads);
     cleanup();
-    printf("All customers served\n");
+    printf("All customers served. Client generator program will be closed successfuly. You can start it again!\n");
     client_function2(server_ip);
     return 0;
 }
@@ -52,7 +52,7 @@ int main(int argc, char *argv[])
 // Signal handler function
 void handle_signal(int sig)
 {
-    printf("\nCaught signal %d (SIGINT), cleaning up...\n", sig);
+    printf("\nCaught signal %d (SIGINT), cleaning up... Client generator program will be closed. You can start it again!\n", sig);
     keep_running = 0;
     client_function2(server_ip);
 

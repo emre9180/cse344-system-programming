@@ -52,7 +52,7 @@ void handle_sigint(int sig)
         pthread_join(delivery_threads[i], NULL);
     }
 
-    pthread_join(manager_thread, NULL);
+    pthread_join(*manager_thread, NULL);
     // Free delivery person's mutexes and cond vars
     for (int i = 0; i < num_delivery_persons; i++)
     {
@@ -105,6 +105,7 @@ void handle_sigint(int sig)
 
     free(cook_threads);
     free(delivery_threads);
+    free(manager_thread);
 
     // Close mutexes and cond variablesr
     pthread_mutex_destroy(&order_mutex);

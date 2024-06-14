@@ -64,7 +64,7 @@ extern int num_delivery_persons;
 extern int order_count;
 extern pthread_t *cook_threads;
 extern pthread_t *delivery_threads;
-extern pthread_t manager_thread;
+extern pthread_t *manager_thread;
 
 extern volatile sig_atomic_t shutdown_flag;
 extern volatile sig_atomic_t cancel_order_flag;

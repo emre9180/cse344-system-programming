@@ -64,7 +64,7 @@ LinkedList orders;
 int order_count = 0;
 pthread_t *cook_threads;
 pthread_t *delivery_threads;
-pthread_t manager_thread;
+pthread_t *manager_thread;
 
 int speed;
 
@@ -171,14 +171,14 @@ void initialize_system(int n_cooks, int m_delivery_persons, int speed_)
         pthread_create(&delivery_threads[i], NULL, delivery_function, (void *)&delivery_persons[i]);
     }
 
-    pthread_create(&manager_thread, NULL, manager_function, NULL);
+    manager_thread = (pthread_t *)malloc(sizeof(pthread_t));
+    pthread_create(manager_thread, NULL, manager_function, NULL);
     fflush(stdout);
 }
 
 Cook *findAppropriateCook()
 {
     Cook *cook = NULL;
-    double min_earnings = INFINITY;
 
     for (int i = 0; i < num_cooks; i++)
     {
@@ -238,6 +238,7 @@ void *manager_function()
             break; // Exit the loop
         }
         // printf("prepared order and order ount: %d %d\n", prepared_order, order_count);
+
         if (countRemainingOrders(&orders) < 3 && prepared_order != order_count)
         {
             // Send signal to all delivery man conds
@@ -245,18 +246,6 @@ void *manager_function()
             {
                 pthread_cond_signal(&delivery_persons[i].order_bag->cond);
             }
-        }
-
-        else if (total_delivered_orders == order_count && order_count > 0)
-        {
-            char buffer[256] = {0};
-            sprintf(buffer, "All orders are delivered.\n");
-            send_response(orders.head->order.socket_fd, buffer);
-            printStatistics();
-            sprintf(buffer, "Client disconnected\n");
-            printf("%s", buffer);
-            writeLog(buffer);
-            break;
         }
 
         pthread_mutex_lock(&order_mutex);
@@ -291,8 +280,12 @@ void *manager_function()
                 cook->busy = 1;
                 cook->order_id = order->order_id;
                 pthread_cond_signal(&cook->cookCond);
-                send_response(order->socket_fd, "Order is sent to cook.\n");
-                printf("Order %d assigned to cook %d.\n", order->order_id, cook->cook_id);
+                // send_response(order->socket_fd, "Order is sent to cook.\n");
+
+                char buffer[256] = {0};
+                sprintf(buffer, "Order %d assigned to cook %d.\n", order->order_id, cook->cook_id);
+                writeLog(buffer);
+                // printf("Order %d assigned to cook %d.\n", order->order_id, cook->cook_id);
             }
         }
         pthread_mutex_unlock(&order_mutex);
@@ -316,14 +309,20 @@ void *manager_function()
                     {
                         delivery_person->busy = 1;
                         pthread_cond_signal(&delivery_person->order_bag->cond);
-                        send_response(order->socket_fd, "Order is sent to delivery man.\n");
-                        printf("\nDelivery person %d is ready to deliver orders.\n", delivery_person->delivery_person_id);
-                        printf("Remaining orders: %d\n", countRemainingOrders(&orders));
+                        // send_response(order->socket_fd, "Order is sent to delivery man.\n");
+
+                        char buffer[256] = {0};
+                        sprintf(buffer, "Delivery person %d is ready to deliver orders.\n", delivery_person->delivery_person_id);
+                        // printf("Delivery person %d is ready to deliver orders.\n", delivery_person->delivery_person_id);
+                        writeLog(buffer);
                         fflush(stdout);
                     }
                     else
                     {
-                        printf("Order %d added to delivery person %d's bag.\n", order->order_id, delivery_person->delivery_person_id);
+                        char buffer[256] = {0};
+                        sprintf(buffer, "Order %d added to delivery person %d's bag.\n", order->order_id, delivery_person->delivery_person_id);
+                        writeLog(buffer);
+                        // printf("Order %d added to delivery person %d's bag.\n", order->order_id, delivery_person->delivery_person_id);
                         fflush(stdout);
                     }
                 }
@@ -348,7 +347,7 @@ void *cook_function(void *arg)
             wakeup();
             char buffer[256] = {0};
             sprintf(buffer, "Cook %d exiting...\n", cook->cook_id);
-            printf("%s", buffer);
+            // printf("%s", buffer);
             writeLog(buffer);
             pthread_exit(NULL);
         }
@@ -368,7 +367,7 @@ void *cook_function(void *arg)
                 pthread_mutex_unlock(&cook->cookMutex);
                 char buffer[256] = {0};
                 sprintf(buffer, "Cook %d exiting...\n", cook->cook_id);
-                printf("%s", buffer);
+                // printf("%s", buffer);
                 writeLog(buffer);
                 pthread_exit(NULL);
             }
@@ -385,7 +384,7 @@ void *cook_function(void *arg)
                 pthread_mutex_unlock(&cook->cookMutex);
                 char buffer[256] = {0};
                 sprintf(buffer, "Cook %d exiting...\n", cook->cook_id);
-                printf("%s", buffer);
+                // printf("%s", buffer);
                 writeLog(buffer);
                 pthread_exit(NULL);
             }
@@ -403,7 +402,7 @@ void *cook_function(void *arg)
             pthread_mutex_unlock(&cook->cookMutex);
             char buffer[256] = {0};
             sprintf(buffer, "Cook %d exiting...\n", cook->cook_id);
-            printf("%s", buffer);
+            // printf("%s", buffer);
             writeLog(buffer);
             pthread_exit(NULL);
         }
@@ -423,7 +422,7 @@ void *cook_function(void *arg)
         }
 
         sprintf(buffer, "Cook %d is preparing order %d\n", cook->cook_id, order->order_id);
-        printf("%s", buffer);
+        // printf("%s", buffer);
         writeLog(buffer);
         double time = getTime();
         usleep(order->preparation_time * 1000); // Convert to microseconds
@@ -432,12 +431,12 @@ void *cook_function(void *arg)
         pthread_mutex_lock(&apparatus_mutex);
 
         sprintf(buffer, "Cook %d is taking an apparatus\n", cook->cook_id);
-        printf("%s", buffer);
+        // printf("%s", buffer);
         writeLog(buffer);
         while (avaliable_apparatus <= 0 && shutdown_flag == 0 && cancel_order_flag == 0)
         {
             sprintf(buffer, "Cook %d is waiting for an apparatus\n", cook->cook_id);
-            printf("%s", buffer);
+            // printf("%s", buffer);
             writeLog(buffer);
             pthread_cond_wait(&apparatus_cond, &apparatus_mutex);
             if (shutdown_flag)
@@ -445,7 +444,7 @@ void *cook_function(void *arg)
                 pthread_mutex_unlock(&apparatus_mutex);
                 char buffer[256] = {0};
                 sprintf(buffer, "Cook %d exiting...\n", cook->cook_id);
-                printf("%s", buffer);
+                // printf("%s", buffer);
                 writeLog(buffer);
                 fflush(stdout);
                 pthread_exit(NULL);
@@ -470,7 +469,7 @@ void *cook_function(void *arg)
                 pthread_mutex_unlock(&oven_putting_opening_mutex);
                 char buffer[256] = {0};
                 sprintf(buffer, "Cook %d exiting...\n", cook->cook_id);
-                printf("%s", buffer);
+                // printf("%s", buffer);
                 writeLog(buffer);
                 pthread_exit(NULL);
             }
@@ -482,7 +481,7 @@ void *cook_function(void *arg)
             }
 
             sprintf(buffer, "Cook %d is waiting for the oven opening\n", cook->cook_id);
-            printf("%s", buffer);
+            // printf("%s", buffer);
             writeLog(buffer);
             pthread_cond_wait(&oven_putting_opening_cond, &oven_putting_opening_mutex);
             if (shutdown_flag)
@@ -491,7 +490,7 @@ void *cook_function(void *arg)
                 pthread_mutex_unlock(&oven_putting_opening_mutex);
                 char buffer[256] = {0};
                 sprintf(buffer, "Cook %d exiting...\n", cook->cook_id);
-                printf("%s", buffer);
+                // printf("%s", buffer);
                 writeLog(buffer);
                 pthread_exit(NULL);
             }
@@ -508,7 +507,7 @@ void *cook_function(void *arg)
             pthread_mutex_unlock(&oven_putting_opening_mutex);
             char buffer[256] = {0};
             sprintf(buffer, "Cook %d exiting...\n", cook->cook_id);
-            printf("%s", buffer);
+            // printf("%s", buffer);
             writeLog(buffer);
             pthread_exit(NULL);
         }
@@ -520,7 +519,7 @@ void *cook_function(void *arg)
         }
 
         sprintf(buffer, "Cook %d is taking the oven opening\n", cook->cook_id);
-        printf("%s", buffer);
+        // printf("%s", buffer);
         writeLog(buffer);
         put_cook_opening--;
         pthread_mutex_unlock(&oven_putting_opening_mutex);
@@ -535,7 +534,7 @@ void *cook_function(void *arg)
                 pthread_mutex_unlock(&oven_mutex);
                 char buffer[256] = {0};
                 sprintf(buffer, "Cook %d exiting...\n", cook->cook_id);
-                printf("%s", buffer);
+                // printf("%s", buffer);
                 writeLog(buffer);
                 pthread_exit(NULL);
             }
@@ -547,13 +546,13 @@ void *cook_function(void *arg)
             }
 
             sprintf(buffer, "Cook %d is waiting for oven space\n", cook->cook_id);
-            printf("%s", buffer);
+            // printf("%s", buffer);
             writeLog(buffer);
             pthread_mutex_lock(&apparatus_mutex);
             avaliable_apparatus++; // Release the apparatus
 
             sprintf(buffer, "Cook %d is putting an apparatus back\n", cook->cook_id);
-            printf("%s", buffer);
+            // printf("%s", buffer);
             writeLog(buffer);
             pthread_cond_signal(&oven_cond); // Notify that the apparatus is available
             pthread_mutex_unlock(&apparatus_mutex);
@@ -562,7 +561,7 @@ void *cook_function(void *arg)
             put_cook_opening++; // Release the take opening
 
             sprintf(buffer, "Cook %d is putting the oven opening back\n", cook->cook_id);
-            printf("%s", buffer);
+            // printf("%s", buffer);
             writeLog(buffer);
             pthread_cond_signal(&oven_putting_opening_cond); // Notify that the take opening is available
             pthread_mutex_unlock(&oven_putting_opening_mutex);
@@ -573,7 +572,7 @@ void *cook_function(void *arg)
                 pthread_mutex_unlock(&oven_mutex);
                 char buffer[256] = {0};
                 sprintf(buffer, "Cook %d exiting...\n", cook->cook_id);
-                printf("%s", buffer);
+                // printf("%s", buffer);
                 writeLog(buffer);
                 pthread_exit(NULL);
             }
@@ -591,7 +590,7 @@ void *cook_function(void *arg)
                 pthread_mutex_unlock(&oven_mutex);
                 char buffer[256] = {0};
                 sprintf(buffer, "Cook %d exiting...\n", cook->cook_id);
-                printf("%s", buffer);
+                // printf("%s", buffer);
                 writeLog(buffer);
                 pthread_exit(NULL);
             }
@@ -609,7 +608,7 @@ void *cook_function(void *arg)
             pthread_mutex_unlock(&oven_mutex);
             char buffer[256] = {0};
             sprintf(buffer, "Cook %d exiting...\n", cook->cook_id);
-            printf("%s", buffer);
+            // printf("%s", buffer);
             writeLog(buffer);
             pthread_exit(NULL);
         }
@@ -624,7 +623,7 @@ void *cook_function(void *arg)
 
         pthread_mutex_lock(&apparatus_mutex);
         sprintf(buffer, "Cook %d is putting an apparatus back\n", cook->cook_id);
-        printf("%s", buffer);
+        // printf("%s", buffer);
         writeLog(buffer);
         avaliable_apparatus++;           // Re-acquire the apparatus
         pthread_cond_signal(&oven_cond); // Notify that the oven space is available
@@ -632,7 +631,7 @@ void *cook_function(void *arg)
 
         pthread_mutex_lock(&oven_putting_opening_mutex);
         sprintf(buffer, "Cook %d is putting the oven opening back\n", cook->cook_id);
-        printf("%s", buffer);
+        // printf("%s", buffer);
         writeLog(buffer);
         put_cook_opening++;                              // Re-acquire the take opening
         pthread_cond_signal(&oven_putting_opening_cond); // Notify that the take opening is available
@@ -643,7 +642,7 @@ void *cook_function(void *arg)
         pthread_mutex_unlock(&oven_mutex);
 
         sprintf(buffer, "Cook %d is putting order %d in the oven\n", cook->cook_id, order->order_id);
-        printf("%s", buffer);
+        // printf("%s", buffer);
         writeLog(buffer);
         usleep(time / 2 * 1000); // Simulate cooking time
 
@@ -652,7 +651,7 @@ void *cook_function(void *arg)
         while (avaliable_apparatus <= 0 && shutdown_flag == 0 && cancel_order_flag == 0)
         {
             sprintf(buffer, "Cook %d is waiting for an apparatus\n", cook->cook_id);
-            printf("%s", buffer);
+            // printf("%s", buffer);
             writeLog(buffer);
             if (shutdown_flag)
             {
@@ -660,7 +659,7 @@ void *cook_function(void *arg)
                 pthread_mutex_unlock(&apparatus_mutex);
                 char buffer[256] = {0};
                 sprintf(buffer, "Cook %d exiting...\n", cook->cook_id);
-                printf("%s", buffer);
+                // printf("%s", buffer);
                 writeLog(buffer);
                 pthread_exit(NULL);
             }
@@ -676,7 +675,7 @@ void *cook_function(void *arg)
                 pthread_mutex_unlock(&apparatus_mutex);
                 char buffer[256] = {0};
                 sprintf(buffer, "Cook %d exiting...\n", cook->cook_id);
-                printf("%s", buffer);
+                // printf("%s", buffer);
                 writeLog(buffer);
                 pthread_exit(NULL);
             }
@@ -695,7 +694,7 @@ void *cook_function(void *arg)
         while (take_cook_opening <= 0 && shutdown_flag == 0 && cancel_order_flag == 0)
         {
             sprintf(buffer, "Cook %d is waiting for the oven opening for removing\n", cook->cook_id);
-            printf("%s", buffer);
+            // printf("%s", buffer);
             writeLog(buffer);
             pthread_cond_wait(&oven_removing_opening_cond, &oven_removing_opening_mutex);
             if (shutdown_flag)
@@ -704,7 +703,7 @@ void *cook_function(void *arg)
                 pthread_mutex_unlock(&oven_removing_opening_mutex);
                 char buffer[256] = {0};
                 sprintf(buffer, "Cook %d exiting...\n", cook->cook_id);
-                printf("%s", buffer);
+                // printf("%s", buffer);
                 writeLog(buffer);
                 pthread_exit(NULL);
             }
@@ -723,12 +722,12 @@ void *cook_function(void *arg)
         avaliable_oven++;
 
         sprintf(buffer, "Cook %d is removing order %d from the oven\n", cook->cook_id, order->order_id);
-        printf("%s", buffer);
+        // printf("%s", buffer);
         writeLog(buffer);
         pthread_cond_signal(&oven_cond); // Notify that the oven space is available
 
         sprintf(buffer, "Cook %d finished cooking order %d\n", cook->cook_id, order->order_id);
-        printf("%s", buffer);
+        // printf("%s", buffer);
         writeLog(buffer);
         pthread_mutex_unlock(&oven_mutex);
 
@@ -736,7 +735,7 @@ void *cook_function(void *arg)
         avaliable_apparatus++; // Release the apparatus
 
         sprintf(buffer, "Cook %d is putting an apparatus back\n", cook->cook_id);
-        printf("%s", buffer);
+        // printf("%s", buffer);
         writeLog(buffer);
         pthread_cond_signal(&apparatus_cond); // Notify that the apparatus is available
         pthread_mutex_unlock(&apparatus_mutex);
@@ -746,7 +745,7 @@ void *cook_function(void *arg)
         pthread_cond_signal(&oven_removing_opening_cond); // Notify that the put opening is available
 
         sprintf(buffer, "Cook %d is putting the oven opening for removal back\n", cook->cook_id);
-        printf("%s", buffer);
+        // printf("%s", buffer);
         writeLog(buffer);
         pthread_cond_signal(&oven_cond); // Notify that the oven space is available
         pthread_mutex_unlock(&oven_removing_opening_mutex);
@@ -761,7 +760,7 @@ void *cook_function(void *arg)
         total_prepared_orders++;
 
         sprintf(buffer, "Total prepared orders: %d/%d\n", total_prepared_orders, order_count);
-        printf("%s", buffer);
+        // printf("%s", buffer);
         writeLog(buffer);
 
         sprintf(buffer, "Order %d is prepared by cook %d\n", order->order_id, cook->cook_id);
@@ -782,7 +781,7 @@ void *delivery_function(void *arg)
             wakeup();
             char buffer[256] = {0};
             sprintf(buffer, "Delivery person %d exiting...\n", delivery_person->delivery_person_id);
-            printf("%s", buffer);
+            // printf("%s", buffer);
             writeLog(buffer);
             pthread_exit(NULL);
         }
@@ -802,7 +801,7 @@ void *delivery_function(void *arg)
                 pthread_mutex_unlock(&delivery_person->order_bag->mutex);
                 char buffer[256] = {0};
                 sprintf(buffer, "Delivery person %d exiting...\n", delivery_person->delivery_person_id);
-                printf("%s", buffer);
+                // printf("%s", buffer);
                 writeLog(buffer);
                 pthread_exit(NULL);
             }
@@ -820,7 +819,7 @@ void *delivery_function(void *arg)
                 pthread_mutex_unlock(&delivery_person->order_bag->mutex);
                 char buffer[256] = {0};
                 sprintf(buffer, "Delivery person %d exiting...\n", delivery_person->delivery_person_id);
-                printf("%s", buffer);
+                // printf("%s", buffer);
                 writeLog(buffer);
                 pthread_exit(NULL);
             }
@@ -851,13 +850,15 @@ void *delivery_function(void *arg)
             double total_delivery_time = 0;
             for (int i = 0; i < delivery_count; i++)
             {
+                int current_x = p / 2;
+                int current_y = q / 2;
                 if (shutdown_flag)
                 {
                     wakeup();
                     pthread_mutex_unlock(&delivery_person->order_bag->mutex);
                     char buffer[256] = {0};
                     sprintf(buffer, "Delivery person %d exiting...\n", delivery_person->delivery_person_id);
-                    printf("%s", buffer);
+                    // printf("%s", buffer);
                     writeLog(buffer);
                     pthread_exit(NULL);
                 }
@@ -877,7 +878,7 @@ void *delivery_function(void *arg)
                 // Sleep to simulate delivery time
                 char buffer[256] = {0};
                 sprintf(buffer, "Delivery person %d delivering order %d over a distance of %.2f km\n", delivery_person->delivery_person_id, orders_to_deliver[i]->order_id, distance);
-                printf("%s", buffer);
+                // printf("%s", buffer);
                 send_response(orders_to_deliver[i]->socket_fd, buffer);
                 writeLog(buffer);
                 usleep(delivery_time * 1000000); // Convert seconds to microseconds for usleep
@@ -886,9 +887,11 @@ void *delivery_function(void *arg)
                 delivery_person->total_earnings += 10.0; // Example earning per delivery
                 sprintf(buffer, "Order %d delivered by delivery person %d\n", orders_to_deliver[i]->order_id, delivery_person->delivery_person_id);
                 char buffer2[256] = {0};
-                sprintf(buffer2, "Your order is delivered.");
+                sprintf(buffer2, "Your order is delivered.\n");
                 send_response(orders_to_deliver[i]->socket_fd, buffer2);
-                printf("%s", buffer);
+                // printf("%s", buffer2);
+                current_x = orders_to_deliver[i]->x;
+                current_y = orders_to_deliver[i]->y;
             }
 
             // Reset delivery person status
@@ -898,7 +901,7 @@ void *delivery_function(void *arg)
             total_delivered_orders += delivery_count;
             char buffer[256] = {0};
             sprintf(buffer, "Total delivered orders: %d/%d\n", total_delivered_orders, order_count);
-            printf("%s", buffer);
+            // printf("%s", buffer);
             writeLog(buffer);
             fflush(stdout);
             pthread_mutex_unlock(&delivery_mutex);
@@ -912,6 +915,8 @@ void place_order(Order *order)
 {
     pthread_mutex_lock(&order_mutex);
     order->order_id = order_count++;
+    if (order_count == 1 || orders.size == 0)
+        printf("New orders has got. Serving...\n");
     order->cook_id = -1;
     order->delivery_person_id = -1;
     add_order(&orders, *order);
@@ -926,7 +931,10 @@ void handle_order_completion(Order *order)
 
 void handle_delivery_completion(DeliveryPerson *delivery_person, Order *order)
 {
-    printf("Order %d is delivered by delivery person %d\n", order->order_id, delivery_person->delivery_person_id);
+    char buffer[256] = {0};
+    sprintf(buffer, "Order %d is delivered by delivery person %d\n", order->order_id, delivery_person->delivery_person_id);
+    // printf("Order %d is delivered by delivery person %d\n", order->order_id, delivery_person->delivery_person_id);
+    writeLog(buffer);
     delivery_person->total_deliveries++;
     delivery_person->total_earnings += 10.0; // Example earning per delivery
 }
@@ -1022,22 +1030,65 @@ int countRemainingOrders(LinkedList *list)
 
 void printStatistics()
 {
-    printf("Statistics:\n");
-    printf("Cook Statistics:\n");
+    char buffer[256] = {0};
+    sprintf(buffer, "Let's look at statistics!\n");
+    writeLog(buffer);
+    printf("%s", buffer);
+
+    sprintf(buffer, "Cook Statistics:\n");
+    writeLog(buffer);
+    printf("%s", buffer);
     fflush(stdout);
+
+    int best_delivery_man = 0;
+    int best_delivery_count = 0;
+    int best_cook = 0;
+    int best_cook_count = 0;
     for (int i = 0; i < num_cooks; i++)
     {
-        printf("Cook %d cooked %d orders\n", cooks[i].cook_id, cooks[i].total_deliveries);
+        if (cooks[i].total_deliveries > best_cook_count)
+        {
+            best_cook = i;
+            best_cook_count = cooks[i].total_deliveries;
+        }
+        sprintf(buffer, "Cook %d cooked %d orders\n", cooks[i].cook_id, cooks[i].total_deliveries);
+        writeLog(buffer);
+        printf("%s", buffer);
     }
 
     printf("Delivery Person Statistics:\n");
     for (int i = 0; i < num_delivery_persons; i++)
     {
-        printf("Delivery Person %d delivered %d orders and earned %.2f TL\n", delivery_persons[i].delivery_person_id, delivery_persons[i].total_deliveries, delivery_persons[i].total_earnings);
+        if (delivery_persons[i].total_deliveries > best_delivery_count)
+        {
+            best_delivery_man = i;
+            best_delivery_count = delivery_persons[i].total_deliveries;
+        }
+
+        sprintf(buffer, "Delivery Person %d delivered %d orders and earned %.2f TL\n", delivery_persons[i].delivery_person_id, delivery_persons[i].total_deliveries, delivery_persons[i].total_earnings);
+        writeLog(buffer);
+        printf("%s", buffer);
     }
 
-    printf("Total prepared orders: %d\n", total_prepared_orders);
-    printf("Total delivered orders: %d\n", total_delivered_orders);
+    sprintf(buffer, "Total orders: %d\n", order_count);
+    writeLog(buffer);
+    printf("%s", buffer);
+
+    sprintf(buffer, "Total prepared orders: %d\n", total_prepared_orders);
+    writeLog(buffer);
+    printf("%s", buffer);
+
+    sprintf(buffer, "Total delivered orders: %d\n", total_delivered_orders);
+    writeLog(buffer);
+    printf("%s", buffer);
+
+    sprintf(buffer, "Thanks our best cook-%d has cooked %d orders\n", cooks[best_cook].cook_id, cooks[best_cook].total_deliveries);
+    writeLog(buffer);
+    printf("%s", buffer);
+
+    sprintf(buffer, "Thanks our best delivery person-%d has delivered %d orders\n", delivery_persons[best_delivery_man].delivery_person_id, delivery_persons[best_delivery_man].total_deliveries);
+    writeLog(buffer);
+    printf("%s", buffer);
 }
 
 void writeLog(char *message)
