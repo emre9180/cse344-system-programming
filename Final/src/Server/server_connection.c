@@ -85,6 +85,7 @@ void *handle_client(void *arg)
     {
         perror("Error reading from client socket");
         close(client_socket);
+        client_connection->socket_fd = -1;
         pthread_exit(NULL);
     }
     // Parse client data
@@ -105,6 +106,7 @@ void *handle_client(void *arg)
     {
         fprintf(stderr, "Error parsing client data: %s\n", buffer);
         close(client_socket);
+        client_connection->socket_fd = -1;
         pthread_exit(NULL);
     }
     if (client_id == -1)
@@ -187,6 +189,9 @@ void *handle_client(void *arg)
         {
             free(delivery_persons[i].order_bag);
         }
+
+        free(cook_threads);
+        free(delivery_threads);
         // Clean orders linked list
         ListNode *current = orders.head;
         while (current != NULL)
@@ -199,10 +204,30 @@ void *handle_client(void *arg)
         cancel_order_flag = 0;
 
         initialize_system(num_cooks, num_delivery_persons, speed);
-        printf("Temizlendi cikis yapiliyor...\n");
+        printf("Client connection is closed.\n");
         fflush(stdout);
+        
+        // // Send all clients a message
+        // char response[256] = {0};
+        // sprintf(response, "Server is shutting down. Please reconnect later.\n");
+        // for (int i = 0; i < num_connections; i++)
+        // {   
+        //     if(client_connections[i] == -1) continue;
+        //     int bytes = send(client_connections[i]->socket_fd, response, strlen(response), 0);
+        //     if (bytes == -1) {
+        //         perror("Error sending message");
+        //         // Handle the error accordingly
+        //     }
 
-        close(client_socket);
+        //     // close(client_connections[i]->socket_fd);
+        // }
+        // // close(client_socket);
+
+        for(int i = 0; i < num_connections; i++) {
+            shutdown(client_socket, SHUT_RDWR);
+            close(client_connections[i]->socket_fd);
+        }
+        
         pthread_exit(NULL);
     }
 

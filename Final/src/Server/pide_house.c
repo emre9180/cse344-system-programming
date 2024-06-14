@@ -253,6 +253,9 @@ void *manager_function()
             sprintf(buffer, "All orders are delivered.\n");
             send_response(orders.head->order.socket_fd, buffer);
             printStatistics();
+            sprintf(buffer, "Client disconnected\n");
+            printf("%s", buffer);
+            writeLog(buffer);
             break;
         }
 
@@ -427,7 +430,7 @@ void *cook_function(void *arg)
 
         // Acquire an apparatus
         pthread_mutex_lock(&apparatus_mutex);
-        
+
         sprintf(buffer, "Cook %d is taking an apparatus\n", cook->cook_id);
         printf("%s", buffer);
         writeLog(buffer);
@@ -882,7 +885,9 @@ void *delivery_function(void *arg)
 
                 delivery_person->total_earnings += 10.0; // Example earning per delivery
                 sprintf(buffer, "Order %d delivered by delivery person %d\n", orders_to_deliver[i]->order_id, delivery_person->delivery_person_id);
-                send_response(orders_to_deliver[i]->socket_fd, buffer);
+                char buffer2[256] = {0};
+                sprintf(buffer2, "Your order is delivered.");
+                send_response(orders_to_deliver[i]->socket_fd, buffer2);
                 printf("%s", buffer);
             }
 

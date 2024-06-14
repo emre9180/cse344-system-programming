@@ -71,7 +71,8 @@ extern volatile sig_atomic_t cancel_order_flag;
 
 // Mutex for protecting the shutdown flag
 extern pthread_mutex_t shutdown_mutex;
-
+extern int total_prepared_orders;
+extern int total_delivered_orders;
 
 extern pthread_mutex_t order_mutex;
 extern pthread_mutex_t delivery_mutex;

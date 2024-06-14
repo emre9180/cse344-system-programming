@@ -4,6 +4,7 @@
 #include <string.h>
 #include <unistd.h>
 #include <arpa/inet.h>
+#include <errno.h>
 
 void initialize_clients(int num_clients, char *server_ip, int p, int q)
 {
@@ -18,6 +19,8 @@ void initialize_clients(int num_clients, char *server_ip, int p, int q)
 
     for (int i = 0; i < num_clients; i++)
     {
+        memset(&clients[i], 0, sizeof(Client)); // Ensure all members are initialized
+
         clients[i].client_id = i;
         clients[i].socket_fd = socket(AF_INET, SOCK_STREAM, 0);
         if (clients[i].socket_fd < 0)
@@ -42,6 +45,7 @@ void initialize_clients(int num_clients, char *server_ip, int p, int q)
         clients[i].q = q;
     }
 }
+
 void *client_function(void *arg)
 {
     Client *client = (Client *)arg;
@@ -71,12 +75,18 @@ void *client_function(void *arg)
 
     // Read the server response
 
-    char buffer[BUFFER_SIZE];
+    char buffer[BUFFER_SIZE] = {0};
     while (keep_running)
     {
-        int bytes_received = read(client->socket_fd, buffer, sizeof(buffer) - 1);
+        printf("asdasd");
+
+        int bytes_received = recv(client->socket_fd, buffer, BUFFER_SIZE, 0);
         if (bytes_received < 0)
         {
+            if (errno == EBADF || errno == EINTR) // Check for invalid socket descriptor or interrupted system call
+            {
+                break;
+            }
             perror("Error reading from server");
             break;
         }
@@ -89,7 +99,7 @@ void *client_function(void *arg)
         buffer[bytes_received] = '\0';
 
         // Check for the specific response indicating all customers are served
-        if (strstr(buffer, "All customers served") != NULL)
+        if (strstr(buffer, "Your order is delivered.") != NULL)
         {
             printf("Client %d received: %s\n", client->client_id, buffer);
             break; // Exit the loop
@@ -99,8 +109,7 @@ void *client_function(void *arg)
             printf("Client %d received: %s\n", client->client_id, buffer);
         }
     }
-
-    close(client->socket_fd);
+    printf("Client %d closing connection\n", client->client_id);
     pthread_exit(NULL);
 }
 
@@ -147,19 +156,50 @@ void client_function2(const char *server_ip)
     printf("Client %d connected to the server at %s:%d\n", client.client_id,
            inet_ntoa(client.server_addr.sin_addr), ntohs(client.server_addr.sin_port));
 
-    char buffer[BUFFER_SIZE];
+    char buffer[BUFFER_SIZE] = {0};
     snprintf(buffer, sizeof(buffer), "-1 -1 -1 -1 -1 -1 -1 -1 -1");
     if (send(client.socket_fd, buffer, strlen(buffer), 0) < 0)
     {
         perror("Error sending disconnection message");
     }
+    while (keep_running)
+    {
+        printf("asdasd");
+        
+        int bytes_received = recv(client.socket_fd, buffer, BUFFER_SIZE, 0);
+        if (bytes_received < 0)
+        {
+            if (errno == EBADF || errno == EINTR) // Check for invalid socket descriptor or interrupted system call
+            {
+                break;
+            }
+            perror("Error reading from server");
+            break;
+        }
+        if (bytes_received == 0)
+        {
+            printf("Server closed the connection\n");
+            break;
+        }
 
-    close(client.socket_fd);
+        buffer[bytes_received] = '\0';
+
+        // Check for the specific response indicating all customers are served
+        if (strstr(buffer, "Your order is delivered.") != NULL)
+        {
+            printf("Client %d received: %s\n", client.client_id, buffer);
+            break; // Exit the loop
+        }
+        else
+        {
+            printf("Client %d received: %s\n", client.client_id, buffer);
+        }
+    }
 }
 
 void send_order(Client *client)
 {
-    char buffer[BUFFER_SIZE];
+    char buffer[BUFFER_SIZE] = {0};
     if (keep_running)
     {
         // Serialize the client struct into the buffer

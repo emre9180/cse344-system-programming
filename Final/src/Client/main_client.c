@@ -10,6 +10,7 @@ Client *clients = NULL;
 int num_clients = 0;
 volatile sig_atomic_t keep_running = 1;
 char server_ip[32];
+pthread_t *threads;
 
 int main(int argc, char *argv[])
 {
@@ -30,7 +31,7 @@ int main(int argc, char *argv[])
 
     initialize_clients(num_clients, server_ip, p, q);
 
-    pthread_t *threads = (pthread_t *)malloc(num_clients * sizeof(pthread_t));
+    threads = (pthread_t *)malloc(num_clients * sizeof(pthread_t));
     for (int i = 0; i < num_clients; i++)
     {
         pthread_create(&threads[i], NULL, client_function, (void *)&clients[i]);
@@ -44,7 +45,7 @@ int main(int argc, char *argv[])
     free(threads);
     cleanup();
     printf("All customers served\n");
-
+    client_function2(server_ip);
     return 0;
 }
 
@@ -54,6 +55,15 @@ void handle_signal(int sig)
     printf("\nCaught signal %d (SIGINT), cleaning up...\n", sig);
     keep_running = 0;
     client_function2(server_ip);
+
+
+
+    for (int i = 0; i < num_clients; i++)
+    {
+        pthread_join(threads[i], NULL);
+    }
+    // DEstroy sockets
+    free(threads);
     cleanup();
     exit(EXIT_SUCCESS);
 }
