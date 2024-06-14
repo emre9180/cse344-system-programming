@@ -13,7 +13,10 @@ int server_socket;
 void handle_sigint(int sig)
 {
     printf("\nCaught signal %d (SIGINT), closing the server socket...\n", sig);
+    while(cancel_order_flag == 1);
     shutdown_flag = 1;
+
+    
 
     // Notify all condition variables to wake up waiting threads
     pthread_cond_broadcast(&order_cond);
@@ -42,6 +45,10 @@ void handle_sigint(int sig)
     }
     printf("Waiting for all threads to finish...\n");
 
+    for (int i = 0; i < client_thread_count; i++)
+    {
+        pthread_join(*client_threads[i], NULL);
+    }
     for (int i = 0; i < num_cooks; i++)
     {
         pthread_join(cook_threads[i], NULL);
@@ -53,6 +60,8 @@ void handle_sigint(int sig)
     }
 
     pthread_join(*manager_thread, NULL);
+
+
     // Free delivery person's mutexes and cond vars
     for (int i = 0; i < num_delivery_persons; i++)
     {
@@ -141,10 +150,7 @@ void handle_sigint(int sig)
         free(client_connections[i]);
     }
 
-    for (int i = 0; i < client_thread_count; i++)
-    {
-        pthread_join(*client_threads[i], NULL);
-    }
+    
 
     for (int i = 0; i < client_thread_count; i++)
     {
@@ -181,25 +187,26 @@ void setup_signal_handler()
 
 int main(int argc, char *argv[])
 {
-    if (argc != 5)
+    if (argc != 6)
     {
-        fprintf(stderr, "Usage: %s <ip_address> <n_cooks> <m_delivery_persons> <delivery_speed>\n", argv[0]);
+        fprintf(stderr, "Usage: %s <ip_address> <port> <n_cooks> <m_delivery_persons> <delivery_speed>\n", argv[0]);
         exit(EXIT_FAILURE);
     }
 
     const char *ip_address = argv[1];
-    int n_cooks = atoi(argv[2]);
-    int m_delivery_persons = atoi(argv[3]);
-    int delivery_speed = atoi(argv[4]);
+    const char *port = argv[2];
+    int n_cooks = atoi(argv[3]);
+    int m_delivery_persons = atoi(argv[4]);
+    int delivery_speed = atoi(argv[5]);
 
     // Initialize the pide house system
-    initialize_system(n_cooks, m_delivery_persons, delivery_speed);
+    initialize_system(n_cooks, m_delivery_persons, delivery_speed, 0);
 
     // Setup the signal handler
     setup_signal_handler();
 
     // Initialize server
-    server_socket = initialize_server(8080, ip_address);
+    server_socket = initialize_server(atoi(port), ip_address);
     if (server_socket < 0)
     {
         fprintf(stderr, "Failed to initialize server\n");

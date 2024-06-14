@@ -114,7 +114,7 @@ void initialize_queue(OrderQueue *queue)
 }
 
 // Initialize the system
-void initialize_system(int n_cooks, int m_delivery_persons, int speed_)
+void initialize_system(int n_cooks, int m_delivery_persons, int speed_, int reset)
 {
     num_cooks = n_cooks;
     num_delivery_persons = m_delivery_persons;
@@ -126,8 +126,12 @@ void initialize_system(int n_cooks, int m_delivery_persons, int speed_)
     avaliable_apparatus = OVEN_APPARATUS_NUMBER;
     prepared_order = 0;
 
-    cook_threads = (pthread_t *)malloc(n_cooks * sizeof(pthread_t));
-    delivery_threads = (pthread_t *)malloc(m_delivery_persons * sizeof(pthread_t));
+    if (reset == 0)
+    {
+        cook_threads = (pthread_t *)malloc(n_cooks * sizeof(pthread_t));
+        delivery_threads = (pthread_t *)malloc(m_delivery_persons * sizeof(pthread_t));
+    }
+    
 
     // Initialize cooks and start cook threads
     for (int i = 0; i < n_cooks; i++)
@@ -147,7 +151,7 @@ void initialize_system(int n_cooks, int m_delivery_persons, int speed_)
         pthread_mutex_init(&cooks[i].cookMutex, NULL);
         pthread_cond_init(&cooks[i].cookCond, NULL);
 
-        pthread_create(&cook_threads[i], NULL, cook_function, (void *)&cooks[i]);
+            
     }
 
     // Initialize delivery persons and start delivery threads
@@ -168,11 +172,50 @@ void initialize_system(int n_cooks, int m_delivery_persons, int speed_)
         initialize_queue(delivery_persons[i].order_bag);
         pthread_mutex_init(&delivery_persons[i].order_bag->mutex, NULL);
         pthread_cond_init(&delivery_persons[i].order_bag->cond, NULL);
-        pthread_create(&delivery_threads[i], NULL, delivery_function, (void *)&delivery_persons[i]);
+           
     }
 
-    manager_thread = (pthread_t *)malloc(sizeof(pthread_t));
-    pthread_create(manager_thread, NULL, manager_function, NULL);
+    for(int i = 0; i < n_cooks; i++)
+    {
+        pthread_create(&cook_threads[i], NULL, cook_function, (void *)&cooks[i]);
+    }
+
+    for (int i = 0; i < num_delivery_persons; i++)
+    {
+         pthread_create(&delivery_threads[i], NULL, delivery_function, (void *)&delivery_persons[i]);
+    }
+
+    if (reset == 0)
+    {
+        manager_thread = (pthread_t *)malloc(sizeof(pthread_t));
+    }
+        pthread_create(manager_thread, NULL, manager_function, NULL);
+
+          pthread_cond_broadcast(&order_cond);
+        pthread_cond_broadcast(&cooked_cond);
+        pthread_cond_broadcast(&oven_cond);
+        pthread_cond_broadcast(&delivery_cond);
+        pthread_cond_broadcast(&delivery_bag_cond);
+        pthread_cond_broadcast(&motor_cond);
+        pthread_cond_broadcast(&apparatus_cond);
+        pthread_cond_broadcast(&oven_putting_opening_cond);
+        pthread_cond_broadcast(&oven_removing_opening_cond);
+
+        for (int i = 0; i < num_cooks; i++)
+        {
+            pthread_cond_broadcast(&cooks[i].cookCond);
+        }
+        for (int i = 0; i < num_delivery_persons; i++)
+        {
+            pthread_cond_broadcast(&delivery_persons[i].order_bag->cond);
+        }
+
+        // send signal to ooks
+        for (int i = 0; i < num_cooks; i++)
+        {
+            pthread_cond_signal(&cooks[i].cookCond);
+        }
+
     fflush(stdout);
 }
 
@@ -247,7 +290,6 @@ void *manager_function()
                 pthread_cond_signal(&delivery_persons[i].order_bag->cond);
             }
         }
-
         pthread_mutex_lock(&order_mutex);
 
         // Wait if there are no new orders
@@ -367,13 +409,14 @@ void *cook_function(void *arg)
                 pthread_mutex_unlock(&cook->cookMutex);
                 char buffer[256] = {0};
                 sprintf(buffer, "Cook %d exiting...\n", cook->cook_id);
-                // printf("%s", buffer);
+                fflush(stdout);
                 writeLog(buffer);
                 pthread_exit(NULL);
             }
             if (cancel_order_flag)
             {
                 wakeup();
+                fflush(stdout);
                 pthread_mutex_unlock(&cook->cookMutex);
                 pthread_exit(NULL);
             }
@@ -384,7 +427,7 @@ void *cook_function(void *arg)
                 pthread_mutex_unlock(&cook->cookMutex);
                 char buffer[256] = {0};
                 sprintf(buffer, "Cook %d exiting...\n", cook->cook_id);
-                // printf("%s", buffer);
+                fflush(stdout);
                 writeLog(buffer);
                 pthread_exit(NULL);
             }
@@ -395,20 +438,20 @@ void *cook_function(void *arg)
                 pthread_exit(NULL);
             }
         }
-
         if (shutdown_flag)
         {
             wakeup();
             pthread_mutex_unlock(&cook->cookMutex);
             char buffer[256] = {0};
             sprintf(buffer, "Cook %d exiting...\n", cook->cook_id);
-            // printf("%s", buffer);
+            printf("%s", buffer);
             writeLog(buffer);
             pthread_exit(NULL);
         }
         if (cancel_order_flag)
         {
             wakeup();
+            printf("Cook %d exiting...\n", cook->cook_id);
             pthread_mutex_unlock(&cook->cookMutex);
             pthread_exit(NULL);
         }
@@ -987,13 +1030,11 @@ void enqueue(OrderQueue *queue, Order *order)
 
 Order *dequeue(OrderQueue *queue)
 {
-    pthread_mutex_lock(&queue->mutex);
 
     while (queue->front == NULL)
     {
         if (shutdown_flag || cancel_order_flag)
         {
-            pthread_mutex_unlock(&queue->mutex);
             return NULL;
         }
         // pthread_cond_wait(&queue->cond, &queue->mutex);
@@ -1008,7 +1049,6 @@ Order *dequeue(OrderQueue *queue)
     }
 
     free(temp);
-    pthread_mutex_unlock(&queue->mutex);
     return order;
 }
 

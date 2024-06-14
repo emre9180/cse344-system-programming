@@ -6,7 +6,7 @@
 #include <arpa/inet.h>
 #include <errno.h>
 
-void initialize_clients(int num_clients, char *server_ip, int p, int q)
+void initialize_clients(int num_clients, char *server_ip, char *port_, int p, int q)
 {
     clients = (Client *)malloc(num_clients * sizeof(Client));
     if (clients == NULL)
@@ -31,7 +31,8 @@ void initialize_clients(int num_clients, char *server_ip, int p, int q)
         }
 
         clients[i].server_addr.sin_family = AF_INET;
-        clients[i].server_addr.sin_port = htons(8080);
+        int port = atoi(port_);
+        clients[i].server_addr.sin_port = htons(port);
         if (inet_pton(AF_INET, server_ip, &clients[i].server_addr.sin_addr) <= 0)
         {
             perror("Invalid address/Address not supported");
@@ -99,11 +100,17 @@ void *client_function(void *arg)
         // Check for the specific response indicating all customers are served
         if (strstr(buffer, "Your order is delivered.") != NULL)
         {
+            char message[2048] = {0};
+            sprintf(message, "Client %d received: %s\n", client->client_id, buffer);
+            writeLog(message);
             printf("Client %d received: %s\n", client->client_id, buffer);
             break; // Exit the loop
         }
         else
         {
+            char message[2048] = {0};
+            sprintf(message, "Client %d received: %s\n", client->client_id, buffer);
+            writeLog(message);
             printf("Client %d received: %s\n", client->client_id, buffer);
         }
     }
@@ -231,4 +238,16 @@ void cleanup()
         free(clients);
         // printf("Cleaned up client connections\n");
     }
+}
+
+void writeLog(char *message)
+{
+    FILE *file = fopen("client_log.log", "a");
+    if (file == NULL)
+    {
+        perror("Error opening log file");
+        return;
+    }
+    fprintf(file, "%s", message);
+    fclose(file);
 }

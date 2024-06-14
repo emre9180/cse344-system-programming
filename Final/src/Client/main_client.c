@@ -10,26 +10,29 @@ Client *clients = NULL;
 int num_clients = 0;
 volatile sig_atomic_t keep_running = 1;
 char server_ip[32];
+char port[32];
 pthread_t *threads;
 
 int main(int argc, char *argv[])
 {
-    if (argc != 5)
+    if (argc != 6)
     {
-        fprintf(stderr, "Usage: %s <server_ip> <num_clients> <p> <q>\n", argv[0]);
+        fprintf(stderr, "Usage: %s <server_ip> <port> <num_clients> <p> <q>\n", argv[0]);
         exit(EXIT_FAILURE);
     }
 
-    num_clients = atoi(argv[2]);
-    int p = atoi(argv[3]);
-    int q = atoi(argv[4]);
+    num_clients = atoi(argv[3]);
+    int p = atoi(argv[4]);
+    int q = atoi(argv[5]);
     strcpy(server_ip, argv[1]);
-    printf("Server IP: %s\n", server_ip);
+    strcpy(port, argv[2]);
+    printf("Server IP: %s", server_ip);
+    printf(":%s\n", port);
 
     // Setup signal handler
     setup_signal_handler();
 
-    initialize_clients(num_clients, server_ip, p, q);
+    initialize_clients(num_clients, server_ip, port, p, q);
 
     threads = (pthread_t *)malloc(num_clients * sizeof(pthread_t));
     for (int i = 0; i < num_clients; i++)
@@ -44,7 +47,7 @@ int main(int argc, char *argv[])
 
     free(threads);
     cleanup();
-    printf("All customers served. Client generator program will be closed successfuly. You can start it again!\n");
+    printf("Client generator program will be closed successfuly. You can start it again!\n");
     client_function2(server_ip);
     return 0;
 }

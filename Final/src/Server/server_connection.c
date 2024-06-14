@@ -109,7 +109,7 @@ void *handle_client(void *arg)
         client_connection->socket_fd = -1;
         pthread_exit(NULL);
     }
-    if (client_id == -1)
+    if (client_id == -1 && shutdown_flag != 1)
     {
         if (total_delivered_orders == order_count && order_count > 0)
         {
@@ -161,6 +161,12 @@ void *handle_client(void *arg)
         for (int i = 0; i < num_delivery_persons; i++)
         {
             pthread_cond_broadcast(&delivery_persons[i].order_bag->cond);
+        }
+
+        // send signal to ooks
+        for (int i = 0; i < num_cooks; i++)
+        {
+            pthread_cond_signal(&cooks[i].cookCond);
         }
 
         pthread_join(*manager_thread, NULL);
@@ -216,13 +222,13 @@ void *handle_client(void *arg)
             free(delivery_persons[i].order_bag);
         }
 
-        free(cook_threads);
-        free(delivery_threads);
-        free(manager_thread);
+        // free(cook_threads);
+        // free(delivery_threads);
+        // free(manager_thread);
 
-        cook_threads = NULL;
-        delivery_threads = NULL;
-        manager_thread = NULL;
+        // cook_threads = NULL;
+        // delivery_threads = NULL;
+        // manager_thread = NULL;
 
         // Clean orders linked list
         ListNode *current = orders.head;
@@ -232,20 +238,17 @@ void *handle_client(void *arg)
             current = current->next;
             free(temp);
         }
-        orders.head = NULL;
-        cancel_order_flag = 0;
-        orders.size = 0;
-        
-        printf("gelio");
-        fflush(stdout);
-        initialize_system(num_cooks, num_delivery_persons, speed);
-        fflush(stdout);
+                cancel_order_flag = 0;
 
-        for(int i = 0; i < num_connections; i++) {
+        initialize_system(num_cooks, num_delivery_persons, speed, 1);
+        orders.head = NULL;
+        orders.size = 0;
+
+        for (int i = 0; i < num_connections; i++)
+        {
             shutdown(client_socket, SHUT_RDWR);
             close(client_connections[i]->socket_fd);
         }
-        
         pthread_exit(NULL);
     }
 
@@ -275,7 +278,6 @@ void *handle_client(void *arg)
 
     // Send response to client
     send_response(client_socket, "Order received and being processed.\n");
-
     // Close connection
     // close_connection(client_socket);
     pthread_exit(NULL);

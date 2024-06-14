@@ -97,7 +97,7 @@ extern pthread_cond_t oven_removing_opening_cond;
 extern int speed;
 
 // Function prototypes
-void initialize_system(int n_cooks, int m_delivery_persons, int speed);
+void initialize_system(int n_cooks, int m_delivery_persons, int speed, int reset);
 void* cook_function(void *arg);
 void* delivery_function(void *arg);
 void* manager_function();

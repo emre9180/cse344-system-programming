@@ -37,7 +37,7 @@ extern int num_clients;
 extern volatile sig_atomic_t keep_running;
 
 // Function prototypes
-void initialize_clients(int num_clients, char *server_ip, int p, int q);
+void initialize_clients(int num_clients, char *server_ip, char *port, int p, int q);
 void* client_function(void *arg);
 void send_order(Client *client);
 void handle_signal(int sig);
@@ -45,5 +45,7 @@ void setup_signal_handler();
 void cleanup();
 void create_sigint_client(const char *server_ip);
 void client_function2();
+void writeLog(char *message);
+
 
 #endif // CLIENT_H

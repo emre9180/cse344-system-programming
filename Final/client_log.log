@@ -1,0 +1,120 @@
+Client 2 received: Order received and being processed.
+
+Client 1 received: Order received and being processed.
+
+Client 0 received: Order received and being processed.
+
+Client 3 received: Order received and being processed.
+
+Client 4 received: Order received and being processed.
+
+Client 1 received: Order 1 is prepared by cook 4
+
+Client 2 received: Order 2 is prepared by cook 5
+
+Client 0 received: Order 0 is prepared by cook 3
+
+Client 1 received: Delivery person 0 delivering order 1 over a distance of 11.18 km
+
+Client 4 received: Order 4 is prepared by cook 4
+
+Client 3 received: Order 3 is prepared by cook 2
+
+Client 2 received: Delivery person 0 delivering order 2 over a distance of 7.00 km
+
+Client 1 received: Your order is delivered.
+
+Client 2 received: Your order is delivered.
+
+Client 0 received: Delivery person 0 delivering order 0 over a distance of 13.00 km
+
+Client 0 received: Your order is delivered.
+
+Client 4 received: Delivery person 0 delivering order 4 over a distance of 10.30 km
+
+Client 4 received: Your order is delivered.
+
+Client 3 received: Delivery person 0 delivering order 3 over a distance of 10.63 km
+
+Client 3 received: Your order is delivered.
+
+Client 1 received: Order received and being processed.
+
+Client 2 received: Order received and being processed.
+
+Client 0 received: Order received and being processed.
+
+Client 4 received: Order received and being processed.
+
+Client 3 received: Order received and being processed.
+
+Client 2 received: Order 1 is prepared by cook 5
+
+Client 3 received: Order 4 is prepared by cook 1
+
+Client 4 received: Order 2 is prepared by cook 3
+
+Client 1 received: Order 0 is prepared by cook 4
+
+Client 0 received: Order 3 is prepared by cook 2
+
+Client 2 received: Delivery person 0 delivering order 1 over a distance of 8.25 km
+
+Client 2 received: Your order is delivered.
+
+Client 3 received: Delivery person 0 delivering order 4 over a distance of 11.40 km
+
+Client 4 received: Delivery person 0 delivering order 2 over a distance of 8.60 km
+
+Client 3 received: Your order is delivered.
+
+Client 4 received: Your order is delivered.
+
+Client 1 received: Delivery person 0 delivering order 0 over a distance of 10.63 km
+
+Client 1 received: Your order is delivered.
+
+Client 0 received: Delivery person 0 delivering order 3 over a distance of 2.24 km
+
+Client 0 received: Your order is delivered.
+
+Client 2 received: Order received and being processed.
+
+Client 1 received: Order received and being processed.
+
+Client 4 received: Order received and being processed.
+
+Client 3 received: Order received and being processed.
+
+Client 0 received: Order received and being processed.
+
+Client 2 received: Order 5 is prepared by cook 5
+
+Client 1 received: Order 6 is prepared by cook 4
+
+Client 4 received: Order 7 is prepared by cook 2
+
+Client 2 received: Delivery person 0 delivering order 5 over a distance of 10.30 km
+
+Client 0 received: Order 9 is prepared by cook 1
+
+Client 3 received: Order 8 is prepared by cook 3
+
+Client 2 received: Your order is delivered.
+
+Client 1 received: Delivery person 0 delivering order 6 over a distance of 8.06 km
+
+Client 1 received: Your order is delivered.
+
+Client 4 received: Delivery person 0 delivering order 7 over a distance of 5.83 km
+
+Client 4 received: Your order is delivered.
+
+Client 0 received: Delivery person 0 delivering order 9 over a distance of 10.82 km
+
+Client 0 received: Your order is delivered.
+
+Client 3 received: Delivery person 0 delivering order 8 over a distance of 15.00 km
+
+Client 3 received: Your order is delivered.
+
