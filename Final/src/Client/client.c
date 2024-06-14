@@ -18,7 +18,7 @@ void initialize_clients(int num_clients, char *server_ip, int p, int q)
 
     for (int i = 0; i < num_clients; i++)
     {
-         clients[i].client_id = i;
+        clients[i].client_id = i;
         clients[i].socket_fd = socket(AF_INET, SOCK_STREAM, 0);
         if (clients[i].socket_fd < 0)
         {
@@ -71,62 +71,60 @@ void *client_function(void *arg)
 
     // Read the server response
 
-        char buffer[BUFFER_SIZE];
-        while (keep_running)
+    char buffer[BUFFER_SIZE];
+    while (keep_running)
+    {
+        int bytes_received = read(client->socket_fd, buffer, sizeof(buffer) - 1);
+        if (bytes_received < 0)
         {
-            int bytes_received = read(client->socket_fd, buffer, sizeof(buffer) - 1);
-            if (bytes_received < 0)
-            {
-                perror("Error reading from server");
-                break;
-            }
-            if (bytes_received == 0)
-            {
-                printf("Server closed the connection\n");
-                break;
-            }
-
-            buffer[bytes_received] = '\0';
-
-            // Check for the specific response indicating all customers are served
-            if (strstr(buffer, "All customers served") != NULL)
-            {
-                printf("Client %d received: %s\n", client->client_id, buffer);
-                break; // Exit the loop
-            }
-            else
-            {
-                printf("Client %d received: %s\n", client->client_id, buffer);
-            }
+            perror("Error reading from server");
+            break;
         }
-     
+        if (bytes_received == 0)
+        {
+            printf("Server closed the connection\n");
+            break;
+        }
+
+        buffer[bytes_received] = '\0';
+
+        // Check for the specific response indicating all customers are served
+        if (strstr(buffer, "All customers served") != NULL)
+        {
+            printf("Client %d received: %s\n", client->client_id, buffer);
+            break; // Exit the loop
+        }
+        else
+        {
+            printf("Client %d received: %s\n", client->client_id, buffer);
+        }
+    }
+
     close(client->socket_fd);
     pthread_exit(NULL);
 }
 
-void client_function2(const char* server_ip)
+void client_function2(const char *server_ip)
 {
     Client client;
 
     client.client_id = -1;
-        client.socket_fd = socket(AF_INET, SOCK_STREAM, 0);
-        if (client.socket_fd < 0)
-        {
-            perror("Error creating socket");
-            free(clients);
-            exit(EXIT_FAILURE);
-        }
+    client.socket_fd = socket(AF_INET, SOCK_STREAM, 0);
+    if (client.socket_fd < 0)
+    {
+        perror("Error creating socket");
+        free(clients);
+        exit(EXIT_FAILURE);
+    }
 
-        client.server_addr.sin_family = AF_INET;
-        client.server_addr.sin_port = htons(8080);
-        if (inet_pton(AF_INET, server_ip, &client.server_addr.sin_addr) <= 0)
-        {
-            perror("Invalid address/Address not supported");
-            free(clients);
-            exit(EXIT_FAILURE);
-        }
-
-
+    client.server_addr.sin_family = AF_INET;
+    client.server_addr.sin_port = htons(8080);
+    if (inet_pton(AF_INET, server_ip, &client.server_addr.sin_addr) <= 0)
+    {
+        perror("Invalid address/Address not supported");
+        free(clients);
+        exit(EXIT_FAILURE);
+    }
 
     // Create a socket for this client thread
     client.socket_fd = socket(AF_INET, SOCK_STREAM, 0);
@@ -150,17 +148,14 @@ void client_function2(const char* server_ip)
            inet_ntoa(client.server_addr.sin_addr), ntohs(client.server_addr.sin_port));
 
     char buffer[BUFFER_SIZE];
-        snprintf(buffer, sizeof(buffer), "-1 -1 -1 -1 -1 -1 -1 -1 -1");
-        if (send(client.socket_fd, buffer, strlen(buffer), 0) < 0)
-        {
-            perror("Error sending disconnection message");
-        }
+    snprintf(buffer, sizeof(buffer), "-1 -1 -1 -1 -1 -1 -1 -1 -1");
+    if (send(client.socket_fd, buffer, strlen(buffer), 0) < 0)
+    {
+        perror("Error sending disconnection message");
+    }
 
-
-     
     close(client.socket_fd);
 }
-
 
 void send_order(Client *client)
 {
@@ -178,8 +173,8 @@ void send_order(Client *client)
                  ntohs(client->client_addr.sin_port),
                  client->p,
                  client->q
-                 
-                 );
+
+        );
     }
     else
     {

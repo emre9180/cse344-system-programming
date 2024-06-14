@@ -99,7 +99,7 @@ extern int speed;
 void initialize_system(int n_cooks, int m_delivery_persons, int speed);
 void* cook_function(void *arg);
 void* delivery_function(void *arg);
-void* manager_function(void *arg);
+void* manager_function();
 void place_order(Order *order);
 void cancel_order(int order_id);
 void handle_order_completion(Order *order);
@@ -110,5 +110,5 @@ void enqueue(OrderQueue* queue, Order *order);
 Order* dequeue(OrderQueue* queue);
 int countRemainingOrders();
 void printStatistics();
-
+void writeLog(char *message);
 #endif // PIDE_HOUSE_H

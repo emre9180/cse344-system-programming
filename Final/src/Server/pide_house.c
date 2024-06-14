@@ -172,7 +172,6 @@ void initialize_system(int n_cooks, int m_delivery_persons, int speed_)
     }
 
     pthread_create(&manager_thread, NULL, manager_function, NULL);
-    printf("bitti\n");
     fflush(stdout);
 }
 
@@ -224,7 +223,7 @@ DeliveryPerson *findAppropriateDeliveryPerson()
     return delivery_person;
 }
 
-void *manager_function(void *arg)
+void *manager_function()
 {
     while (1)
     {
@@ -250,6 +249,9 @@ void *manager_function(void *arg)
 
         else if (total_delivered_orders == order_count && order_count > 0)
         {
+            char buffer[256] = {0};
+            sprintf(buffer, "All orders are delivered.\n");
+            send_response(orders.head->order.socket_fd, buffer);
             printStatistics();
             break;
         }
@@ -336,10 +338,15 @@ void *cook_function(void *arg)
 
     while (1)
     {
+        char buffer[256] = {0};
+
         if (shutdown_flag)
         {
             wakeup();
-            printf("Cook %d exiting...\n", cook->cook_id);
+            char buffer[256] = {0};
+            sprintf(buffer, "Cook %d exiting...\n", cook->cook_id);
+            printf("%s", buffer);
+            writeLog(buffer);
             pthread_exit(NULL);
         }
         if (cancel_order_flag)
@@ -356,7 +363,10 @@ void *cook_function(void *arg)
             {
                 wakeup();
                 pthread_mutex_unlock(&cook->cookMutex);
-                printf("Cook %d exiting...\n", cook->cook_id);
+                char buffer[256] = {0};
+                sprintf(buffer, "Cook %d exiting...\n", cook->cook_id);
+                printf("%s", buffer);
+                writeLog(buffer);
                 pthread_exit(NULL);
             }
             if (cancel_order_flag)
@@ -370,7 +380,10 @@ void *cook_function(void *arg)
             {
                 wakeup();
                 pthread_mutex_unlock(&cook->cookMutex);
-                printf("Cook %d exiting...\n", cook->cook_id);
+                char buffer[256] = {0};
+                sprintf(buffer, "Cook %d exiting...\n", cook->cook_id);
+                printf("%s", buffer);
+                writeLog(buffer);
                 pthread_exit(NULL);
             }
             if (cancel_order_flag)
@@ -385,7 +398,10 @@ void *cook_function(void *arg)
         {
             wakeup();
             pthread_mutex_unlock(&cook->cookMutex);
-            printf("Cook %d exiting...\n", cook->cook_id);
+            char buffer[256] = {0};
+            sprintf(buffer, "Cook %d exiting...\n", cook->cook_id);
+            printf("%s", buffer);
+            writeLog(buffer);
             pthread_exit(NULL);
         }
         if (cancel_order_flag)
@@ -403,21 +419,31 @@ void *cook_function(void *arg)
             continue; // Handle spurious wakeups
         }
 
-        printf("Cook %d is preparing order %d\n", cook->cook_id, order->order_id);
+        sprintf(buffer, "Cook %d is preparing order %d\n", cook->cook_id, order->order_id);
+        printf("%s", buffer);
+        writeLog(buffer);
         double time = getTime();
         usleep(order->preparation_time * 1000); // Convert to microseconds
 
         // Acquire an apparatus
         pthread_mutex_lock(&apparatus_mutex);
-        printf("Cook %d is taking an apparatus\n", cook->cook_id);
+        
+        sprintf(buffer, "Cook %d is taking an apparatus\n", cook->cook_id);
+        printf("%s", buffer);
+        writeLog(buffer);
         while (avaliable_apparatus <= 0 && shutdown_flag == 0 && cancel_order_flag == 0)
         {
-            printf("Cook %d is waiting for an apparatus\n", cook->cook_id);
+            sprintf(buffer, "Cook %d is waiting for an apparatus\n", cook->cook_id);
+            printf("%s", buffer);
+            writeLog(buffer);
             pthread_cond_wait(&apparatus_cond, &apparatus_mutex);
             if (shutdown_flag)
             {
                 pthread_mutex_unlock(&apparatus_mutex);
-                printf("Cook %d exiting...\n", cook->cook_id);
+                char buffer[256] = {0};
+                sprintf(buffer, "Cook %d exiting...\n", cook->cook_id);
+                printf("%s", buffer);
+                writeLog(buffer);
                 fflush(stdout);
                 pthread_exit(NULL);
             }
@@ -439,7 +465,10 @@ void *cook_function(void *arg)
             {
                 wakeup();
                 pthread_mutex_unlock(&oven_putting_opening_mutex);
-                printf("Cook %d exiting...\n", cook->cook_id);
+                char buffer[256] = {0};
+                sprintf(buffer, "Cook %d exiting...\n", cook->cook_id);
+                printf("%s", buffer);
+                writeLog(buffer);
                 pthread_exit(NULL);
             }
             if (cancel_order_flag)
@@ -448,13 +477,19 @@ void *cook_function(void *arg)
                 pthread_mutex_unlock(&oven_putting_opening_mutex);
                 pthread_exit(NULL);
             }
-            printf("Cook %d is waiting for the oven opening\n", cook->cook_id);
+
+            sprintf(buffer, "Cook %d is waiting for the oven opening\n", cook->cook_id);
+            printf("%s", buffer);
+            writeLog(buffer);
             pthread_cond_wait(&oven_putting_opening_cond, &oven_putting_opening_mutex);
             if (shutdown_flag)
             {
                 wakeup();
                 pthread_mutex_unlock(&oven_putting_opening_mutex);
-                printf("Cook %d exiting...\n", cook->cook_id);
+                char buffer[256] = {0};
+                sprintf(buffer, "Cook %d exiting...\n", cook->cook_id);
+                printf("%s", buffer);
+                writeLog(buffer);
                 pthread_exit(NULL);
             }
             if (cancel_order_flag)
@@ -468,7 +503,10 @@ void *cook_function(void *arg)
         {
             wakeup();
             pthread_mutex_unlock(&oven_putting_opening_mutex);
-            printf("Cook %d exiting...\n", cook->cook_id);
+            char buffer[256] = {0};
+            sprintf(buffer, "Cook %d exiting...\n", cook->cook_id);
+            printf("%s", buffer);
+            writeLog(buffer);
             pthread_exit(NULL);
         }
         if (cancel_order_flag)
@@ -477,7 +515,10 @@ void *cook_function(void *arg)
             pthread_mutex_unlock(&oven_putting_opening_mutex);
             pthread_exit(NULL);
         }
-        printf("Cook %d is taking the oven opening\n", cook->cook_id);
+
+        sprintf(buffer, "Cook %d is taking the oven opening\n", cook->cook_id);
+        printf("%s", buffer);
+        writeLog(buffer);
         put_cook_opening--;
         pthread_mutex_unlock(&oven_putting_opening_mutex);
 
@@ -489,7 +530,10 @@ void *cook_function(void *arg)
             {
                 wakeup();
                 pthread_mutex_unlock(&oven_mutex);
-                printf("Cook %d exiting...\n", cook->cook_id);
+                char buffer[256] = {0};
+                sprintf(buffer, "Cook %d exiting...\n", cook->cook_id);
+                printf("%s", buffer);
+                writeLog(buffer);
                 pthread_exit(NULL);
             }
             if (cancel_order_flag)
@@ -499,16 +543,24 @@ void *cook_function(void *arg)
                 pthread_exit(NULL);
             }
 
-            printf("Cook %d is waiting for oven space\n", cook->cook_id);
+            sprintf(buffer, "Cook %d is waiting for oven space\n", cook->cook_id);
+            printf("%s", buffer);
+            writeLog(buffer);
             pthread_mutex_lock(&apparatus_mutex);
             avaliable_apparatus++; // Release the apparatus
-            printf("Cook %d is putting an apparatus back\n", cook->cook_id);
+
+            sprintf(buffer, "Cook %d is putting an apparatus back\n", cook->cook_id);
+            printf("%s", buffer);
+            writeLog(buffer);
             pthread_cond_signal(&oven_cond); // Notify that the apparatus is available
             pthread_mutex_unlock(&apparatus_mutex);
 
             pthread_mutex_lock(&oven_putting_opening_mutex);
             put_cook_opening++; // Release the take opening
-            printf("Cook %d is putting the oven opening back\n", cook->cook_id);
+
+            sprintf(buffer, "Cook %d is putting the oven opening back\n", cook->cook_id);
+            printf("%s", buffer);
+            writeLog(buffer);
             pthread_cond_signal(&oven_putting_opening_cond); // Notify that the take opening is available
             pthread_mutex_unlock(&oven_putting_opening_mutex);
 
@@ -516,7 +568,10 @@ void *cook_function(void *arg)
             {
                 wakeup();
                 pthread_mutex_unlock(&oven_mutex);
-                printf("Cook %d exiting...\n", cook->cook_id);
+                char buffer[256] = {0};
+                sprintf(buffer, "Cook %d exiting...\n", cook->cook_id);
+                printf("%s", buffer);
+                writeLog(buffer);
                 pthread_exit(NULL);
             }
             if (cancel_order_flag)
@@ -531,7 +586,10 @@ void *cook_function(void *arg)
             {
                 wakeup();
                 pthread_mutex_unlock(&oven_mutex);
-                printf("Cook %d exiting...\n", cook->cook_id);
+                char buffer[256] = {0};
+                sprintf(buffer, "Cook %d exiting...\n", cook->cook_id);
+                printf("%s", buffer);
+                writeLog(buffer);
                 pthread_exit(NULL);
             }
             if (cancel_order_flag)
@@ -546,7 +604,10 @@ void *cook_function(void *arg)
         {
             wakeup();
             pthread_mutex_unlock(&oven_mutex);
-            printf("Cook %d exiting...\n", cook->cook_id);
+            char buffer[256] = {0};
+            sprintf(buffer, "Cook %d exiting...\n", cook->cook_id);
+            printf("%s", buffer);
+            writeLog(buffer);
             pthread_exit(NULL);
         }
         if (cancel_order_flag)
@@ -559,13 +620,17 @@ void *cook_function(void *arg)
         pthread_mutex_unlock(&oven_mutex);
 
         pthread_mutex_lock(&apparatus_mutex);
-        printf("Cook %d is putting an apparatus back\n", cook->cook_id);
+        sprintf(buffer, "Cook %d is putting an apparatus back\n", cook->cook_id);
+        printf("%s", buffer);
+        writeLog(buffer);
         avaliable_apparatus++;           // Re-acquire the apparatus
         pthread_cond_signal(&oven_cond); // Notify that the oven space is available
         pthread_mutex_unlock(&apparatus_mutex);
 
         pthread_mutex_lock(&oven_putting_opening_mutex);
-        printf("Cook %d is putting the oven opening for putting back\n", cook->cook_id);
+        sprintf(buffer, "Cook %d is putting the oven opening back\n", cook->cook_id);
+        printf("%s", buffer);
+        writeLog(buffer);
         put_cook_opening++;                              // Re-acquire the take opening
         pthread_cond_signal(&oven_putting_opening_cond); // Notify that the take opening is available
         pthread_mutex_unlock(&oven_putting_opening_mutex);
@@ -574,19 +639,26 @@ void *cook_function(void *arg)
         avaliable_oven--;
         pthread_mutex_unlock(&oven_mutex);
 
-        printf("Cook %d is putting order %d in the oven\n", cook->cook_id, order->order_id);
+        sprintf(buffer, "Cook %d is putting order %d in the oven\n", cook->cook_id, order->order_id);
+        printf("%s", buffer);
+        writeLog(buffer);
         usleep(time / 2 * 1000); // Simulate cooking time
 
         // Acquire an apparatus again
         pthread_mutex_lock(&apparatus_mutex);
         while (avaliable_apparatus <= 0 && shutdown_flag == 0 && cancel_order_flag == 0)
         {
-            printf("Cook %d is waiting for an apparatus\n", cook->cook_id);
+            sprintf(buffer, "Cook %d is waiting for an apparatus\n", cook->cook_id);
+            printf("%s", buffer);
+            writeLog(buffer);
             if (shutdown_flag)
             {
                 wakeup();
                 pthread_mutex_unlock(&apparatus_mutex);
-                printf("Cook %d exiting...\n", cook->cook_id);
+                char buffer[256] = {0};
+                sprintf(buffer, "Cook %d exiting...\n", cook->cook_id);
+                printf("%s", buffer);
+                writeLog(buffer);
                 pthread_exit(NULL);
             }
             if (cancel_order_flag)
@@ -599,7 +671,10 @@ void *cook_function(void *arg)
             if (shutdown_flag)
             {
                 pthread_mutex_unlock(&apparatus_mutex);
-                printf("Cook %d exiting...\n", cook->cook_id);
+                char buffer[256] = {0};
+                sprintf(buffer, "Cook %d exiting...\n", cook->cook_id);
+                printf("%s", buffer);
+                writeLog(buffer);
                 pthread_exit(NULL);
             }
             if (cancel_order_flag)
@@ -616,13 +691,18 @@ void *cook_function(void *arg)
         pthread_mutex_lock(&oven_removing_opening_mutex);
         while (take_cook_opening <= 0 && shutdown_flag == 0 && cancel_order_flag == 0)
         {
-            printf("Cook %d is waiting for the oven opening for removing\n", cook->cook_id);
+            sprintf(buffer, "Cook %d is waiting for the oven opening for removing\n", cook->cook_id);
+            printf("%s", buffer);
+            writeLog(buffer);
             pthread_cond_wait(&oven_removing_opening_cond, &oven_removing_opening_mutex);
             if (shutdown_flag)
             {
                 wakeup();
                 pthread_mutex_unlock(&oven_removing_opening_mutex);
-                printf("Cook %d exiting...\n", cook->cook_id);
+                char buffer[256] = {0};
+                sprintf(buffer, "Cook %d exiting...\n", cook->cook_id);
+                printf("%s", buffer);
+                writeLog(buffer);
                 pthread_exit(NULL);
             }
             if (cancel_order_flag)
@@ -638,21 +718,33 @@ void *cook_function(void *arg)
         // Remove from oven
         pthread_mutex_lock(&oven_mutex);
         avaliable_oven++;
-        printf("Cook %d is removing order %d from the oven\n", cook->cook_id, order->order_id);
+
+        sprintf(buffer, "Cook %d is removing order %d from the oven\n", cook->cook_id, order->order_id);
+        printf("%s", buffer);
+        writeLog(buffer);
         pthread_cond_signal(&oven_cond); // Notify that the oven space is available
-        printf("Cook %d finished cooking order %d\n", cook->cook_id, order->order_id);
+
+        sprintf(buffer, "Cook %d finished cooking order %d\n", cook->cook_id, order->order_id);
+        printf("%s", buffer);
+        writeLog(buffer);
         pthread_mutex_unlock(&oven_mutex);
 
         pthread_mutex_lock(&apparatus_mutex);
         avaliable_apparatus++; // Release the apparatus
-        printf("Cook %d is putting an apparatus back\n", cook->cook_id);
+
+        sprintf(buffer, "Cook %d is putting an apparatus back\n", cook->cook_id);
+        printf("%s", buffer);
+        writeLog(buffer);
         pthread_cond_signal(&apparatus_cond); // Notify that the apparatus is available
         pthread_mutex_unlock(&apparatus_mutex);
 
         pthread_mutex_lock(&oven_removing_opening_mutex);
         take_cook_opening++;                              // Release the put opening
         pthread_cond_signal(&oven_removing_opening_cond); // Notify that the put opening is available
-        printf("Cook %d is putting the oven opening for removal back\n", cook->cook_id);
+
+        sprintf(buffer, "Cook %d is putting the oven opening for removal back\n", cook->cook_id);
+        printf("%s", buffer);
+        writeLog(buffer);
         pthread_cond_signal(&oven_cond); // Notify that the oven space is available
         pthread_mutex_unlock(&oven_removing_opening_mutex);
 
@@ -664,8 +756,13 @@ void *cook_function(void *arg)
         cook->total_deliveries++;
         pthread_cond_signal(&cooked_cond); // Notify that the order is cooked
         total_prepared_orders++;
-        printf("Total prepared orders: %d\n", total_prepared_orders);
-        printf("Total orders: %d\n", order_count);
+
+        sprintf(buffer, "Total prepared orders: %d/%d\n", total_prepared_orders, order_count);
+        printf("%s", buffer);
+        writeLog(buffer);
+
+        sprintf(buffer, "Order %d is prepared by cook %d\n", order->order_id, cook->cook_id);
+        send_response(order->socket_fd, buffer);
         cook->busy = 0;
         pthread_mutex_unlock(&order_mutex);
     }
@@ -680,7 +777,10 @@ void *delivery_function(void *arg)
         if (shutdown_flag)
         {
             wakeup();
-            printf("Delivery person %d exiting...\n", delivery_person->delivery_person_id);
+            char buffer[256] = {0};
+            sprintf(buffer, "Delivery person %d exiting...\n", delivery_person->delivery_person_id);
+            printf("%s", buffer);
+            writeLog(buffer);
             pthread_exit(NULL);
         }
         if (cancel_order_flag)
@@ -697,7 +797,10 @@ void *delivery_function(void *arg)
             {
                 wakeup();
                 pthread_mutex_unlock(&delivery_person->order_bag->mutex);
-                printf("Delivery person %d exiting...\n", delivery_person->delivery_person_id);
+                char buffer[256] = {0};
+                sprintf(buffer, "Delivery person %d exiting...\n", delivery_person->delivery_person_id);
+                printf("%s", buffer);
+                writeLog(buffer);
                 pthread_exit(NULL);
             }
             if (cancel_order_flag)
@@ -712,7 +815,10 @@ void *delivery_function(void *arg)
             {
                 wakeup();
                 pthread_mutex_unlock(&delivery_person->order_bag->mutex);
-                printf("Delivery person %d exiting...\n", delivery_person->delivery_person_id);
+                char buffer[256] = {0};
+                sprintf(buffer, "Delivery person %d exiting...\n", delivery_person->delivery_person_id);
+                printf("%s", buffer);
+                writeLog(buffer);
                 pthread_exit(NULL);
             }
             if (cancel_order_flag)
@@ -732,7 +838,6 @@ void *delivery_function(void *arg)
         {
             orders_to_deliver[delivery_count++] = dequeue(delivery_person->order_bag);
         }
-        printf("Uyandi ve delivery count: %d\n", delivery_person->current_delivery_count);
 
         delivery_person->current_delivery_count = 0; // Reset count after collecting orders
 
@@ -747,7 +852,10 @@ void *delivery_function(void *arg)
                 {
                     wakeup();
                     pthread_mutex_unlock(&delivery_person->order_bag->mutex);
-                    printf("Delivery person %d exiting...\n", delivery_person->delivery_person_id);
+                    char buffer[256] = {0};
+                    sprintf(buffer, "Delivery person %d exiting...\n", delivery_person->delivery_person_id);
+                    printf("%s", buffer);
+                    writeLog(buffer);
                     pthread_exit(NULL);
                 }
                 if (cancel_order_flag)
@@ -764,12 +872,18 @@ void *delivery_function(void *arg)
                 total_delivery_time += delivery_time;
 
                 // Sleep to simulate delivery time
-                printf("Delivery person %d delivering order %d over a distance of %.2f km\n", delivery_person->delivery_person_id, orders_to_deliver[i]->order_id, distance);
+                char buffer[256] = {0};
+                sprintf(buffer, "Delivery person %d delivering order %d over a distance of %.2f km\n", delivery_person->delivery_person_id, orders_to_deliver[i]->order_id, distance);
+                printf("%s", buffer);
+                send_response(orders_to_deliver[i]->socket_fd, buffer);
+                writeLog(buffer);
                 usleep(delivery_time * 1000000); // Convert seconds to microseconds for usleep
                 orders_to_deliver[i]->delivery_time = delivery_time;
 
                 delivery_person->total_earnings += 10.0; // Example earning per delivery
-                printf("Order %d delivered by delivery person %d\n", orders_to_deliver[i]->order_id, delivery_person->delivery_person_id);
+                sprintf(buffer, "Order %d delivered by delivery person %d\n", orders_to_deliver[i]->order_id, delivery_person->delivery_person_id);
+                send_response(orders_to_deliver[i]->socket_fd, buffer);
+                printf("%s", buffer);
             }
 
             // Reset delivery person status
@@ -777,7 +891,10 @@ void *delivery_function(void *arg)
             delivery_person->busy = 0;
 
             total_delivered_orders += delivery_count;
-            printf("Total delivered orders: %d\n", total_delivered_orders);
+            char buffer[256] = {0};
+            sprintf(buffer, "Total delivered orders: %d/%d\n", total_delivered_orders, order_count);
+            printf("%s", buffer);
+            writeLog(buffer);
             fflush(stdout);
             pthread_mutex_unlock(&delivery_mutex);
         }
@@ -855,41 +972,6 @@ void enqueue(OrderQueue *queue, Order *order)
     pthread_mutex_unlock(&queue->mutex);
 }
 
-// Order *dequeue(OrderQueue *queue)
-// {
-//     pthread_mutex_lock(&queue->mutex);
-//     while (queue->front == NULL)
-//     {
-//         if (shutdown_flag)
-//         {
-//             wakeup();
-//             pthread_mutex_unlock(&queue->mutex);
-//             pthread_exit(NULL);
-//         }
-//         if (cancel_order_flag)
-//         {
-//             wakeup();
-//             pthread_mutex_unlock(&queue->mutex);
-//             pthread_exit(NULL);
-//         }
-//         pthread_cond_wait(&queue->cond, &queue->mutex);
-//     }
-
-//     QueueNode *temp = queue->front;
-//     Order *order;
-
-//     order = temp->order;
-//     queue->front = temp->next;
-//     if (queue->front == NULL)
-//     {
-//         queue->rear = NULL;
-//     }
-
-//     free(temp);
-//     pthread_mutex_unlock(&queue->mutex);
-//     return order; // Successfully dequeued and return the order
-// }
-
 Order *dequeue(OrderQueue *queue)
 {
     pthread_mutex_lock(&queue->mutex);
@@ -951,4 +1033,16 @@ void printStatistics()
 
     printf("Total prepared orders: %d\n", total_prepared_orders);
     printf("Total delivered orders: %d\n", total_delivered_orders);
+}
+
+void writeLog(char *message)
+{
+    FILE *log_file = fopen("pide_house.log", "a");
+    if (log_file == NULL)
+    {
+        perror("Failed to open log file");
+        exit(EXIT_FAILURE);
+    }
+    fprintf(log_file, "%s", message);
+    fclose(log_file);
 }

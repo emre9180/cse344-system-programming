@@ -109,7 +109,10 @@ void *handle_client(void *arg)
     }
     if (client_id == -1)
     {
-        printf("\n\n\n\n\nClient disconnected\n\n\n\n\n");
+        char buffer[256] = {0};
+        sprintf(buffer, "Client disconnected\n");
+        printf("%s", buffer);
+        writeLog(buffer);
         cancel_order_flag = 1;
 
         // Notify all condition variables to wake up waiting threads
