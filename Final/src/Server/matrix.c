@@ -11,12 +11,15 @@ void multiply(double complex mat1[][COLS], double complex mat2[][ROWS], double c
 void invert(double complex mat[COLS][COLS], double complex inv[COLS][COLS], int n);
 void calculatePseudoInverse(double complex A[ROWS][COLS], double complex A_pseudo[COLS][ROWS]);
 
-double getTime() {
+double getTime()
+{
     // Initialize a 30x40 complex matrix
     double complex A[ROWS][COLS] = {0};
     srand(time(NULL));
-    for (int i = 0; i < ROWS; i++) {
-        for (int j = 0; j < COLS; j++) {
+    for (int i = 0; i < ROWS; i++)
+    {
+        for (int j = 0; j < COLS; j++)
+        {
             A[i][j] = rand() % 10 + rand() % 10 * I;
         }
     }
@@ -30,7 +33,7 @@ double getTime() {
     calculatePseudoInverse(A, A_pseudo);
     end = clock();
 
-    cpu_time_used = ((double) (end - start)) / CLOCKS_PER_SEC;
+    cpu_time_used = ((double)(end - start)) / CLOCKS_PER_SEC;
 
     printf("Time taken to compute the pseudo-inverse: %f seconds\n", cpu_time_used);
 
@@ -38,9 +41,12 @@ double getTime() {
 }
 
 // Function to print a complex matrix
-void printMatrix(double complex mat[ROWS][COLS], int rows, int cols) {
-    for (int i = 0; i < rows; i++) {
-        for (int j = 0; j < cols; j++) {
+void printMatrix(double complex mat[ROWS][COLS], int rows, int cols)
+{
+    for (int i = 0; i < rows; i++)
+    {
+        for (int j = 0; j < cols; j++)
+        {
             printf("(%f, %f) ", creal(mat[i][j]), cimag(mat[i][j]));
         }
         printf("\n");
@@ -48,21 +54,28 @@ void printMatrix(double complex mat[ROWS][COLS], int rows, int cols) {
 }
 
 // Function to transpose a matrix
-void transpose(double complex src[ROWS][COLS], double complex dest[COLS][ROWS], int rows, int cols) {
-    for (int i = 0; i < rows; i++) {
-        for (int j = 0; j < cols; j++) {
+void transpose(double complex src[ROWS][COLS], double complex dest[COLS][ROWS], int rows, int cols)
+{
+    for (int i = 0; i < rows; i++)
+    {
+        for (int j = 0; j < cols; j++)
+        {
             dest[j][i] = conj(src[i][j]);
         }
     }
 }
 
 // Function to multiply two matrices
-void multiply(double complex mat1[][COLS], double complex mat2[][ROWS], double complex result[][ROWS], int rows1, int cols1, int rows2, int cols2) {
+void multiply(double complex mat1[][COLS], double complex mat2[][ROWS], double complex result[][ROWS], int rows1, int cols1, int rows2, int cols2)
+{
     // Ensure result is initialized to 0
-    for (int i = 0; i < rows1; i++) {
-        for (int j = 0; j < cols2; j++) {
+    for (int i = 0; i < rows1; i++)
+    {
+        for (int j = 0; j < cols2; j++)
+        {
             result[i][j] = 0.0 + 0.0 * I;
-            for (int k = 0; k < cols1; k++) {
+            for (int k = 0; k < cols1; k++)
+            {
                 result[i][j] += mat1[i][k] * mat2[k][j];
             }
         }
@@ -70,34 +83,44 @@ void multiply(double complex mat1[][COLS], double complex mat2[][ROWS], double c
 }
 
 // Function to invert a matrix using Gaussian elimination
-void invert(double complex mat[COLS][COLS], double complex inv[COLS][COLS], int n) {
+void invert(double complex mat[COLS][COLS], double complex inv[COLS][COLS], int n)
+{
     // Create an augmented matrix [mat|I]
-    double complex augmented[COLS][2*COLS];
+    double complex augmented[COLS][2 * COLS];
 
     // Initialize the augmented matrix
-    for (int i = 0; i < COLS; i++) {
-        for (int j = 0; j < 2*COLS; j++) {
+    for (int i = 0; i < COLS; i++)
+    {
+        for (int j = 0; j < 2 * COLS; j++)
+        {
             augmented[i][j] = 0.0 + 0.0 * I;
         }
     }
 
-    for (int i = 0; i < n; i++) {
-        for (int j = 0; j < n; j++) {
+    for (int i = 0; i < n; i++)
+    {
+        for (int j = 0; j < n; j++)
+        {
             augmented[i][j] = mat[i][j];
-            augmented[i][j+n] = (i == j) ? 1.0 + 0.0 * I : 0.0 + 0.0 * I;
+            augmented[i][j + n] = (i == j) ? 1.0 + 0.0 * I : 0.0 + 0.0 * I;
         }
     }
 
     // Perform Gaussian elimination
-    for (int i = 0; i < n; i++) {
+    for (int i = 0; i < n; i++)
+    {
         double complex pivot = augmented[i][i];
-        for (int j = 0; j < 2*n; j++) {
+        for (int j = 0; j < 2 * n; j++)
+        {
             augmented[i][j] /= pivot;
         }
-        for (int k = 0; k < n; k++) {
-            if (k != i) {
+        for (int k = 0; k < n; k++)
+        {
+            if (k != i)
+            {
                 double complex factor = augmented[k][i];
-                for (int j = 0; j < 2*n; j++) {
+                for (int j = 0; j < 2 * n; j++)
+                {
                     augmented[k][j] -= factor * augmented[i][j];
                 }
             }
@@ -105,33 +128,39 @@ void invert(double complex mat[COLS][COLS], double complex inv[COLS][COLS], int 
     }
 
     // Extract the inverse matrix
-    for (int i = 0; i < n; i++) {
-        for (int j = 0; j < n; j++) {
-            inv[i][j] = augmented[i][j+n];
+    for (int i = 0; i < n; i++)
+    {
+        for (int j = 0; j < n; j++)
+        {
+            inv[i][j] = augmented[i][j + n];
         }
     }
 }
 
 // Function to calculate the pseudo-inverse of a matrix
-void calculatePseudoInverse(double complex A[ROWS][COLS], double complex A_pseudo[COLS][ROWS]) {
+void calculatePseudoInverse(double complex A[ROWS][COLS], double complex A_pseudo[COLS][ROWS])
+{
     double complex A_H[COLS][ROWS];
     double complex A_H_A[COLS][COLS];
     double complex A_H_A_inv[COLS][COLS];
 
     // Fill arrays initially with 0
-    for (int i = 0; i < COLS; i++) {
-        for (int j = 0; j < ROWS; j++) {
+    for (int i = 0; i < COLS; i++)
+    {
+        for (int j = 0; j < ROWS; j++)
+        {
             A_H[i][j] = 0.0 + 0.0 * I;
         }
     }
 
-    for (int i = 0; i < COLS; i++) {
-        for (int j = 0; j < COLS; j++) {
+    for (int i = 0; i < COLS; i++)
+    {
+        for (int j = 0; j < COLS; j++)
+        {
             A_H_A[i][j] = 0.0 + 0.0 * I;
             A_H_A_inv[i][j] = 0.0 + 0.0 * I;
         }
     }
-
 
     // Compute A^H (Hermitian transpose of A)
     transpose(A, A_H, ROWS, COLS);

@@ -134,7 +134,6 @@ void *handle_client(void *arg)
 
         pthread_join(manager_thread, NULL);
 
-
         for (int i = 0; i < num_cooks; i++)
         {
             pthread_join(cook_threads[i], NULL);
@@ -197,9 +196,8 @@ void *handle_client(void *arg)
         cancel_order_flag = 0;
 
         initialize_system(num_cooks, num_delivery_persons, speed);
- printf("Temizlendi cikis yapiliyor...\n");
-                fflush(stdout);
-               
+        printf("Temizlendi cikis yapiliyor...\n");
+        fflush(stdout);
 
         close(client_socket);
         pthread_exit(NULL);

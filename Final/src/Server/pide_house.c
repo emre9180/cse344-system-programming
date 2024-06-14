@@ -80,11 +80,13 @@ void wakeup()
     pthread_cond_broadcast(&apparatus_cond);
     pthread_cond_broadcast(&oven_putting_opening_cond);
     pthread_cond_broadcast(&oven_removing_opening_cond);
-                
-    for (int i = 0; i < num_cooks; i++) {
+
+    for (int i = 0; i < num_cooks; i++)
+    {
         pthread_cond_broadcast(&cooks[i].cookCond);
     }
-    for (int i = 0; i < num_delivery_persons; i++) {
+    for (int i = 0; i < num_delivery_persons; i++)
+    {
         pthread_cond_broadcast(&delivery_persons[i].order_bag->cond);
     }
 
@@ -190,7 +192,7 @@ Cook *findAppropriateCook()
     return cook;
 }
 
-Order* findAppropriateOrder(LinkedList *order_list)
+Order *findAppropriateOrder(LinkedList *order_list)
 {
     ListNode *current = order_list->head;
 
@@ -205,7 +207,6 @@ Order* findAppropriateOrder(LinkedList *order_list)
 
     return NULL; // No appropriate order found
 }
-
 
 DeliveryPerson *findAppropriateDeliveryPerson()
 {
@@ -238,7 +239,8 @@ void *manager_function(void *arg)
             break; // Exit the loop
         }
         // printf("prepared order and order ount: %d %d\n", prepared_order, order_count);
-        if(countRemainingOrders(&orders) < 3 && prepared_order != order_count){
+        if (countRemainingOrders(&orders) < 3 && prepared_order != order_count)
+        {
             // Send signal to all delivery man conds
             for (int i = 0; i < num_delivery_persons; i++)
             {
@@ -246,12 +248,11 @@ void *manager_function(void *arg)
             }
         }
 
-        else if(total_delivered_orders==order_count && order_count>0){
+        else if (total_delivered_orders == order_count && order_count > 0)
+        {
             printStatistics();
             break;
         }
-
-      
 
         pthread_mutex_lock(&order_mutex);
 
@@ -292,34 +293,39 @@ void *manager_function(void *arg)
         pthread_mutex_unlock(&order_mutex);
 
         // Check for completed orders and assign to delivery personnel
-ListNode *current = orders.head;
+        ListNode *current = orders.head;
 
-while (current != NULL) {
-    Order *order = &current->order;
+        while (current != NULL)
+        {
+            Order *order = &current->order;
 
-    if (order->ready == 1 && order->taken == 1 && order->delivery_person_id == -1) {
-        DeliveryPerson *delivery_person = findAppropriateDeliveryPerson();
-        if (delivery_person != NULL) {
-            order->delivery_person_id = delivery_person->delivery_person_id;
-            enqueue(delivery_person->order_bag, order);
-            delivery_person->current_delivery_count++;
-            if (delivery_person->current_delivery_count == DELIVERY_CAPACITY) {
-                delivery_person->busy = 1;
-                pthread_cond_signal(&delivery_person->order_bag->cond);
-                send_response(order->socket_fd, "Order is sent to delivery man.\n");
-                printf("\nDelivery person %d is ready to deliver orders.\n", delivery_person->delivery_person_id);
-                printf("Remaining orders: %d\n", countRemainingOrders(&orders));
-                fflush(stdout);
-            } else {
-                printf("Order %d added to delivery person %d's bag.\n", order->order_id, delivery_person->delivery_person_id);
-                fflush(stdout);
+            if (order->ready == 1 && order->taken == 1 && order->delivery_person_id == -1)
+            {
+                DeliveryPerson *delivery_person = findAppropriateDeliveryPerson();
+                if (delivery_person != NULL)
+                {
+                    order->delivery_person_id = delivery_person->delivery_person_id;
+                    enqueue(delivery_person->order_bag, order);
+                    delivery_person->current_delivery_count++;
+                    if (delivery_person->current_delivery_count == DELIVERY_CAPACITY)
+                    {
+                        delivery_person->busy = 1;
+                        pthread_cond_signal(&delivery_person->order_bag->cond);
+                        send_response(order->socket_fd, "Order is sent to delivery man.\n");
+                        printf("\nDelivery person %d is ready to deliver orders.\n", delivery_person->delivery_person_id);
+                        printf("Remaining orders: %d\n", countRemainingOrders(&orders));
+                        fflush(stdout);
+                    }
+                    else
+                    {
+                        printf("Order %d added to delivery person %d's bag.\n", order->order_id, delivery_person->delivery_person_id);
+                        fflush(stdout);
+                    }
+                }
             }
+
+            current = current->next;
         }
-    }
-
-    current = current->next;
-}
-
     }
     pthread_exit(NULL);
 }
@@ -451,7 +457,8 @@ void *cook_function(void *arg)
                 printf("Cook %d exiting...\n", cook->cook_id);
                 pthread_exit(NULL);
             }
-            if(cancel_order_flag){
+            if (cancel_order_flag)
+            {
                 wakeup();
                 pthread_mutex_unlock(&oven_putting_opening_mutex);
                 pthread_exit(NULL);
@@ -464,7 +471,8 @@ void *cook_function(void *arg)
             printf("Cook %d exiting...\n", cook->cook_id);
             pthread_exit(NULL);
         }
-        if(cancel_order_flag){
+        if (cancel_order_flag)
+        {
             wakeup();
             pthread_mutex_unlock(&oven_putting_opening_mutex);
             pthread_exit(NULL);
@@ -567,7 +575,7 @@ void *cook_function(void *arg)
         pthread_mutex_unlock(&oven_mutex);
 
         printf("Cook %d is putting order %d in the oven\n", cook->cook_id, order->order_id);
-        usleep(time/2* 1000); // Simulate cooking time
+        usleep(time / 2 * 1000); // Simulate cooking time
 
         // Acquire an apparatus again
         pthread_mutex_lock(&apparatus_mutex);
@@ -683,7 +691,7 @@ void *delivery_function(void *arg)
 
         pthread_mutex_lock(&delivery_person->order_bag->mutex);
         // Wait for orders in the bag
-        while ((delivery_person->order_bag->front == NULL || (delivery_person->current_delivery_count < DELIVERY_CAPACITY && countRemainingOrders(&orders)>=3)) && shutdown_flag == 0 && cancel_order_flag == 0)
+        while ((delivery_person->order_bag->front == NULL || (delivery_person->current_delivery_count < DELIVERY_CAPACITY && countRemainingOrders(&orders) >= 3)) && shutdown_flag == 0 && cancel_order_flag == 0)
         {
             if (shutdown_flag)
             {
@@ -698,7 +706,7 @@ void *delivery_function(void *arg)
                 pthread_mutex_unlock(&delivery_person->order_bag->mutex);
                 pthread_exit(NULL);
             }
-            //printf("Delivery person %d is waiting for orders\n\n\n\n\n", delivery_person->delivery_person_id);
+            // printf("Delivery person %d is waiting for orders\n\n\n\n\n", delivery_person->delivery_person_id);
             pthread_cond_wait(&delivery_person->order_bag->cond, &delivery_person->order_bag->mutex);
             if (shutdown_flag)
             {
@@ -724,32 +732,32 @@ void *delivery_function(void *arg)
         {
             orders_to_deliver[delivery_count++] = dequeue(delivery_person->order_bag);
         }
-                            printf("Uyandi ve delivery count: %d\n", delivery_person->current_delivery_count);
+        printf("Uyandi ve delivery count: %d\n", delivery_person->current_delivery_count);
 
         delivery_person->current_delivery_count = 0; // Reset count after collecting orders
 
         if (delivery_count > 0)
         {
-            //printf("Delivery person %d is delivering %d orders\n", delivery_person->delivery_person_id, delivery_count);
+            // printf("Delivery person %d is delivering %d orders\n", delivery_person->delivery_person_id, delivery_count);
             fflush(stdout);
             double total_delivery_time = 0;
             for (int i = 0; i < delivery_count; i++)
             {
                 if (shutdown_flag)
-            {
-                wakeup();
-                pthread_mutex_unlock(&delivery_person->order_bag->mutex);
-                printf("Delivery person %d exiting...\n", delivery_person->delivery_person_id);
-                pthread_exit(NULL);
-            }
+                {
+                    wakeup();
+                    pthread_mutex_unlock(&delivery_person->order_bag->mutex);
+                    printf("Delivery person %d exiting...\n", delivery_person->delivery_person_id);
+                    pthread_exit(NULL);
+                }
                 if (cancel_order_flag)
-            {
-                wakeup();
-                pthread_mutex_unlock(&delivery_person->order_bag->mutex);
-                pthread_exit(NULL);
-            }
+                {
+                    wakeup();
+                    pthread_mutex_unlock(&delivery_person->order_bag->mutex);
+                    pthread_exit(NULL);
+                }
                 handle_delivery_completion(delivery_person, orders_to_deliver[i]);
-                 // Calculate the Euclidean distance from the Pide House (p/2, q/2) to the customer (order->x, order->y)
+                // Calculate the Euclidean distance from the Pide House (p/2, q/2) to the customer (order->x, order->y)
                 double distance = sqrt(pow(orders_to_deliver[i]->x - (p / 2), 2) + pow(orders_to_deliver[i]->y - (q / 2), 2));
                 double delivery_time = distance / speed; // Assume DELIVERY_SPEED is a constant speed factor
 
@@ -788,8 +796,6 @@ void place_order(Order *order)
     pthread_cond_signal(&order_cond);
     pthread_mutex_unlock(&order_mutex);
 }
-
-
 
 void handle_order_completion(Order *order)
 {
@@ -911,20 +917,21 @@ Order *dequeue(OrderQueue *queue)
     return order;
 }
 
-
-int countRemainingOrders(LinkedList *list) {
+int countRemainingOrders(LinkedList *list)
+{
     int count = 0;
     ListNode *current = list->head;
-    
-    while (current != NULL) {
-        if (current->order.delivery_person_id == -1) {
+
+    while (current != NULL)
+    {
+        if (current->order.delivery_person_id == -1)
+        {
             count++;
         }
         current = current->next;
     }
     return count;
 }
-
 
 void printStatistics()
 {
