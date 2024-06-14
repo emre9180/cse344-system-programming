@@ -25,7 +25,7 @@ all: $(TARGET) $(CLIENT_TARGET)
 
 # Rule to build the PideHouse executable
 $(TARGET): $(SERVER_OBJ_FILES)
-	$(CC) $(CFLAGS) $^ -o $@
+	$(CC) $(CFLAGS) $^ -lm -o $@
 
 # Rule to build the HungryVeryMuch executable
 $(CLIENT_TARGET): $(CLIENT_OBJ_FILES)

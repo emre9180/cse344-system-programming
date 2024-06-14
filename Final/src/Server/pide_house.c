@@ -1,5 +1,7 @@
 #include "../../include/Server/pide_house.h"
 #include "../../include/Server/server_connection.h"
+#include "../../include/Server/matrix.h"
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -63,6 +65,8 @@ pthread_t *cook_threads;
 pthread_t *delivery_threads;
 pthread_t manager_thread;
 
+int speed;
+
 void wakeup()
 {
 }
@@ -84,11 +88,11 @@ void initialize_queue(OrderQueue *queue)
 }
 
 // Initialize the system
-void initialize_system(int n_cooks, int m_delivery_persons)
+void initialize_system(int n_cooks, int m_delivery_persons, int speed_)
 {
     num_cooks = n_cooks;
     num_delivery_persons = m_delivery_persons;
-
+    speed = speed_;
     avaliable_oven = OVEN_CAPACITY;
     avaliable_motor = MOTOR_NUMBER;
     available_cooks = n_cooks;
@@ -128,6 +132,7 @@ void initialize_system(int n_cooks, int m_delivery_persons)
         delivery_persons[i].total_earnings = 0.0;
         delivery_persons[i].order_id = -1;
         delivery_persons[i].busy = 0;
+        delivery_persons[i].current_delivery_count = 0;
         delivery_persons[i].order_bag = (OrderQueue *)malloc(sizeof(OrderQueue));
         if (delivery_persons[i].order_bag == NULL)
         {
@@ -199,6 +204,21 @@ void *manager_function(void *arg)
             wakeup();
             break; // Exit the loop
         }
+        // printf("prepared order and order ount: %d %d\n", prepared_order, order_count);
+        if(countRemainingOrders() < 3 && prepared_order != order_count){
+            // Send signal to all delivery man conds
+            for (int i = 0; i < num_delivery_persons; i++)
+            {
+                pthread_cond_signal(&delivery_persons[i].order_bag->cond);
+            }
+        }
+
+        else if(total_delivered_orders==order_count && order_count>0){
+            printStatistics();
+            break;
+        }
+
+      
 
         pthread_mutex_lock(&order_mutex);
 
@@ -238,6 +258,8 @@ void *manager_function(void *arg)
             order = &orders[i];
             if (order->ready == 1 && order->taken == 1 && order->delivery_person_id == -1)
             {
+                
+                fflush(stdout);
                 DeliveryPerson *delivery_person = findAppropriateDeliveryPerson();
                 if (delivery_person != NULL)
                 {
@@ -249,11 +271,14 @@ void *manager_function(void *arg)
                         delivery_person->busy = 1;
                         pthread_cond_signal(&delivery_person->order_bag->cond);
                         send_response(order->socket_fd, "Order is sent to delivery man.\n");
-                        printf("Delivery person %d is ready to deliver orders.\n", delivery_person->delivery_person_id);
+                        printf("\n\n\n\n\n\nDelivery person %d is ready to deliver orders.\n", delivery_person->delivery_person_id);
+                        printf("Reamining orders: %d\n", countRemainingOrders());
+                        fflush(stdout);
                     }
                     else
                     {
                         printf("Order %d added to delivery person %d's bag.\n", order->order_id, delivery_person->delivery_person_id);
+                        fflush(stdout);
                     }
                 }
             }
@@ -314,7 +339,8 @@ void *cook_function(void *arg)
         }
 
         printf("Cook %d is preparing order %d\n", cook->cook_id, order->order_id);
-        usleep(order->preparation_time * 1000); // Simulate preparation time
+        double time = getTime();
+        usleep(order->preparation_time * 1000); // Convert to microseconds
 
         // Acquire an apparatus
         pthread_mutex_lock(&apparatus_mutex);
@@ -435,7 +461,7 @@ void *cook_function(void *arg)
         pthread_mutex_unlock(&oven_mutex);
 
         printf("Cook %d is putting order %d in the oven\n", cook->cook_id, order->order_id);
-        usleep(order->cooking_time * 1000); // Simulate cooking time
+        usleep(time/2* 1000); // Simulate cooking time
 
         // Acquire an apparatus again
         pthread_mutex_lock(&apparatus_mutex);
@@ -503,6 +529,7 @@ void *cook_function(void *arg)
         order->ready = 1;
         available_cooks++; // Release the cook
         prepared_order++;
+        cook->total_deliveries++;
         pthread_cond_signal(&cooked_cond); // Notify that the order is cooked
         total_prepared_orders++;
         printf("Total prepared orders: %d\n", total_prepared_orders);
@@ -521,24 +548,25 @@ void *delivery_function(void *arg)
         if (shutdown_flag)
         {
             wakeup();
-            pthread_mutex_unlock(&delivery_person->order_bag->mutex);
-            printf("Delivery person %d exiting...\n", delivery_person->delivery_person_id);
+            //printf("Delivery person %d exiting...\n", delivery_person->delivery_person_id);
             pthread_exit(NULL);
         }
 
         pthread_mutex_lock(&delivery_person->order_bag->mutex);
         // Wait for orders in the bag
-        while (delivery_person->order_bag->front == NULL)
+        while (delivery_person->order_bag->front == NULL || (delivery_person->current_delivery_count < DELIVERY_CAPACITY && countRemainingOrders()>=3))
         {
+            //printf("Delivery person %d is waiting for orders\n\n\n\n\n", delivery_person->delivery_person_id);
             pthread_cond_wait(&delivery_person->order_bag->cond, &delivery_person->order_bag->mutex);
             if (shutdown_flag)
             {
                 wakeup();
                 pthread_mutex_unlock(&delivery_person->order_bag->mutex);
-                printf("Delivery person %d exiting...\n", delivery_person->delivery_person_id);
+                //printf("Delivery person %d exiting...\n", delivery_person->delivery_person_id);
                 pthread_exit(NULL);
             }
         }
+
         pthread_mutex_unlock(&delivery_person->order_bag->mutex);
         int delivery_count = 0;
         Order *orders_to_deliver[DELIVERY_CAPACITY];
@@ -548,24 +576,29 @@ void *delivery_function(void *arg)
         {
             orders_to_deliver[delivery_count++] = dequeue(delivery_person->order_bag);
         }
+                            printf("Uyandi ve delivery count: %d\n", delivery_person->current_delivery_count);
+
         delivery_person->current_delivery_count = 0; // Reset count after collecting orders
 
         if (delivery_count > 0)
         {
-            printf("Delivery person %d is delivering %d orders\n", delivery_person->delivery_person_id, delivery_count);
-
-            // Simulate delivery time
-            int total_delivery_time = 0;
-            for (int i = 0; i < delivery_count; i++)
-            {
-                total_delivery_time += orders_to_deliver[i]->delivery_time;
-            }
-            usleep(total_delivery_time * 1000); // Convert to microseconds
-
+            //printf("Delivery person %d is delivering %d orders\n", delivery_person->delivery_person_id, delivery_count);
+            fflush(stdout);
+            double total_delivery_time = 0;
             for (int i = 0; i < delivery_count; i++)
             {
                 handle_delivery_completion(delivery_person, orders_to_deliver[i]);
-                delivery_person->total_deliveries++;
+                 // Calculate the Euclidean distance from the Pide House (p/2, q/2) to the customer (order->x, order->y)
+                double distance = sqrt(pow(orders_to_deliver[i]->x - (p / 2), 2) + pow(orders_to_deliver[i]->y - (q / 2), 2));
+                double delivery_time = distance / speed; // Assume DELIVERY_SPEED is a constant speed factor
+
+                total_delivery_time += delivery_time;
+
+                // Sleep to simulate delivery time
+                printf("Delivery person %d delivering order %d over a distance of %.2f km\n", delivery_person->delivery_person_id, orders_to_deliver[i]->order_id, distance);
+                usleep(delivery_time * 1000000); // Convert seconds to microseconds for usleep
+                orders_to_deliver[i]->delivery_time = delivery_time;
+
                 delivery_person->total_earnings += 10.0; // Example earning per delivery
                 printf("Order %d delivered by delivery person %d\n", orders_to_deliver[i]->order_id, delivery_person->delivery_person_id);
             }
@@ -576,6 +609,7 @@ void *delivery_function(void *arg)
 
             total_delivered_orders += delivery_count;
             printf("Total delivered orders: %d\n", total_delivered_orders);
+            fflush(stdout);
             pthread_mutex_unlock(&delivery_mutex);
         }
     }
@@ -689,4 +723,37 @@ Order *dequeue(OrderQueue *queue)
     free(temp);
     pthread_mutex_unlock(&queue->mutex);
     return order; // Successfully dequeued and return the order
+}
+
+int countRemainingOrders()
+{
+    int count = 0;
+    for (int i = 0; i < order_count; i++)
+    {
+        if (orders[i].delivery_person_id == -1)
+        {
+            count++;
+        }
+    }
+    return count;
+}
+
+void printStatistics()
+{
+    printf("Statistics:\n");
+    printf("Cook Statistics:\n");
+    fflush(stdout);
+    for (int i = 0; i < num_cooks; i++)
+    {
+        printf("Cook %d cooked %d orders\n", cooks[i].cook_id, cooks[i].total_deliveries);
+    }
+
+    printf("Delivery Person Statistics:\n");
+    for (int i = 0; i < num_delivery_persons; i++)
+    {
+        printf("Delivery Person %d delivered %d orders and earned %.2f TL\n", delivery_persons[i].delivery_person_id, delivery_persons[i].total_deliveries, delivery_persons[i].total_earnings);
+    }
+
+    printf("Total prepared orders: %d\n", total_prepared_orders);
+    printf("Total delivered orders: %d\n", total_delivered_orders);
 }

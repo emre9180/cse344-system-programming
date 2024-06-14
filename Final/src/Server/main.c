@@ -161,7 +161,7 @@ int main(int argc, char *argv[]) {
     int delivery_speed = atoi(argv[4]);
 
     // Initialize the pide house system
-    initialize_system(n_cooks, m_delivery_persons);
+    initialize_system(n_cooks, m_delivery_persons, delivery_speed);
 
     // Setup the signal handler
     setup_signal_handler();

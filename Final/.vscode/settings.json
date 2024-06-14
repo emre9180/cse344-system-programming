@@ -11,6 +11,8 @@
         "pthread.h": "c",
         "stdlib.h": "c",
         "shared_mutex": "c",
-        "in.h": "c"
+        "in.h": "c",
+        "initializer_list": "c",
+        "utility": "c"
     }
 }

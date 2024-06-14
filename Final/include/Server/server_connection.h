@@ -23,6 +23,8 @@ extern int num_connections;
 extern pthread_mutex_t connection_mutex;
 extern pthread_t* client_threads[MAX_CONNECTIONS];
 extern int client_thread_count;
+extern int p;
+extern int q;
 
 // Function prototypes
 int initialize_server(int port, const char *ip_address);

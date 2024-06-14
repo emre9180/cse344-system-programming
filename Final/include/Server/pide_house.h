@@ -4,6 +4,7 @@
 #include <pthread.h>
 #include <semaphore.h>
 #include <signal.h>
+#include <math.h>
 
 // Define constants
 #define MAX_COOKS 10
@@ -108,8 +109,10 @@ extern pthread_cond_t apparatus_cond;
 extern pthread_cond_t oven_putting_opening_cond;
 extern pthread_cond_t oven_removing_opening_cond;
 
+extern int speed;
+
 // Function prototypes
-void initialize_system(int n_cooks, int m_delivery_persons);
+void initialize_system(int n_cooks, int m_delivery_persons, int speed);
 void* cook_function(void *arg);
 void* delivery_function(void *arg);
 void* manager_function(void *arg);
@@ -121,5 +124,7 @@ void evaluate_performance();
 void initialize_queue(OrderQueue* queue);
 void enqueue(OrderQueue* queue, Order *order);
 Order* dequeue(OrderQueue* queue);
+int countRemainingOrders();
+void printStatistics();
 
 #endif // PIDE_HOUSE_H

@@ -8,6 +8,8 @@
 #include <pthread.h>
 
 // Global variables
+int p = 1;
+int q = 1;
 int server_socket_fd;
 ClientConnection* client_connections[MAX_CONNECTIONS];
 int num_connections = 0;
@@ -83,14 +85,16 @@ void* handle_client(void *arg) {
     char server_ip[INET_ADDRSTRLEN], client_ip[INET_ADDRSTRLEN];
     int server_port, client_port;
     // Parse coordinates
- if (sscanf(buffer, "%d %d %s %d %d %s %d",
+ if (sscanf(buffer, "%d %d %s %d %d %s %d %d %d",
                &client_id,
                &x,
                server_ip,
                &server_port,
                &y,
                client_ip,
-               &client_port) != 7) {
+               &client_port,
+               &p,
+               &q) != 9) {
         fprintf(stderr, "Error parsing client data: %s\n", buffer);
         close(client_socket);
         pthread_exit(NULL);
@@ -145,7 +149,7 @@ void* handle_client(void *arg) {
     order.y = client_connection->y;
     order.preparation_time = (double)rand() / RAND_MAX * 5.0 + 1.0; // Example preparation time
     order.cooking_time = order.preparation_time / 2.0; // Example cooking time
-    order.delivery_time = (abs(order.x) + abs(order.y)) * 2; // Simplified delivery time
+    order.delivery_time = 0; // Simplified delivery time
     order.is_cancelled = 0;
     order.delivery_person_id = -1;
     order.cook_id = -1;

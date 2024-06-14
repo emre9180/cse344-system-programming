@@ -27,6 +27,8 @@ typedef struct {
     int x; // x-coordinate of the client
     int y; // y-coordinate of the client
     struct sockaddr_in client_addr;
+    int p;
+    int q;
 } Client;
 
 // Global variables
