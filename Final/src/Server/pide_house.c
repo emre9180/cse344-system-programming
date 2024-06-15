@@ -913,7 +913,7 @@ void *delivery_function(void *arg)
                 }
                 handle_delivery_completion(delivery_person, orders_to_deliver[i]);
                 // Calculate the Euclidean distance from the Pide House (p/2, q/2) to the customer (order->x, order->y)
-                double distance = sqrt(pow(orders_to_deliver[i]->x - (p / 2), 2) + pow(orders_to_deliver[i]->y - (q / 2), 2));
+                double distance = sqrt(pow(orders_to_deliver[i]->x - (current_x), 2) + pow(orders_to_deliver[i]->y - (current_y), 2));
                 double delivery_time = distance / speed; // Assume DELIVERY_SPEED is a constant speed factor
 
                 total_delivery_time += delivery_time;
