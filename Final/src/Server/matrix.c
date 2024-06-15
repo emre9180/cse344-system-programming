@@ -1,16 +1,6 @@
 
 #include "../../include/Server/matrix.h"
 
-#define ROWS 30
-#define COLS 40
-
-// Function prototypes
-void printMatrix(double complex mat[ROWS][COLS], int rows, int cols);
-void transpose(double complex src[ROWS][COLS], double complex dest[COLS][ROWS], int rows, int cols);
-void multiply(double complex mat1[][COLS], double complex mat2[][ROWS], double complex result[][ROWS], int rows1, int cols1, int rows2, int cols2);
-void invert(double complex mat[COLS][COLS], double complex inv[COLS][COLS], int n);
-void calculatePseudoInverse(double complex A[ROWS][COLS], double complex A_pseudo[COLS][ROWS]);
-
 double getTime() {
     // Initialize a 30x40 complex matrix
     double complex A[ROWS][COLS] = {0};
@@ -57,7 +47,8 @@ void transpose(double complex src[ROWS][COLS], double complex dest[COLS][ROWS], 
 }
 
 // Function to multiply two matrices
-void multiply(double complex mat1[][COLS], double complex mat2[][ROWS], double complex result[][ROWS], int rows1, int cols1, int rows2, int cols2) {
+void multiply(double complex mat1[][ROWS], double complex mat2[][COLS], double complex result[][COLS], int rows1, int cols1, int cols2)
+{
     // Ensure result is initialized to 0
     for (int i = 0; i < rows1; i++) {
         for (int j = 0; j < cols2; j++) {
@@ -137,11 +128,11 @@ void calculatePseudoInverse(double complex A[ROWS][COLS], double complex A_pseud
     transpose(A, A_H, ROWS, COLS);
 
     // Compute A^H * A
-    multiply(A_H, A, A_H_A, COLS, ROWS, ROWS, COLS);
+    multiply(A_H, A, A_H_A, COLS, ROWS, COLS);
 
     // Compute (A^H * A)^-1
     invert(A_H_A, A_H_A_inv, COLS);
 
     // Compute pseudo-inverse: A^+ = (A^H * A)^-1 * A^H
-    multiply(A_H_A_inv, A_H, A_pseudo, COLS, COLS, COLS, ROWS);
+    multiply(A_H_A_inv, A_H, A_pseudo, COLS, COLS, ROWS);
 }

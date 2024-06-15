@@ -21,7 +21,11 @@ TARGET := PideHouse
 CLIENT_TARGET := HungryVeryMuch
 
 # Default target
-all: $(TARGET) $(CLIENT_TARGET)
+all: create_dirs $(TARGET) $(CLIENT_TARGET)
+
+# Rule to create necessary directories
+create_dirs:
+	@mkdir -p $(OBJ_DIR)
 
 # Rule to build the PideHouse executable
 $(TARGET): $(SERVER_OBJ_FILES)
@@ -32,13 +36,14 @@ $(CLIENT_TARGET): $(CLIENT_OBJ_FILES)
 	$(CC) $(CFLAGS) $^ -o $@
 
 # Rule to build object files for the server
-$(OBJ_DIR)/%.o: $(SRC_DIR)/Server/%.c
+$(OBJ_DIR)/%.o: $(SRC_DIR)/Server/%.c | create_dirs
 	$(CC) $(CFLAGS) -c $< -o $@
 
 # Rule to build object files for the client
-$(OBJ_DIR)/%.o: $(SRC_DIR)/Client/%.c
+$(OBJ_DIR)/%.o: $(SRC_DIR)/Client/%.c | create_dirs
 	$(CC) $(CFLAGS) -c $< -o $@
 
 # Rule to clean the project
 clean:
 	rm -rf $(OBJ_DIR)/*.o $(TARGET) $(CLIENT_TARGET)
+
